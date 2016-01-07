@@ -11,8 +11,8 @@ class Map extends React.Component {
 
   componentDidMount() {
     const map = this.map = L.map(ReactDOM.findDOMNode(this), {
-      center: [40, -3],
-      zoom: 5
+      center: this.props.center,
+      zoom: this.props.zoom
     });
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
   }
