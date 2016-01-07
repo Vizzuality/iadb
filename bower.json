@@ -1,0 +1,30 @@
+{
+  "name": "iadb",
+  "description": "A web application",
+  "main": "server.js",
+  "authors": [
+    "David Inga <david.inga@vizzuality.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "d3",
+    "javascript",
+    "data",
+    "visualisation"
+  ],
+  "homepage": "https://github.com/Vizzuality/iadb",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.6"
+  }
+}
