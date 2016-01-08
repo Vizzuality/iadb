@@ -7,14 +7,22 @@ import ReactDOM from 'react-dom';
 
 class Map extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {year: this.props.year};
+  }
+
   componentDidMount() {
     this.createMap();
     this.setBasemap();
     this.setLayer();
   }
 
-  componentWillReceiveProps() {
-    this.setLayer();
+  componentWillReceiveProps(props) {
+    if (props.year !== this.state.year) {
+      this.setState({year: props.year});
+      this.setLayer();
+    }
   }
 
   createMap() {
@@ -60,9 +68,9 @@ class Map extends React.Component {
     function setLayer(layer) {
       this.layer = layer;
       this.layer.setInteraction(true);
-      this.layer.on('featureClick', (e, latlng, point, data)=> {
-        console.log(data);
-      });
+      this.layer.on('featureClick', function(e, latlng, point, data) {
+        this.props.setDashboard(data);
+      }.bind(this));
     }
 
     cartodb.createLayer(this.map, cartodbConfig)
