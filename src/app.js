@@ -7,11 +7,20 @@ import Timeline from './components/Timeline';
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {year: 2000};
+  }
+
+  setCurrentYear(year) {
+    this.setState({year: year});
+  }
+
   render() {
     return (
       <div>
-        <Map center={[40, -3]} zoom={5} />
-        <Timeline startYear={1990} endYear={2010} steps={10} />
+        <Map center={[-19, -43]} zoom={5} year={this.state.year} />
+        <Timeline startYear={2000} endYear={2012} steps={1} setCurrentYear={this.setCurrentYear.bind(this)} />
       </div>
     );
   }

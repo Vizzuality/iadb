@@ -1,10 +1,19 @@
 .timeline {
   position: absolute;
-  bottom: 1rem;
+  bottom: 3rem;
   left: 1rem;
-  right: 1rem;
   padding: .5rem;
   box-sizing: content-box;
   background-color: white;
   color: black;
+}
+
+.timeline ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  cursor: pointer;
 }
