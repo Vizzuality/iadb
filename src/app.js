@@ -1,9 +1,9 @@
 'use strict';
 
 import React from 'react';
-import Map from '../../components/Map';
-import Timeline from '../../components/Timeline';
-// import Dashboard from '../../components/Dashboard';
+import ReactDOM from 'react-dom';
+import Map from './components/Map';
+import Timeline from './components/Timeline';
 
 class App extends React.Component {
 
@@ -18,9 +18,4 @@ class App extends React.Component {
 
 }
 
-Map.propTypes = {
-  center: React.PropTypes.array,
-  zoom: React.PropTypes.number
-};
-
-export default App;
+ReactDOM.render(<App />, document.getElementById('app'));
