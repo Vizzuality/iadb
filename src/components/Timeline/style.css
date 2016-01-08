@@ -4,8 +4,10 @@
   left: 1rem;
   padding: .5rem;
   box-sizing: content-box;
-  background-color: white;
+
   color: black;
+
+  background-color: white;
 }
 
 .timeline ul {
