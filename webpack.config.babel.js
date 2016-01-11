@@ -2,6 +2,8 @@
 
 import webpack from 'webpack';
 import path from 'path';
+import autoprefixer from 'autoprefixer';
+import nested from 'postcss-nested';
 
 const config = {
 
@@ -23,7 +25,7 @@ const config = {
       {test: /\.html$/, loader: 'file?name=[name].[ext]'},
       {test: /\.js?$/, loaders: ['react-hot', 'babel'], exclude: /node_modules/},
       {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
-      {test: /\.css$/, loader: 'style-loader!css-loader'},
+      {test: /\.css$/, loader: 'style-loader!css-loader!postcss-loader'},
       {test: /\.png$/, loader: 'url-loader?prefix=img/&limit=5000'}
     ]
   },
@@ -34,7 +36,9 @@ const config = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+
+  postcss: () => [autoprefixer, nested]
 
 };
 
