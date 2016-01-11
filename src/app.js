@@ -31,8 +31,8 @@ class App extends React.Component {
           year={this.state.year}
           setDashboard={this.setDashboard.bind(this)} />
         <Timeline
-          startDate={moment({year: 2000})}
-          endYear={moment({year: 2012})}
+          startDate={moment({year: 2000, month: 0, day: 2})}
+          endYear={moment({year: 2012, month: 0, day: 2})}
           format={'YYYY'}
           play={true}
           velocity={3000}
