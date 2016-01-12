@@ -29,7 +29,6 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log(props.year, this.state.year);
     if (props.year !== this.state.year) {
       this.setState({year: props.year});
       this.setLayer();

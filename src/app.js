@@ -2,7 +2,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import moment from 'moment';
 import Map from './components/Map';
 import Timeline from './components/Timeline';
 import Dashboard from './components/Dashboard';
@@ -15,7 +14,7 @@ class App extends React.Component {
   }
 
   setCurrentYear(props) {
-    this.setState({year: props.currentDate.year()});
+    // this.setState({year: props.currentDate.year()});
   }
 
   setDashboard(props) {
@@ -31,11 +30,12 @@ class App extends React.Component {
           year={this.state.year}
           setDashboard={this.setDashboard.bind(this)} />
         <Timeline
-          startDate={moment({year: 2000, month: 0, day: 2})}
-          endYear={moment({year: 2012, month: 0, day: 2})}
+          startDate={new Date('2000')}
+          endDate={new Date('2012')}
+          step={[1, 'year']}
           format={'YYYY'}
           play={true}
-          velocity={3000}
+          velocity={500}
           onChange={this.setCurrentYear.bind(this)} />
         <div>
           <Dashboard
