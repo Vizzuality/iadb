@@ -10,82 +10,107 @@ class Timeline extends React.Component {
     super(props);
     this.state = {
       playing: false,
-      current: this.props.startDate,
-      steps: this.calculateSteps()
+      current: 0,
+      steps: this.getSteps()
     };
   }
 
-  calculateSteps() {
-    const steps = [];
+  getSteps() {
     const startDate = moment(this.props.startDate);
     const endDate = moment(this.props.endDate);
     const diff = endDate.diff(startDate, this.props.step[1]);
-    for (let d = 0; d <= diff; d++) {
-      const stepDate = moment(startDate)
-        .add(d * this.props.step[0], this.props.step[1]);
-      steps.push(stepDate._d);
-    }
-    return steps;
-  }
-
-  calculateNext() {
-    // const isEnd = moment(this.state.current)
-    //     .isSame(moment(this.props.endDate), this.props.step[1]);
-    // if (isEnd) {
-    //   return moment(this.props.startDate);
-    // }
-    return moment(this.state.current)
-      .add(1 * this.props.step[0], this.props.step[1]);
+    return [...Array(diff + 1)].map((d, i) => {
+      return moment(startDate).add(i * this.props.step[0], this.props.step[1]);
+    });
   }
 
   handleClick(e) {
-    const value = new Date(e.currentTarget.getAttribute('data-date'));
-    this.stop();
+    const value = Number(e.currentTarget.getAttribute('data-index'));
+    if (isNaN(value) && value < 0) {
+      throw 'value is not a valid number or is less than 0';
+    }
     this.setState({current: value});
   }
 
+  handlePlay() {
+    const isPlaying = !this.state.playing;
+    if (isPlaying) {
+      this.play();
+    } else {
+      this.stop();
+    }
+  }
+
+  triggerChange() {
+    if (this.props.onChange && typeof this.props.onChange === 'function') {
+      const currentDate = moment(this.props.startDate)
+        .add(this.state.current * this.props.step[0], this.props.step[1]);
+      this.props.onChange({index: this.state.current, date: currentDate._d});
+    }
+  }
+
   play() {
-    this.setState({
-      playing: !this.state.playing,
-      current: this.calculateNext()
-    });
-    this.runner = setInterval(() => {
-      this.setState({current: this.calculateNext()});
-    }, this.props.velocity);
+    let current = this.state.current;
+
+    this.setState({playing: true});
+
+    // Restart count
+    if (current === (this.state.steps.length - 1)) {
+      current = -1;
+    }
+
+    this.timer = setInterval(() => {
+      current = current + 1;
+      // Stopping at end
+      if (current === this.state.steps.length) {
+        this.stop();
+      } else {
+        this.setState({current: current});
+      }
+    }, this.props.pause);
   }
 
   stop() {
-    if (this.runner) {
-      clearInterval(this.runner);
-    }
     this.setState({playing: false});
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
+
+  componentDidMount() {
+    this.triggerChange();
+  }
+
+  componentDidUpdate() {
+    this.triggerChange();
   }
 
   render() {
-    const list = this.state.steps.map((step) => {
-      const isActive = this.state.current.valueOf() === step.valueOf();
-      const date = moment(step);
-      return <li
-          key={step.valueOf()}
-          className={isActive ? '_active' : null}
-          data-date={date.format()}
-          onClick={this.handleClick.bind(this)}
-        >{date.format(this.props.format)}</li>
-    });
-
+    // Making play/pause buttons depending on play props value
     let control = null;
 
     if (this.props.play) {
       control = <div
-        className={this.state.playing ? 'control _playing' : 'control'}
-        onClick={this.state.playing ? this.stop.bind(this) : this.play.bind(this)}></div>;
+        className={'control ' + (this.state.playing ? '_playing' : '')}
+        onClick={this.handlePlay.bind(this)}></div>;
     }
+
+    // Making steps list
+    const steps = this.state.steps.map((step, index) => {
+      const stepDate = moment(step);
+      return <li key={index}
+        className={index === this.state.current ? '_active' : ''}
+        data-index={index}
+        data-date={stepDate.format()}
+        onClick={this.handleClick.bind(this)}
+      >{stepDate.format(this.props.format)}</li>
+    });
 
     return (
       <div className="timeline -inline">
         {control}
         <ul>
-          {list}
+          {steps}
         </ul>
       </div>
     );
@@ -108,7 +133,7 @@ Timeline.defaultProps = {
   step: [1, 'year'],
   format: 'YYYY-MM-DD',
   play: true,
-  velocity: 1000,
+  pause: 1000,
   onChange: function() {}
 };
 
