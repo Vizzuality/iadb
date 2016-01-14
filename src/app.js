@@ -1,6 +1,7 @@
 'use strict';
 
 import './app.css';
+import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from './components/Map';
@@ -23,8 +24,12 @@ class App extends React.Component {
     };
   }
 
-  setCurrentYear(data) {
-    this.refs.map.setLayer(data);
+  setData(data) {
+    if (data) {
+      this.data = _.extend({}, this.data, data);
+    }
+    this.data.layerName = this.data.layerName || this.props.layerName;
+    this.refs.map.setLayer(this.data);
   }
 
   componentDidMount() {
@@ -51,13 +56,16 @@ class App extends React.Component {
         format={'YYYY'}
         play={true}
         pause={3000}
-        onChange={this.setCurrentYear.bind(this)}
+        onChange={this.setData.bind(this)}
       />;
     }
 
     return (
       <div>
-        <Layers data={layersDataSource} />
+        <Layers
+          data={layersDataSource}
+          onChange={this.setData.bind(this)}
+        />
         <Map
           ref='map'
           mapOptions={{center: [-19, -43], zoom: 5}}
@@ -70,4 +78,4 @@ class App extends React.Component {
 
 }
 
-ReactDOM.render(<App userName={'iadb'} />, document.getElementById('app'));
+ReactDOM.render(<App userName='iadb' layerName='reven' />, document.getElementById('app'));

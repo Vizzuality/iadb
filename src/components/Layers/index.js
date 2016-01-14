@@ -40,12 +40,16 @@ class Layers extends React.Component {
   setSelected(e) {
     const value = e.currentTarget.value;
     const data = this.state.data.map((d) => {
+      if (!this.props.multiple) {
+        d.active = false;
+      }
       if (value === d.value) {
         d.active = e.currentTarget.checked;
       }
       return d;
     });
     this.setState({data: data});
+    this.props.onChange({layerName: value});
   }
 
 }
@@ -56,7 +60,7 @@ Layers.propTypes = {
 };
 
 Layers.defaultProps = {
-  multiple: true,
+  multiple: false,
   data: []
 };
 

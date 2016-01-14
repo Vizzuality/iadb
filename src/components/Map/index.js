@@ -56,7 +56,7 @@ class Map extends React.Component {
       }.bind(this));
     }
 
-    this.getCartoCSS(function(cartocss) {
+    this.getCartoCSS(data.layerName, function(cartocss) {
       cartodbConfig.sublayers[0].cartocss = cartocss;
       cartodb.createLayer(this.map, cartodbConfig)
         .addTo(this.map)
@@ -67,20 +67,26 @@ class Map extends React.Component {
     }.bind(this));
   }
 
-  getCartoCSS(cb) {
-    const query = `SELECT CDB_JenksBins(array_agg(reven::numeric), 7)
+  getCartoCSS(layerName, cb) {
+    const query = `SELECT CDB_JenksBins(array_agg(${layerName}::numeric), 7)
       FROM table_3fiscal_primera_serie`;
     const url = `https:\/\/${cdbUsername}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, function(d) {
       const data = d.rows[0].cdb_jenksbins;
-      const cartocss = `#table_3fiscal_primera_serie{polygon-fill: ${colors[0]}; polygon-opacity: 0.8; line-color: #FFF; line-width: 0.5; line-opacity: 1;}
-      #table_3fiscal_primera_serie [ reven <= ${data[6]}] {polygon-fill: ${colors[6]};}
-      #table_3fiscal_primera_serie [ reven <= ${data[5]}] {polygon-fill: ${colors[5]};}
-      #table_3fiscal_primera_serie [ reven <= ${data[4]}] {polygon-fill: ${colors[4]};}
-      #table_3fiscal_primera_serie [ reven <= ${data[3]}] {polygon-fill: ${colors[3]};}
-      #table_3fiscal_primera_serie [ reven <= ${data[2]}] {polygon-fill: ${colors[2]};}
-      #table_3fiscal_primera_serie [ reven <= ${data[1]}] {polygon-fill: ${colors[1]};}
-      #table_3fiscal_primera_serie [ reven <= ${data[0]}] {polygon-fill: ${colors[0]};}`;
+      const cartocss = `#table_3fiscal_primera_serie{
+        polygon-fill: ${colors[0]};
+        polygon-opacity: 0.8;
+        line-color: #FFF;
+        line-width: 0.5;
+        line-opacity: 1;
+      }
+      #table_3fiscal_primera_serie [ ${layerName} <= ${data[6]}] {polygon-fill: ${colors[6]};}
+      #table_3fiscal_primera_serie [ ${layerName} <= ${data[5]}] {polygon-fill: ${colors[5]};}
+      #table_3fiscal_primera_serie [ ${layerName} <= ${data[4]}] {polygon-fill: ${colors[4]};}
+      #table_3fiscal_primera_serie [ ${layerName} <= ${data[3]}] {polygon-fill: ${colors[3]};}
+      #table_3fiscal_primera_serie [ ${layerName} <= ${data[2]}] {polygon-fill: ${colors[2]};}
+      #table_3fiscal_primera_serie [ ${layerName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
+      #table_3fiscal_primera_serie [ ${layerName} <= ${data[0]}] {polygon-fill: ${colors[0]};}`;
       cb(cartocss);
     });
   }
