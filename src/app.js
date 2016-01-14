@@ -1,52 +1,73 @@
 'use strict';
 
+import './app.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from './components/Map';
+import Layers from './components/Layers';
 import Timeline from './components/Timeline';
-import Dashboard from './components/Dashboard';
+
+const layersDataSource = [
+  {value: 'reven', name: 'Reven', active: true},
+  {value: 'taxes', name: 'Taxes', active: false},
+  {value: 'taxinc', name: 'Tax Inc.', active: false}
+];
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {year: 2000};
+    this.state = {
+      startDate: null,
+      endDate: null
+    };
   }
 
-  setCurrentYear(props) {
-    // this.setState({year: props.currentDate.year()});
+  setCurrentYear(data) {
+    this.refs.map.setLayer(data);
   }
 
-  setDashboard(props) {
-    this.setState(props);
+  componentDidMount() {
+    // Getting min and max year from data
+    const query = 'SELECT MIN(year), MAX(year) FROM table_3fiscal_primera_serie';
+    const url = `https:\/\/${this.props.userName}.cartodb.com/api/v2/sql?q=${query}`;
+    $.getJSON(url, (data) => {
+      const row = data.rows[0];
+      this.setState({
+        startDate: new Date(row.min.toString()),
+        endDate: new Date(row.max.toString())
+      });
+    });
   }
 
   render() {
+    let timeline = null;
+
+    if (this.state.startDate && this.state.endDate) {
+      timeline = <Timeline
+        startDate={this.state.startDate}
+        endDate={this.state.endDate}
+        step={[1, 'year']}
+        format={'YYYY'}
+        play={true}
+        pause={3000}
+        onChange={this.setCurrentYear.bind(this)}
+      />;
+    }
+
     return (
       <div>
+        <Layers data={layersDataSource} />
         <Map
-          center={[-19, -43]}
-          zoom={5}
-          year={this.state.year}
-          setDashboard={this.setDashboard.bind(this)} />
-        <Timeline
-          startDate={new Date('2000')}
-          endDate={new Date('2012')}
-          step={[1, 'year']}
-          format={'YYYY'}
-          play={true}
-          velocity={500}
-          onChange={this.setCurrentYear.bind(this)} />
-        <div>
-          <Dashboard
-            reven={this.state.reven}
-            taxes={this.state.taxes}
-            taxinc={this.state.taxinc} />
-        </div>
+          ref='map'
+          mapOptions={{center: [-19, -43], zoom: 5}}
+          tileUrl={'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'}
+        />
+        {timeline}
       </div>
     );
   }
 
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App userName={'iadb'} />, document.getElementById('app'));

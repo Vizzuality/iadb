@@ -1,0 +1,18 @@
+.layers {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  padding: .5rem;
+
+  transform: translateY(-50%);
+
+  background: white;
+
+  z-index: 1;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

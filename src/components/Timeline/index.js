@@ -11,16 +11,22 @@ class Timeline extends React.Component {
     this.state = {
       playing: false,
       current: 0,
-      steps: this.getSteps()
+      steps: this.getSteps(props)
     };
   }
 
-  getSteps() {
-    const startDate = moment(this.props.startDate);
-    const endDate = moment(this.props.endDate);
-    const diff = endDate.diff(startDate, this.props.step[1]);
+  getSteps(props) {
+    if (props.steps) {
+      return 1;
+    }
+    const startDate = moment(props.startDate);
+    const endDate = moment(props.endDate);
+    const diff = endDate.diff(startDate, props.step[1]);
+    if (diff < 0) {
+      return [];
+    }
     return [...Array(diff + 1)].map((d, i) => {
-      return moment(startDate).add(i * this.props.step[0], this.props.step[1]);
+      return moment(startDate).add(i * props.step[0], props.step[1]);
     });
   }
 
@@ -59,6 +65,11 @@ class Timeline extends React.Component {
       current = -1;
     }
 
+    // Change inmediately
+    current = current + 1;
+    this.setState({current: current});
+
+    // Setting timer
     this.timer = setInterval(() => {
       current = current + 1;
       // Stopping at end
@@ -85,7 +96,17 @@ class Timeline extends React.Component {
     this.triggerChange();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.startDate || nextProps.endDate) {
+      this.setState({steps: this.getSteps(nextProps)});
+    }
+  }
+
   render() {
+    if (this.state.steps.length <= 1) {
+      return null;
+    }
+
     // Making play/pause buttons depending on play props value
     let control = null;
 
@@ -119,8 +140,8 @@ class Timeline extends React.Component {
 }
 
 Timeline.propTypes = {
-  startDate: React.PropTypes.object,
-  endDate: React.PropTypes.object,
+  startDate: React.PropTypes.object.isRequired,
+  endDate: React.PropTypes.object.isRequired,
   step: React.PropTypes.array,
   format: React.PropTypes.string,
   play: React.PropTypes.bool,
@@ -128,7 +149,7 @@ Timeline.propTypes = {
 };
 
 Timeline.defaultProps = {
-  startDate: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
+  startDate: new Date(),
   endDate: new Date(),
   step: [1, 'year'],
   format: 'YYYY-MM-DD',

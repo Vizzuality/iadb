@@ -4,6 +4,7 @@ import webpack from 'webpack';
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 import nested from 'postcss-nested';
+import importCSS from 'postcss-import';
 
 const config = {
 
@@ -38,7 +39,7 @@ const config = {
     new webpack.HotModuleReplacementPlugin()
   ],
 
-  postcss: () => [autoprefixer, nested]
+  postcss: () => [importCSS, nested, autoprefixer]
 
 };
 

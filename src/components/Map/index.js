@@ -11,9 +11,12 @@ const colors = [
 
 class Map extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {year: this.props.year};
+  componentDidMount() {
+    this.createMap();
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   render() {
@@ -22,36 +25,12 @@ class Map extends React.Component {
     );
   }
 
-  componentDidMount() {
-    this.createMap();
-    this.setBasemap();
-    this.setLayer();
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.year !== this.state.year) {
-      this.setState({year: props.year});
-      this.setLayer();
-    }
-  }
-
   createMap() {
-    const mapOptions = {
-      center: this.props.center,
-      zoom: this.props.zoom
-    };
-    this.map = L.map(ReactDOM.findDOMNode(this), mapOptions);
+    this.map = L.map(ReactDOM.findDOMNode(this), this.props.mapOptions);
+    L.tileLayer(this.props.tileUrl).addTo(this.map);
   }
 
-  setBasemap() {
-    this.checkMap();
-    this.basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
-    this.basemap.addTo(this.map);
-  }
-
-  setLayer() {
-    this.checkMap();
-
+  setLayer(data) {
     // Removing existing layer
     if (this.layer) {
       this.map.removeLayer(this.layer);
@@ -63,7 +42,7 @@ class Map extends React.Component {
       sublayers: [{
         sql: `SELECT a.*, b.reven,b.taxes, b.taxinc
           FROM bra_poladm2 a join table_3fiscal_primera_serie b
-          on a.codgov::integer=b.codgov where year=${this.props.year}`,
+          on a.codgov::integer=b.codgov where year=${data.date.getFullYear()}`,
         interactivity: 'reven, taxes, taxinc'
       }]
     };
@@ -72,7 +51,8 @@ class Map extends React.Component {
       this.layer = layer;
       this.layer.setInteraction(true);
       this.layer.on('featureClick', function(e, latlng, point, data) {
-        this.props.setDashboard(data);
+        console.log(data);
+        // this.props.setDashboard(data);
       }.bind(this));
     }
 
@@ -87,14 +67,8 @@ class Map extends React.Component {
     }.bind(this));
   }
 
-  checkMap() {
-    if (!this.map) {
-      throw 'Map must be initialized, try executing createMap method';
-    }
-  }
-
   getCartoCSS(cb) {
-    const query = `SELECT CDB_JenksBins(array_agg(reven::numeric), ${colors.length})
+    const query = `SELECT CDB_JenksBins(array_agg(reven::numeric), 7)
       FROM table_3fiscal_primera_serie`;
     const url = `https:\/\/${cdbUsername}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, function(d) {
@@ -114,9 +88,7 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  center: React.PropTypes.array,
-  zoom: React.PropTypes.number,
-  year: React.PropTypes.number
+  mapOptions: React.PropTypes.object.isRequired
 };
 
 export default Map;
