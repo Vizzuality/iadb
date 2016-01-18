@@ -7,75 +7,56 @@ import ReactDOM from 'react-dom';
 import Map from './components/Map';
 import Layers from './components/Layers';
 import Timeline from './components/Timeline';
-
-const layersDataSource = [
-  {value: 'reven', name: 'Reven', active: true},
-  {value: 'taxes', name: 'Taxes', active: false},
-  {value: 'taxinc', name: 'Tax Inc.', active: false}
-];
+import config from './config';
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      startDate: null,
-      endDate: null
-    };
-  }
-
-  setData(data) {
-    if (data) {
-      this.data = _.extend({}, this.data, data);
-    }
-    this.data.layerName = this.data.layerName || this.props.layerName;
-    this.refs.map.setLayer(this.data);
-  }
-
   componentDidMount() {
-    // Getting min and max year from data
-    const query = 'SELECT MIN(year), MAX(year) FROM table_3fiscal_primera_serie';
-    const url = `https:\/\/${this.props.userName}.cartodb.com/api/v2/sql?q=${query}`;
-    $.getJSON(url, (data) => {
-      const row = data.rows[0];
-      this.setState({
-        startDate: new Date(row.min.toString()),
-        endDate: new Date(row.max.toString())
-      });
+    this.setLayer();
+  }
+
+  setLayer() {
+    const layersView = this.refs.layers;
+    const map = this.refs.map.map;
+    const year = this.refs.timeline.getCurrentDate().getFullYear();
+
+    if (this.layer) {
+      map.removeLayer(this.layer);
+    }
+
+    layersView.getLayer(map, year, (layer) => {
+      this.layer = layer;
     });
   }
 
   render() {
-    let timeline = null;
-
-    if (this.state.startDate && this.state.endDate) {
-      timeline = <Timeline
-        startDate={this.state.startDate}
-        endDate={this.state.endDate}
-        step={[1, 'year']}
-        format={'YYYY'}
-        play={true}
-        pause={3000}
-        onChange={this.setData.bind(this)}
-      />;
-    }
+    const config = this.props.config;
 
     return (
       <div>
-        <Layers
-          data={layersDataSource}
-          onChange={this.setData.bind(this)}
+        <Layers ref='layers'
+          cartodb_username={config.cartodb_username}
+          multiple={config.layers.multiple}
+          data={config.layers.data}
+          onChange={this.setLayer.bind(this)}
         />
-        <Map
-          ref='map'
-          mapOptions={{center: [-19, -43], zoom: 5}}
-          tileUrl={'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'}
+        <Map ref='map'
+          options={config.map.options}
+          basemap={config.map.basemap}
         />
-        {timeline}
+        <Timeline ref='timeline'
+          cartodb_username={config.cartodb_username}
+          query={config.timeline.query}
+          step={config.timeline.step}
+          format={config.timeline.format}
+          play={config.timeline.play}
+          pause={config.timeline.pause}
+          onChange={this.setLayer.bind(this)}
+        />
       </div>
     );
   }
 
 }
 
-ReactDOM.render(<App userName='iadb' layerName='reven' />, document.getElementById('app'));
+ReactDOM.render(<App config={config} />, document.getElementById('app'));

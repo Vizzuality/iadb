@@ -11,22 +11,21 @@ class Timeline extends React.Component {
     this.state = {
       playing: false,
       current: 0,
-      steps: this.getSteps(props)
+      startDate: props.startDate,
+      endDate: props.endDate,
+      steps: []
     };
   }
 
-  getSteps(props) {
-    if (props.steps) {
-      return 1;
-    }
-    const startDate = moment(props.startDate);
-    const endDate = moment(props.endDate);
-    const diff = endDate.diff(startDate, props.step[1]);
+  getSteps(state) {
+    const startDate = moment(state.startDate);
+    const endDate = moment(state.endDate);
+    const diff = endDate.diff(startDate, this.props.step[1]);
     if (diff < 0) {
       return [];
     }
     return [...Array(diff + 1)].map((d, i) => {
-      return moment(startDate).add(i * props.step[0], props.step[1]);
+      return moment(startDate).add(i * this.props.step[0], this.props.step[1]);
     });
   }
 
@@ -49,10 +48,15 @@ class Timeline extends React.Component {
 
   triggerChange() {
     if (this.props.onChange && typeof this.props.onChange === 'function') {
-      const currentDate = moment(this.props.startDate)
-        .add(this.state.current * this.props.step[0], this.props.step[1]);
+      const currentDate = this.getCurrentDate();
       this.props.onChange({index: this.state.current, date: currentDate._d});
     }
+  }
+
+  getCurrentDate() {
+    const currentDate = moment(this.state.startDate)
+        .add(this.state.current * this.props.step[0], this.props.step[1]);
+    return currentDate._d;
   }
 
   play() {
@@ -89,21 +93,38 @@ class Timeline extends React.Component {
   }
 
   componentDidMount() {
-    this.triggerChange();
+    // Checking if query exist
+    if (!this.props.query) {
+      return;
+    }
+    // Getting min and max year from data
+    const query = this.props.query;
+    const url = `https:\/\/${this.props.cartodb_username}.cartodb.com/api/v2/sql?q=${query}`;
+    $.getJSON(url, (data) => {
+      const row = data.rows[0];
+      const state = {
+        startDate: new Date(row.min.toString()),
+        endDate: new Date(row.max.toString())
+      };
+      state.steps = this.getSteps(state);
+      this.setState(state);
+    });
   }
 
   componentDidUpdate() {
     this.triggerChange();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.startDate || nextProps.endDate) {
-      this.setState({steps: this.getSteps(nextProps)});
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.startDate || nextProps.endDate) {
+  //     this.setState({steps: this.getSteps(nextProps)});
+  //   }
+  // }
 
   render() {
-    if (this.state.steps.length <= 1) {
+    const steps = this.state.steps;
+
+    if (steps.length <= 1) {
       return null;
     }
 
@@ -117,7 +138,7 @@ class Timeline extends React.Component {
     }
 
     // Making steps list
-    const steps = this.state.steps.map((step, index) => {
+    const stepsList = steps.map((step, index) => {
       const stepDate = moment(step);
       return <li key={index}
         className={index === this.state.current ? '_active' : ''}
@@ -131,7 +152,7 @@ class Timeline extends React.Component {
       <div className="timeline -inline">
         {control}
         <ul>
-          {steps}
+          {stepsList}
         </ul>
       </div>
     );
@@ -140,8 +161,9 @@ class Timeline extends React.Component {
 }
 
 Timeline.propTypes = {
-  startDate: React.PropTypes.object.isRequired,
-  endDate: React.PropTypes.object.isRequired,
+  query: React.PropTypes.string,
+  startDate: React.PropTypes.object,
+  endDate: React.PropTypes.object,
   step: React.PropTypes.array,
   format: React.PropTypes.string,
   play: React.PropTypes.bool,
@@ -149,6 +171,7 @@ Timeline.propTypes = {
 };
 
 Timeline.defaultProps = {
+  query: null,
   startDate: new Date(),
   endDate: new Date(),
   step: [1, 'year'],
