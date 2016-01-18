@@ -50,7 +50,7 @@ export default {
         "column_name": "reven",
         "buckets": 7,
         "query": "SELECT a.*, b.reven, b.taxes, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
-        "interactivity": "reven",
+        "interactivity": "codgov,reven",
         "active": true
       }, {
         "name": "Taxes",
@@ -70,6 +70,15 @@ export default {
         "active": false
       }
     ]
+  },
+
+  average: {
+    "query": "SELECT a.nam_2 AS name, AVG(b.reven) AS reven, AVG(b.taxes) AS taxes, AVG(b.taxinc) AS taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov='${codgov}' AND year=${year} GROUP BY a.nam_2"
+  },
+
+  chart: {
+    "title": "Lorem ipsum dolor",
+    "query": "SELECT a.nam_2 AS name, a.codgov, b.reven, b.taxes, b.taxinc, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov='0762918753' ORDER BY b.year"
   }
 
 };

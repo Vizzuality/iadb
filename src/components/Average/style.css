@@ -1,0 +1,17 @@
+.average {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  padding: .5rem 1rem;
+
+  background: white;
+  z-index: 1;
+
+  h2 {
+    margin: 0;
+  }
+
+  .value {
+    font-size: 2rem;
+  }
+}
