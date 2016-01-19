@@ -25,11 +25,13 @@
   },
   "homepage": "https://github.com/Vizzuality/iadb#readme",
   "dependencies": {
+    "backbone": "^1.2.3",
     "lodash": "^4.0.0",
     "moment": "^2.11.1",
     "normalize.css": "^3.0.3",
     "react": "^0.14.6",
-    "react-dom": "^0.14.6"
+    "react-dom": "^0.14.6",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.3",
