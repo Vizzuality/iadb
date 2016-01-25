@@ -9,7 +9,6 @@ import Layers from './components/Layers';
 import Timeline from './components/Timeline';
 import Average from './components/Average';
 import config from './config';
-import Vizz from './core';
 
 class App extends React.Component {
 
