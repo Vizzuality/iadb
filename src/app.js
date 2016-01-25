@@ -8,71 +8,62 @@ import Map from './components/Map';
 import Layers from './components/Layers';
 import Timeline from './components/Timeline';
 import Average from './components/Average';
+import Chart from './components/Chart';
 import config from './config';
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      codgov: '0762918753',
-      layer: 'reven',
-      date: new Date(2000, 0, 1)
-    };
+  onChangeTimeline(timelineData) {
+    const layerData = this.refs.layers.state.layer;
+    this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
+    this.refs.map.addLayer(layerData);
+    this.refs.average.setState({date: timelineData.date});
   }
 
-  componentDidMount() {
-    this.setLayer();
-  }
-
-  setLayer() {
-    const layersView = this.refs.layers;
-    const map = this.refs.map.map;
-    const average = this.refs.average;
-    const year = this.refs.timeline.getCurrentDate().getFullYear();
-
-    if (this.layer) {
-      map.removeLayer(this.layer);
-    }
-
-    layersView.getLayer(map, year, (layer) => {
-      this.layer = layer;
-      this.layer.setInteraction(true);
-      this.layer.on('featureClick', (e, latlng, point, d) => {
-        this.setState({codgov: d.codgov});
-      });
-    });
+  onChangeLayers(layerData) {
+    this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
+    this.refs.map.addLayer(layerData);
+    this.refs.chart.setState({layerName: layerData.columnName});
+    this.refs.average.setState({layerName: layerData.columnName});
   }
 
   render() {
-    const config = this.props.config;
-
     return (
       <div>
+        <Map ref='map'
+          cartodbUser={config.app.cartodbUser}
+          mapOptions={config.map.mapOptions}
+          basemap={config.map.basemap}
+          colors={config.map.colors}
+          date={config.app.date}
+        />
         <Layers ref='layers'
-          cartodb_username={config.cartodb_username}
-          multiple={config.layers.multiple}
-          data={config.layers.data}
-          onChange={this.setLayer.bind(this)}
+          layerName={config.app.layerName}
+          layers={config.layers}
+          onChange={this.onChangeLayers.bind(this)}
         />
         <Average ref='average'
-          cartodb_username={config.cartodb_username}
-          date={this.state.date}
-          codgov={this.state.codgov}
+          cartodbUser={config.app.cartodbUser}
+          date={config.app.date}
+          layerName={config.app.layerName}
+          codgov={config.app.codgov}
           query={config.average.query}
         />
-        <Map ref='map'
-          options={config.map.options}
-          basemap={config.map.basemap}
+        <Chart ref='chart'
+          cartodbUser={config.app.cartodbUser}
+          layerName={config.app.layerName}
+          date={config.app.date}
+          codgov={config.app.codgov}
+          query={config.chart.query}
         />
         <Timeline ref='timeline'
-          cartodb_username={config.cartodb_username}
+          cartodbUser={config.app.cartodbUser}
           query={config.timeline.query}
           step={config.timeline.step}
           format={config.timeline.format}
           play={config.timeline.play}
           pause={config.timeline.pause}
-          onChange={this.setLayer.bind(this)}
+          onChange={this.onChangeTimeline.bind(this)}
         />
       </div>
     );
@@ -80,4 +71,4 @@ class App extends React.Component {
 
 }
 
-ReactDOM.render(<App config={config} />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));

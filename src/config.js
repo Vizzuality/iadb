@@ -1,6 +1,25 @@
+'use strict';
+
 export default {
 
-  cartodb_username: 'iadb',
+  /**
+   * App configuration
+   * @type {Object}
+   */
+  app: {
+    cartodbUser: 'iadb',
+    layerName: 'reven',
+    date: new Date(2000, 0, 1),
+    codgov: '0762918753'
+  },
+
+  /**
+   * Average info panel
+   * @type {Object}
+   */
+  average: {
+    query: 'SELECT a.nam_2 AS name, AVG(b.${columnName}) AS average_value FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year} GROUP BY a.nam_2'
+  },
 
   /**
    * Map configuration
@@ -8,12 +27,14 @@ export default {
    */
   map: {
     // More info: [http://leafletjs.com/reference.html#map-options]
-    options: {
+    mapOptions: {
       zoom: 5,
       center: [-16.78350556192777, -54.0087890625]
     },
     // Basemap url
-    basemap: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
+    basemap: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    // Legend colors
+    colors: ['#FFFFCC', '#C7E9B4', '#7FCDBB', '#41B6C4', '#1D91C0', '#225EA8', '#0C2C84']
   },
 
   /**
@@ -41,44 +62,35 @@ export default {
    * Layers configuration
    * @type {Object}
    */
-  layers: {
-    multiple: false,
-    data: [
-      {
-        "name": "Reven",
-        "table_name": "table_3fiscal_primera_serie",
-        "column_name": "reven",
-        "buckets": 7,
-        "query": "SELECT a.*, b.reven, b.taxes, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
-        "interactivity": "codgov,reven",
-        "active": true
-      }, {
-        "name": "Taxes",
-        "table_name": "table_3fiscal_primera_serie",
-        "column_name": "taxes",
-        "buckets": 7,
-        "query": "SELECT a.*, b.reven, b.taxes, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
-        "interactivity": "taxes",
-        "active": false
-      }, {
-        "name": "Tax. Inc.",
-        "table_name": "table_3fiscal_primera_serie",
-        "column_name": "taxinc",
-        "buckets": 7,
-        "query": "SELECT a.*, b.reven, b.taxes, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
-        "interactivity": "taxinc",
-        "active": false
-      }
-    ]
-  },
+  layers: [{
+    "name": "Reven",
+    "tableName": "table_3fiscal_primera_serie",
+    "columnName": "reven",
+    "buckets": 7,
+    "query": "SELECT a.*, b.reven, b.taxes, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
+    "interactivity": "codgov,reven"
+  }, {
+    "name": "Taxes",
+    "tableName": "table_3fiscal_primera_serie",
+    "columnName": "taxes",
+    "buckets": 7,
+    "query": "SELECT a.*, b.reven, b.taxes, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
+    "interactivity": "taxes"
+  }, {
+    "name": "Tax. Inc.",
+    "tableName": "table_3fiscal_primera_serie",
+    "columnName": "taxinc",
+    "buckets": 7,
+    "query": "SELECT a.*, b.reven, b.taxes, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
+    "interactivity": "taxinc"
+  }],
 
-  average: {
-    "query": "SELECT a.nam_2 AS name, AVG(b.reven) AS reven, AVG(b.taxes) AS taxes, AVG(b.taxinc) AS taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov='${codgov}' AND year=${year} GROUP BY a.nam_2"
-  },
-
+  /**
+   * Chart
+   * @type {Object}
+   */
   chart: {
-    "title": "Lorem ipsum dolor",
-    "query": "SELECT a.nam_2 AS name, a.codgov, b.reven, b.taxes, b.taxinc, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov='0762918753' ORDER BY b.year"
+    query: 'SELECT a.nam_2 AS name, b.${columnName} AS value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
   }
 
 };

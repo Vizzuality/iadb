@@ -49,7 +49,7 @@ class Timeline extends React.Component {
   triggerChange() {
     if (this.props.onChange && typeof this.props.onChange === 'function') {
       const currentDate = this.getCurrentDate();
-      this.props.onChange({index: this.state.current, date: currentDate._d});
+      this.props.onChange({index: this.state.current, date: currentDate});
     }
   }
 
@@ -99,7 +99,7 @@ class Timeline extends React.Component {
     }
     // Getting min and max year from data
     const query = this.props.query;
-    const url = `https:\/\/${this.props.cartodb_username}.cartodb.com/api/v2/sql?q=${query}`;
+    const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (data) => {
       const row = data.rows[0];
       const state = {
@@ -114,12 +114,6 @@ class Timeline extends React.Component {
   componentDidUpdate() {
     this.triggerChange();
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.startDate || nextProps.endDate) {
-  //     this.setState({steps: this.getSteps(nextProps)});
-  //   }
-  // }
 
   render() {
     const steps = this.state.steps;
@@ -161,6 +155,7 @@ class Timeline extends React.Component {
 }
 
 Timeline.propTypes = {
+  cartodbUser: React.PropTypes.string,
   query: React.PropTypes.string,
   startDate: React.PropTypes.object,
   endDate: React.PropTypes.object,
@@ -171,6 +166,7 @@ Timeline.propTypes = {
 };
 
 Timeline.defaultProps = {
+  cartodbUser: null,
   query: null,
   startDate: new Date(),
   endDate: new Date(),
