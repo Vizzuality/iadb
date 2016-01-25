@@ -13,6 +13,10 @@ import config from './config';
 
 class App extends React.Component {
 
+  onMapChange(mapData) {
+    this.refs.average.setState({codgov: mapData.codgov});
+  }
+
   onChangeTimeline(timelineData) {
     const layerData = this.refs.layers.state.layer;
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
@@ -36,6 +40,7 @@ class App extends React.Component {
           basemap={config.map.basemap}
           colors={config.map.colors}
           date={config.app.date}
+          onChange={this.onMapChange.bind(this)}
         />
         <Layers ref='layers'
           layerName={config.app.layerName}

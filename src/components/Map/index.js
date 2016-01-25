@@ -49,6 +49,10 @@ class Map extends React.Component {
         .addTo(this.map)
         .done((layer) => {
           this.layer = layer;
+          this.layer.setInteraction(true);
+          this.layer.on('featureClick', (e, latlng, point, d) => {
+            this.props.onChange(d);
+          });
         });
     });
   }

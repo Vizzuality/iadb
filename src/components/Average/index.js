@@ -34,7 +34,8 @@ class Average extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.layerName !== this.state.layerName ||
+    if (prevState.codgov !== this.state.codgov ||
+        prevState.layerName !== this.state.layerName ||
         prevState.date !== this.state.date) {
       this.fetchData();
     }
