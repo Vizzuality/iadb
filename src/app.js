@@ -28,6 +28,7 @@ class App extends React.Component {
   setLayer() {
     const layersView = this.refs.layers;
     const map = this.refs.map.map;
+    const average = this.refs.average;
     const year = this.refs.timeline.getCurrentDate().getFullYear();
 
     if (this.layer) {
@@ -54,10 +55,10 @@ class App extends React.Component {
           data={config.layers.data}
           onChange={this.setLayer.bind(this)}
         />
-        <Average
+        <Average ref='average'
           cartodb_username={config.cartodb_username}
           date={this.state.date}
-          codgov={ this.state.codgov}
+          codgov={this.state.codgov}
           query={config.average.query}
         />
         <Map ref='map'

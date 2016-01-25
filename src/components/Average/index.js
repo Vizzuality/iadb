@@ -9,7 +9,9 @@ class Average extends React.Component {
     super(props);
     this.state = {
       name: null,
-      value: null
+      value: null,
+      codgov: props.codgov,
+      date: props.date
     };
   }
 
@@ -20,13 +22,19 @@ class Average extends React.Component {
     const url = `https:\/\/${this.props.cartodb_username}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (data) => {
       const d = data.rows[0];
-      this.setState({name: d.name, value: d.reven});
+      this.setState({
+        name: d.name,
+        value: d.reven,
+        codgov: this.props.codgov
+      });
     });
   }
 
-  // componentDidUpdate() {
-  //   this.fetchData();
-  // }
+  componentDidUpdate(prevProps) {
+    if (prevProps.codgov !== this.state.codgov) {
+      this.fetchData();
+    }
+  }
 
   componentDidMount() {
     this.fetchData();
@@ -36,7 +44,6 @@ class Average extends React.Component {
     if (!this.state.name || !this.state.value) {
       return null;
     }
-    console.log('render');
     return (
       <div className='average'>
         <h2>{this.state.name}</h2>
