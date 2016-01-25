@@ -4,10 +4,6 @@ import './style.css';
 import _ from 'lodash';
 import React from 'react';
 
-const colors = [
-  '#FFFFCC', '#C7E9B4', '#7FCDBB', '#41B6C4', '#1D91C0', '#225EA8', '#0C2C84'
-];
-
 class Layers extends React.Component {
 
   constructor(props) {

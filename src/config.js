@@ -32,7 +32,9 @@ export default {
       center: [-16.78350556192777, -54.0087890625]
     },
     // Basemap url
-    basemap: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
+    basemap: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    // Legend colors
+    colors: ['#FFFFCC', '#C7E9B4', '#7FCDBB', '#41B6C4', '#1D91C0', '#225EA8', '#0C2C84']
   },
 
   /**

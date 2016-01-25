@@ -14,10 +14,15 @@ import config from './config';
 class App extends React.Component {
 
   onChangeTimeline(timelineData) {
+    const layerData = this.refs.layers.state.layer;
+    this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
+    this.refs.map.addLayer(layerData);
     this.refs.average.setState({date: timelineData.date});
   }
 
   onChangeLayers(layerData) {
+    this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
+    this.refs.map.addLayer(layerData);
     this.refs.chart.setState({layerName: layerData.columnName});
     this.refs.average.setState({layerName: layerData.columnName});
   }
@@ -26,8 +31,11 @@ class App extends React.Component {
     return (
       <div>
         <Map ref='map'
+          cartodbUser={config.app.cartodbUser}
           mapOptions={config.map.mapOptions}
           basemap={config.map.basemap}
+          colors={config.map.colors}
+          date={config.app.date}
         />
         <Layers ref='layers'
           layerName={config.app.layerName}
