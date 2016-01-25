@@ -21,7 +21,7 @@ class Map extends React.Component {
   }
 
   createMap() {
-    this.map = L.map(ReactDOM.findDOMNode(this), this.props.options);
+    this.map = L.map(ReactDOM.findDOMNode(this), this.props.mapOptions);
     L.tileLayer(this.props.basemap).addTo(this.map);
   }
 
@@ -40,9 +40,8 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  options: React.PropTypes.object.isRequired,
-  basemap: React.PropTypes.string,
-  currentLayer: React.PropTypes.object
+  mapOptions: React.PropTypes.object.isRequired,
+  basemap: React.PropTypes.string
 };
 
 export default Map;

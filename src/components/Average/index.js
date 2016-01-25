@@ -11,27 +11,31 @@ class Average extends React.Component {
       name: null,
       value: null,
       codgov: props.codgov,
+      layerName: props.layerName,
       date: props.date
     };
   }
 
   fetchData() {
-    const query = this.props.query
-      .replace('${year}', this.props.date.getFullYear())
-      .replace('${codgov}', this.props.codgov);
-    const url = `https:\/\/${this.props.cartodb_username}.cartodb.com/api/v2/sql?q=${query}`;
+    const username = this.props.cartodbUser;
+    const sql = this.props.query
+      .replace(/\$\{columnName\}/g, this.state.layerName)
+      .replace(/\$\{year\}/g, this.state.date.getFullYear())
+      .replace(/\$\{codgov\}/g, this.state.codgov)
+      .replace(/\n/g, ' ');
+    const url = `https:\/\/${username}.cartodb.com/api/v2/sql?q=${sql}`;
     $.getJSON(url, (data) => {
       const d = data.rows[0];
       this.setState({
         name: d.name,
-        value: d.reven,
-        codgov: this.props.codgov
+        value: d.average_value
       });
     });
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.codgov !== this.state.codgov) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.layerName !== this.state.layerName ||
+        prevState.date !== this.state.date) {
       this.fetchData();
     }
   }
@@ -41,13 +45,16 @@ class Average extends React.Component {
   }
 
   render() {
-    if (!this.state.name || !this.state.value) {
+    console.log('render average');
+    if (!this.state.name) {
       return null;
     }
+    const val = this.state.value;
+    const total = val || val === 0 ? val : '-';
     return (
       <div className='average'>
         <h2>{this.state.name}</h2>
-        <div className='value'>{this.state.value}</div>
+        <div className='value'>{total}</div>
       </div>
     );
   }
@@ -55,9 +62,11 @@ class Average extends React.Component {
 }
 
 Average.propTypes = {
-  query: React.PropTypes.string,
+  cartodbUser: React.PropTypes.string,
+  layerName: React.PropTypes.string,
+  codgov: React.PropTypes.string,
   date: React.PropTypes.object,
-  codgov: React.PropTypes.string
+  query: React.PropTypes.string
 };
 
 export default Average;
