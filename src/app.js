@@ -15,6 +15,7 @@ class App extends React.Component {
 
   onMapChange(mapData) {
     this.refs.average.setState({codgov: mapData.codgov});
+    this.refs.chart.setState({codgov: mapData.codgov});
   }
 
   onChangeTimeline(timelineData) {
