@@ -1,6 +1,7 @@
 'use strict';
 
 import './style.css';
+import $ from 'jquery';
 import React from 'react';
 
 class Average extends React.Component {
@@ -24,7 +25,7 @@ class Average extends React.Component {
       .replace(/\$\{codgov\}/g, this.state.codgov)
       .replace(/\n/g, ' ');
     const url = `https:\/\/${username}.cartodb.com/api/v2/sql?q=${sql}`;
-    $.getJSON(url, (data) => {
+    $.getJSON(url, data => {
       const d = data.rows[0];
       this.setState({
         name: d.name,
@@ -46,16 +47,15 @@ class Average extends React.Component {
   }
 
   render() {
-    console.log('render average');
     if (!this.state.name) {
       return null;
     }
     const val = this.state.value;
-    const total = val || val === 0 ? val : '-';
+    const total = (val || val === 0) ? val : '-';
     return (
-      <div className='average'>
+      <div className="average">
         <h2>{this.state.name}</h2>
-        <div className='value'>{total}</div>
+        <div className="value">{total}</div>
       </div>
     );
   }

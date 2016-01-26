@@ -1,6 +1,7 @@
 'use strict';
 
 import './style.css';
+import $ from 'jquery';
 import React from 'react';
 import moment from 'moment';
 
@@ -32,7 +33,7 @@ class Timeline extends React.Component {
   handleClick(e) {
     const value = Number(e.currentTarget.getAttribute('data-index'));
     if (isNaN(value) && value < 0) {
-      throw 'value is not a valid number or is less than 0';
+      throw new Error('value is not a valid number or is less than 0');
     }
     this.setState({current: value});
   }
@@ -70,7 +71,7 @@ class Timeline extends React.Component {
     }
 
     // Change inmediately
-    current = current + 1;
+    current++;
     this.setState({current: current});
 
     // Setting timer
@@ -100,7 +101,7 @@ class Timeline extends React.Component {
     // Getting min and max year from data
     const query = this.props.query;
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
-    $.getJSON(url, (data) => {
+    $.getJSON(url, data => {
       const row = data.rows[0];
       const state = {
         startDate: new Date(row.min.toString()),
@@ -134,12 +135,14 @@ class Timeline extends React.Component {
     // Making steps list
     const stepsList = steps.map((step, index) => {
       const stepDate = moment(step);
-      return <li key={index}
-        className={index === this.state.current ? '_active' : ''}
-        data-index={index}
-        data-date={stepDate.format()}
-        onClick={this.handleClick.bind(this)}
-      >{stepDate.format(this.props.format)}</li>
+      return (
+        <li key={index}
+          className={index === this.state.current ? '_active' : ''}
+          data-index={index}
+          data-date={stepDate.format()}
+          onClick={this.handleClick.bind(this)}
+        >{stepDate.format(this.props.format)}</li>
+      );
     });
 
     return (
