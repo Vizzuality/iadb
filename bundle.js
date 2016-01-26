@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d2d569413b596b40d59d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "345d751ef7e71142b2fc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -59382,7 +59382,7 @@
 	        return d.date;
 	      }));
 	      y.domain([0, _d2.default.max(data, function (d) {
-	        return d.average_value;
+	        return d.average_value > d.value ? d.average_value : d.value;
 	      })]);
 
 	      // X Axis
