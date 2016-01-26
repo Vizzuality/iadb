@@ -13,8 +13,12 @@ import config from './config';
 class App extends React.Component {
 
   onMapChange(mapData) {
+    const layerData = this.refs.layers.state.layer;
     this.refs.average.setState({codgov: mapData.codgov});
-    this.refs.chart.setState({codgov: mapData.codgov});
+    this.refs.map.updateLayer(layerData);
+    config.charts.forEach((c, i) => {
+      this.refs[`chart${i}`].setState({codgov: mapData.codgov});
+    });
   }
 
   onChangeTimeline(timelineData) {
@@ -27,11 +31,29 @@ class App extends React.Component {
   onChangeLayers(layerData) {
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
-    this.refs.chart.setState({layerName: layerData.columnName});
     this.refs.average.setState({layerName: layerData.columnName});
+    config.charts.forEach((c, i) => {
+      this.refs[`chart${i}`].setState({layerName: layerData.columnName});
+    });
   }
 
   render() {
+    const charts = [];
+
+    config.charts.forEach((c, i) => {
+      charts.push(
+        <Chart ref={`chart${i}`}
+          cartodbUser={config.app.cartodbUser}
+          layerName={config.app.layerName}
+          date={config.app.date}
+          codgov={config.app.codgov}
+          title={c.title}
+          query={c.query}
+          key={i}
+        />
+      );
+    });
+
     return (
       <div>
         <Map ref="map"
@@ -40,26 +62,13 @@ class App extends React.Component {
           basemap={config.map.basemap}
           colors={config.map.colors}
           date={config.app.date}
+          codgov={config.app.codgov}
           onChange={this.onMapChange.bind(this)}
         />
         <Layers ref="layers"
           layerName={config.app.layerName}
           layers={config.layers}
           onChange={this.onChangeLayers.bind(this)}
-        />
-        <Average ref="average"
-          cartodbUser={config.app.cartodbUser}
-          date={config.app.date}
-          layerName={config.app.layerName}
-          codgov={config.app.codgov}
-          query={config.average.query}
-        />
-        <Chart ref="chart"
-          cartodbUser={config.app.cartodbUser}
-          layerName={config.app.layerName}
-          date={config.app.date}
-          codgov={config.app.codgov}
-          query={config.chart.query}
         />
         <Timeline ref="timeline"
           cartodbUser={config.app.cartodbUser}
@@ -70,6 +79,16 @@ class App extends React.Component {
           pause={config.timeline.pause}
           onChange={this.onChangeTimeline.bind(this)}
         />
+        <div className="dashboard">
+          <Average ref="average"
+            cartodbUser={config.app.cartodbUser}
+            date={config.app.date}
+            layerName={config.app.layerName}
+            codgov={config.app.codgov}
+            query={config.average.query}
+          />
+          {charts}
+        </div>
       </div>
     );
   }

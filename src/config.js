@@ -89,8 +89,15 @@ export default {
    * Chart
    * @type {Object}
    */
-  chart: {
-    query: 'SELECT a.nam_2 AS name, b.${columnName} AS value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
-  }
+  charts: [{
+    title: 'Lorem ipsum 1',
+    query: 'SELECT a.nam_2 AS name, b.reven AS value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+  }, {
+    title: 'Lorem ipsum 2',
+    query: 'SELECT a.nam_2 AS name, b.taxes AS value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+  }, {
+    title: 'Lorem ipsum 3',
+    query: 'SELECT a.nam_2 AS name, b.taxinc AS value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+  }]
 
 };

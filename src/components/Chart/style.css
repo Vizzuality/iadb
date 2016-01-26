@@ -1,13 +1,15 @@
 .chart {
-  position: absolute;
-  bottom: 10rem;
-  right: 2rem;
-  /*padding: .5rem 1rem;*/
-  height: 200px;
-  width: 400px;
+  position: relative;
+  padding: 1rem 0;
+
+  border-top: 1px solid #ccc;
 
   background: white;
-  z-index: 1;
+
+  .canvas {
+    height: 200px;
+    width: 300px;
+  }
 
   .sparkline {
     fill: none;
