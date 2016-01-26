@@ -6,13 +6,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
 
-let data = [];
-
 class Chart extends React.Component {
 
   constructor(props) {
     super(props);
-    data = [];
+    this.data = [];
     this.state = {
       layerName: props.layerName,
       codgov: props.codgov,
@@ -27,7 +25,7 @@ class Chart extends React.Component {
       .replace(/\$\{codgov\}/g, this.state.codgov);
     const url = `https:\/\/${username}.cartodb.com/api/v2/sql?q=${sql}`;
     $.getJSON(url, (d) => {
-      data = d.rows;
+      this.data = d.rows;
       this.renderSparkLine();
     });
   }
@@ -52,6 +50,7 @@ class Chart extends React.Component {
   }
 
   renderSparkLine() {
+    let data = this.data;
     const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
     const margin = {top: 10, left: 30, right: 20, bottom: 25};
@@ -115,6 +114,19 @@ class Chart extends React.Component {
       .attr('class', 'y axis')
       .call(yAxis);
 
+    // Circle
+    const focus = svg.append('g')
+      .append('circle')
+      .style('display', 'none')
+      .attr('class', 'focus')
+      .attr('r', 4);
+
+    const avgFocus = svg.append('g')
+      .append('circle')
+      .style('display', 'none')
+      .attr('class', 'avg-focus')
+      .attr('r', 4);
+
     // Draw line
     const line = d3.svg.line()
       .interpolate('basis')
@@ -125,6 +137,34 @@ class Chart extends React.Component {
       .datum(data)
       .attr('class', 'sparkline')
       .attr('d', line);
+
+    // Rectangle to capture mouse
+    const bisectDate = d3.bisector(d => d.date).left;
+
+    svg.append('rect')
+      .attr('width', width)
+      .attr('height', height)
+      .style('fill', 'none')
+      .style('pointer-events', 'all')
+      .on('mouseover', () => {
+        avgFocus.style('display', null);
+        focus.style('display', null);
+      })
+      .on('mouseout', () => {
+        avgFocus.style('display', 'none');
+        focus.style('display', 'none');
+      })
+      .on('mousemove', function () {
+        const x0 = x.invert(d3.mouse(this)[0]);
+        const i = bisectDate(data, x0, 1);
+        const d0 = data[i - 1];
+        const d1 = data[i];
+        if (d1 && d1.date) {
+          const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+          focus.attr('transform',`translate(${x(d.date)}, ${y(d.value)})`);
+          avgFocus.attr('transform',`translate(${x(d.date)}, ${y(d.average_value)})`);
+        }
+      });
 
     // Draw average line
     const avgLine = d3.svg.line()
