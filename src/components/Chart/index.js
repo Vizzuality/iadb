@@ -73,7 +73,9 @@ class Chart extends React.Component {
 
     // Domain
     x.domain(d3.extent(data, (d) => d.date));
-    y.domain([0, d3.max(data, (d) => d.average_value)]);
+    y.domain([0, d3.max(data, (d) => {
+      return d.average_value > d.value ? d.average_value : d.value;
+    })]);
 
     // X Axis
     const xAxis = d3.svg.axis()
