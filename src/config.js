@@ -63,26 +63,26 @@ export default {
    * @type {Object}
    */
   layers: [{
-    "name": "Reven",
-    "tableName": "table_3fiscal_primera_serie",
-    "columnName": "reven",
-    "buckets": 7,
-    "query": "SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
-    "interactivity": "codgov,reven"
+    name: 'Reven',
+    tableName: 'table_3fiscal_primera_serie',
+    columnName: 'reven',
+    buckets: 7,
+    query: 'SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
+    interactivity: 'codgov,reven'
   }, {
-    "name": "Taxes",
-    "tableName": "table_3fiscal_primera_serie",
-    "columnName": "taxes",
-    "buckets": 7,
-    "query": "SELECT a.*, b.taxes FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
-    "interactivity": "codgov,taxes"
+    name: 'Taxes',
+    tableName: 'table_3fiscal_primera_serie',
+    columnName: 'taxes',
+    buckets: 7,
+    query: 'SELECT a.*, b.taxes FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
+    interactivity: 'codgov,taxes'
   }, {
-    "name": "Tax. Inc.",
-    "tableName": "table_3fiscal_primera_serie",
-    "columnName": "taxinc",
-    "buckets": 7,
-    "query": "SELECT a.*, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}",
-    "interactivity": "codgov,taxinc"
+    name: 'Tax. Inc.',
+    tableName: 'table_3fiscal_primera_serie',
+    columnName: 'taxinc',
+    buckets: 7,
+    query: 'SELECT a.*, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
+    interactivity: 'codgov,taxinc'
   }],
 
   /**

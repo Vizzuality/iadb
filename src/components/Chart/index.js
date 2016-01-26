@@ -1,6 +1,7 @@
 'use strict';
 
 import './style.css';
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
@@ -41,9 +42,8 @@ class Chart extends React.Component {
   }
 
   render() {
-    console.log('render chart');
     return (
-      <div className='chart'>
+      <div className="chart">
       </div>
     );
   }
@@ -63,7 +63,7 @@ class Chart extends React.Component {
         .attr('width', width)
         .attr('height', height)
       .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
     // Parsing data
     data.forEach((d) => d.date = new Date(d.year, 0, 1));

@@ -1,7 +1,6 @@
 'use strict';
 
 import './app.css';
-import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from './components/Map';
@@ -35,7 +34,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Map ref='map'
+        <Map ref="map"
           cartodbUser={config.app.cartodbUser}
           mapOptions={config.map.mapOptions}
           basemap={config.map.basemap}
@@ -43,26 +42,26 @@ class App extends React.Component {
           date={config.app.date}
           onChange={this.onMapChange.bind(this)}
         />
-        <Layers ref='layers'
+        <Layers ref="layers"
           layerName={config.app.layerName}
           layers={config.layers}
           onChange={this.onChangeLayers.bind(this)}
         />
-        <Average ref='average'
+        <Average ref="average"
           cartodbUser={config.app.cartodbUser}
           date={config.app.date}
           layerName={config.app.layerName}
           codgov={config.app.codgov}
           query={config.average.query}
         />
-        <Chart ref='chart'
+        <Chart ref="chart"
           cartodbUser={config.app.cartodbUser}
           layerName={config.app.layerName}
           date={config.app.date}
           codgov={config.app.codgov}
           query={config.chart.query}
         />
-        <Timeline ref='timeline'
+        <Timeline ref="timeline"
           cartodbUser={config.app.cartodbUser}
           query={config.timeline.query}
           step={config.timeline.step}

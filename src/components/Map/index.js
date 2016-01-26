@@ -1,6 +1,7 @@
 'use strict';
 
 import './style.css';
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -34,12 +35,11 @@ class Map extends React.Component {
 
   addLayer(layerData) {
     const cartodbConfig = {
-      user_name: this.props.cartodbUser,
-      type: 'cartodb',
-      sublayers: []
+      'user_name': this.props.cartodbUser,
+      'type': 'cartodb'
     };
     this.removeLayer();
-    this.getCartoCSS(layerData, (cartocss) => {
+    this.getCartoCSS(layerData, cartocss => {
       cartodbConfig.sublayers = [{
         sql: layerData.query.replace('${year}', this.state.date.getFullYear()),
         cartocss: cartocss,
@@ -47,7 +47,7 @@ class Map extends React.Component {
       }];
       cartodb.createLayer(this.map, cartodbConfig)
         .addTo(this.map)
-        .done((layer) => {
+        .done(layer => {
           this.layer = layer;
           this.layer.setInteraction(true);
           this.layer.on('featureClick', (e, latlng, point, d) => {

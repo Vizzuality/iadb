@@ -16,18 +16,17 @@ class Layers extends React.Component {
   }
 
   render() {
-    console.log('render layers');
     if (!this.props.layers || !(this.props.layers.length)) {
       return null;
     }
     const layers = this.props.layers.map((d, i) => {
       return (
         <li key={i}>
-          <label htmlFor={'layer_' + i}>
+          <label htmlFor={`layer_${i}`}>
             <input
               defaultChecked={this.state.layer.columnName === d.columnName}
-              id={'layer_' + i}
-              name='layer'
+              id={`layer_${i}`}
+              name="layer"
               onChange={this.setSelected.bind(this)}
               defaultValue={d.columnName}
               type={this.props.multiple ? 'checkbox' : 'radio'} /> {d.name}
