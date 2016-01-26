@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "345d751ef7e71142b2fc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8e740c4cb4f85073a653"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -59310,8 +59310,6 @@
 	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var data = [];
-
 	var Chart = function (_React$Component) {
 	  _inherits(Chart, _React$Component);
 
@@ -59320,7 +59318,7 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Chart).call(this, props));
 
-	    data = [];
+	    _this.data = [];
 	    _this.state = {
 	      layerName: props.layerName,
 	      codgov: props.codgov,
@@ -59338,7 +59336,7 @@
 	      var sql = this.props.query.replace(/\$\{columnName\}/g, this.state.layerName).replace(/\$\{codgov\}/g, this.state.codgov);
 	      var url = 'https://' + username + '.cartodb.com/api/v2/sql?q=' + sql;
 	      _jquery2.default.getJSON(url, function (d) {
-	        data = d.rows;
+	        _this2.data = d.rows;
 	        _this2.renderSparkLine();
 	      });
 	    }
@@ -59361,6 +59359,7 @@
 	  }, {
 	    key: 'renderSparkLine',
 	    value: function renderSparkLine() {
+	      var data = this.data;
 	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
 	      var dateFormat = '%Y';
 	      var margin = { top: 10, left: 30, right: 20, bottom: 25 };
@@ -59397,6 +59396,11 @@
 
 	      svg.append('g').attr('class', 'y axis').call(yAxis);
 
+	      // Circle
+	      var focus = svg.append('g').append('circle').style('display', 'none').attr('class', 'focus').attr('r', 4);
+
+	      var avgFocus = svg.append('g').append('circle').style('display', 'none').attr('class', 'avg-focus').attr('r', 4);
+
 	      // Draw line
 	      var line = _d2.default.svg.line().interpolate('basis').x(function (d) {
 	        return x(d.date);
@@ -59405,6 +59409,29 @@
 	      });
 
 	      svg.append('path').datum(data).attr('class', 'sparkline').attr('d', line);
+
+	      // Rectangle to capture mouse
+	      var bisectDate = _d2.default.bisector(function (d) {
+	        return d.date;
+	      }).left;
+
+	      svg.append('rect').attr('width', width).attr('height', height).style('fill', 'none').style('pointer-events', 'all').on('mouseover', function () {
+	        avgFocus.style('display', null);
+	        focus.style('display', null);
+	      }).on('mouseout', function () {
+	        avgFocus.style('display', 'none');
+	        focus.style('display', 'none');
+	      }).on('mousemove', function () {
+	        var x0 = x.invert(_d2.default.mouse(this)[0]);
+	        var i = bisectDate(data, x0, 1);
+	        var d0 = data[i - 1];
+	        var d1 = data[i];
+	        if (d1 && d1.date) {
+	          var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+	          focus.attr('transform', 'translate(' + x(d.date) + ', ' + y(d.value) + ')');
+	          avgFocus.attr('transform', 'translate(' + x(d.date) + ', ' + y(d.average_value) + ')');
+	        }
+	      });
 
 	      // Draw average line
 	      var avgLine = _d2.default.svg.line().interpolate('basis').x(function (d) {
@@ -59473,7 +59500,7 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 1rem 0;\n\n  border-top: 1px solid #ccc;\n\n  background: white;\n}\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n.chart .axis {\n  font-size: 11px;\n}\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n.chart .tick-label {\n  font-size: 11px;\n  text-anchor: middle;\n}\n\n\n/*.chart {\n  width: 100%;\n  height: rem(270px);\n  position: relative;\n\n  .axis {\n    &.y {\n      .domain {\n        stroke-width: 0;\n        stroke: transparent;\n        shape-rendering: crispEdges;\n      }\n    }\n    &.x {\n      .domain {\n        stroke-width: 0;\n        stroke: transparent;\n        shape-rendering: crispEdges;\n      }\n      .tick {\n        line {\n          shape-rendering: crispEdges;\n          stroke-width: 1;\n          stroke: rgba($white, 0.2);\n        }\n        text {\n          fill: $white;\n          font-family: $font-secondary;\n          font-size: rem($font-size-small);\n          letter-spacing: rem(1px);\n          shape-rendering: crispEdges;\n        }\n      }\n    }\n  }\n  &.line {\n    .handle {\n      shape-rendering: crispEdges;\n      fill: transparent;\n      stroke: $white;\n      stroke-width: 2;\n    }\n    .line-top {\n      stroke: #B8B8B8;\n      stroke-width: 2;\n      stroke-linecap: round;\n    }\n    .curstom-domain {\n      stroke: #B8B8B8;\n      stroke-width: 1;\n      shape-rendering: crispEdges;\n    }\n    .area {\n      shape-rendering: crispEdges;\n      fill-opacity: 0.3;\n      stroke-width: 0;\n    }\n    .line {\n      shape-rendering: optimizeSpeed;\n      fill: transparent;\n      stroke-width: 2;\n    }\n    text {\n      stroke: $white;\n    }\n  }\n}*/\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 1rem 0;\n\n  border-top: 1px solid #ccc;\n\n  background: white;\n}\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n.chart .axis {\n  font-size: 11px;\n}\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n.chart .tick-label {\n  font-size: 11px;\n  text-anchor: middle;\n}\n.chart .focus,\n  .chart .avg-focus {\n  fill: none;\n  stroke: #000;\n}\n.chart .avg-focus {\n  stroke: #f00;\n}\n", ""]);
 
 	// exports
 
