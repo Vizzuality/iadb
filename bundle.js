@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4de1ce3a655d3561891d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d2d569413b596b40d59d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -761,8 +761,14 @@
 	  _createClass(App, [{
 	    key: 'onMapChange',
 	    value: function onMapChange(mapData) {
+	      var _this2 = this;
+
+	      var layerData = this.refs.layers.state.layer;
 	      this.refs.average.setState({ codgov: mapData.codgov });
-	      this.refs.chart.setState({ codgov: mapData.codgov });
+	      this.refs.map.updateLayer(layerData);
+	      _config2.default.charts.forEach(function (c, i) {
+	        _this2.refs['chart' + i].setState({ codgov: mapData.codgov });
+	      });
 	    }
 	  }, {
 	    key: 'onChangeTimeline',
@@ -775,37 +781,44 @@
 	  }, {
 	    key: 'onChangeLayers',
 	    value: function onChangeLayers(layerData) {
+	      var _this3 = this;
+
 	      this.refs.map.setState({ date: this.refs.timeline.getCurrentDate() });
 	      this.refs.map.addLayer(layerData);
-	      this.refs.chart.setState({ layerName: layerData.columnName });
 	      this.refs.average.setState({ layerName: layerData.columnName });
+	      _config2.default.charts.forEach(function (c, i) {
+	        _this3.refs['chart' + i].setState({ layerName: layerData.columnName });
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var charts = [];
+
+	      _config2.default.charts.forEach(function (c, i) {
+	        charts.push(_react2.default.createElement(_Chart2.default, { ref: 'chart' + i,
+	          cartodbUser: _config2.default.app.cartodbUser,
+	          layerName: _config2.default.app.layerName,
+	          date: _config2.default.app.date,
+	          codgov: _config2.default.app.codgov,
+	          title: c.title,
+	          query: c.query,
+	          key: i
+	        }));
+	      });
+
 	      return _react2.default.createElement('div', null, _react2.default.createElement(_Map2.default, { ref: 'map',
 	        cartodbUser: _config2.default.app.cartodbUser,
 	        mapOptions: _config2.default.map.mapOptions,
 	        basemap: _config2.default.map.basemap,
 	        colors: _config2.default.map.colors,
 	        date: _config2.default.app.date,
+	        codgov: _config2.default.app.codgov,
 	        onChange: this.onMapChange.bind(this)
 	      }), _react2.default.createElement(_Layers2.default, { ref: 'layers',
 	        layerName: _config2.default.app.layerName,
 	        layers: _config2.default.layers,
 	        onChange: this.onChangeLayers.bind(this)
-	      }), _react2.default.createElement(_Average2.default, { ref: 'average',
-	        cartodbUser: _config2.default.app.cartodbUser,
-	        date: _config2.default.app.date,
-	        layerName: _config2.default.app.layerName,
-	        codgov: _config2.default.app.codgov,
-	        query: _config2.default.average.query
-	      }), _react2.default.createElement(_Chart2.default, { ref: 'chart',
-	        cartodbUser: _config2.default.app.cartodbUser,
-	        layerName: _config2.default.app.layerName,
-	        date: _config2.default.app.date,
-	        codgov: _config2.default.app.codgov,
-	        query: _config2.default.chart.query
 	      }), _react2.default.createElement(_Timeline2.default, { ref: 'timeline',
 	        cartodbUser: _config2.default.app.cartodbUser,
 	        query: _config2.default.timeline.query,
@@ -814,7 +827,13 @@
 	        play: _config2.default.timeline.play,
 	        pause: _config2.default.timeline.pause,
 	        onChange: this.onChangeTimeline.bind(this)
-	      }));
+	      }), _react2.default.createElement('div', { className: 'dashboard' }, _react2.default.createElement(_Average2.default, { ref: 'average',
+	        cartodbUser: _config2.default.app.cartodbUser,
+	        date: _config2.default.app.date,
+	        layerName: _config2.default.app.layerName,
+	        codgov: _config2.default.app.codgov,
+	        query: _config2.default.average.query
+	      }), charts));
 	    }
 	  }]);
 
@@ -20877,7 +20896,7 @@
 
 
 	// module
-	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\nbody {\n  font-family: Arial, sans-serif;\n  line-height: 1.4;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n", ""]);
+	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\nbody {\n  font-family: Arial, sans-serif;\n  line-height: 1.4;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\nbody {\n  overflow: hidden;\n}\n\nh1 {\n  font-size: 1.8rem;\n}\n\nh2 {\n  font-size: 1.2rem;\n}\n\n#app {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.dashboard {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 300px;\n  padding: 20px;\n\n  background: white;\n\n  overflow: auto;\n  -webkit-overflow-scrolling: touch;\n  z-index: 1;\n}\n", ""]);
 
 	// exports
 
@@ -21270,7 +21289,8 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Map).call(this, props));
 
 	    _this.state = {
-	      date: _this.props.date
+	      codgov: props.codgov,
+	      date: props.date
 	    };
 	    return _this;
 	  }
@@ -21316,10 +21336,21 @@
 	          _this2.layer = layer;
 	          _this2.layer.setInteraction(true);
 	          _this2.layer.on('featureClick', function (e, latlng, point, d) {
+	            _this2.setState({ codgov: d.codgov });
 	            _this2.props.onChange(d);
 	          });
 	        });
 	      });
+	    }
+	  }, {
+	    key: 'updateLayer',
+	    value: function updateLayer(layerData) {
+	      var layer = this.layer;
+	      if (layer) {
+	        this.getCartoCSS(layerData, function (cartocss) {
+	          layer.getSubLayer(0).setCartoCSS(cartocss);
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'removeLayer',
@@ -21331,12 +21362,14 @@
 	  }, {
 	    key: 'getCartoCSS',
 	    value: function getCartoCSS(layerData, cb) {
+	      var _this3 = this;
+
 	      var colors = this.props.colors;
 	      var query = 'SELECT CDB_JenksBins(array_agg(' + layerData.columnName + '::numeric), 7)\n      FROM ' + layerData.tableName;
 	      var url = 'https://' + this.props.cartodbUser + '.cartodb.com/api/v2/sql?q=' + query;
 	      _jquery2.default.getJSON(url, function (d) {
 	        var data = d.rows[0].cdb_jenksbins;
-	        var cartocss = '#' + layerData.tableName + '{\n        polygon-fill: ' + colors[0] + ';\n        polygon-opacity: 0.8;\n        line-color: #FFF;\n        line-width: 0.5;\n        line-opacity: 1;\n      }\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[6] + '] {polygon-fill: ' + colors[6] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[5] + '] {polygon-fill: ' + colors[5] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[4] + '] {polygon-fill: ' + colors[4] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[3] + '] {polygon-fill: ' + colors[3] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[2] + '] {polygon-fill: ' + colors[2] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[1] + '] {polygon-fill: ' + colors[1] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[0] + '] {polygon-fill: ' + colors[0] + ';}';
+	        var cartocss = '#' + layerData.tableName + '{\n        polygon-fill: ' + colors[0] + ';\n        polygon-opacity: 0.8;\n        line-color: #FFF;\n        line-width: 0.5;\n        line-opacity: 1;\n      }\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[6] + '] {polygon-fill: ' + colors[6] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[5] + '] {polygon-fill: ' + colors[5] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[4] + '] {polygon-fill: ' + colors[4] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[3] + '] {polygon-fill: ' + colors[3] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[2] + '] {polygon-fill: ' + colors[2] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[1] + '] {polygon-fill: ' + colors[1] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[0] + '] {polygon-fill: ' + colors[0] + ';}\n      #' + layerData.tableName + ' [codgov = \'' + _this3.state.codgov + '\'] {\n        line-color: #F00;\n        line-width: 3;\n      }';
 	        cb(cartocss);
 	      });
 	    }
@@ -46236,7 +46269,7 @@
 
 
 	// module
-	exports.push([module.id, ".timeline {\n  position: absolute;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  bottom: 3rem;\n  left: 2rem;\n  right: 2rem;\n\n  z-index: 1;\n}\n.timeline ul {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.timeline ul::before {\n  position: absolute;\n  display: block;\n  content: \"\";\n  width: 100%;\n  top: 6px;\n  border-top: 2px solid #333;\n}\n.timeline li {\n  position: relative;\n  padding-top: 20px;\n  cursor: pointer;\n}\n.timeline li::after {\n  position: absolute;\n  display: block;\n  content: \"\";\n  width: 10px;\n  height: 10px;\n  left: 50%;\n  top: 0;\n  border: 2px solid #333;\n  border-radius: 100%;\n  background-color: #fff;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n.timeline li._active::after {\n  background-color: #64d1b8;\n}\n.timeline .control {\n  position: relative;\n  width: 30px;\n  height: 30px;\n  background-color: #333;\n}\n.timeline .control + ul {\n  margin-left: 20px;\n}\n.timeline .control::after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 50%;\n  left: 50%;\n  border-top: 8px solid transparent;\n  border-left: 12px solid white;\n  border-bottom: 8px solid transparent;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n}\n.timeline .control._playing::after {\n  width: 4px;\n  height: 16px;\n  border-top: 0;\n  border-bottom: 0;\n  border-right: 4px solid white;\n  border-left: 4px solid white;\n}\n", ""]);
+	exports.push([module.id, ".timeline {\n  position: absolute;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  bottom: 3rem;\n  left: 2rem;\n  right: 370px;\n\n  z-index: 1;\n}\n.timeline ul {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.timeline ul::before {\n  position: absolute;\n  display: block;\n  content: \"\";\n  width: 100%;\n  top: 6px;\n  border-top: 2px solid #333;\n}\n.timeline li {\n  position: relative;\n  padding-top: 20px;\n  cursor: pointer;\n}\n.timeline li::after {\n  position: absolute;\n  display: block;\n  content: \"\";\n  width: 10px;\n  height: 10px;\n  left: 50%;\n  top: 0;\n  border: 2px solid #333;\n  border-radius: 100%;\n  background-color: #fff;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n.timeline li._active::after {\n  background-color: #64d1b8;\n}\n.timeline .control {\n  position: relative;\n  width: 30px;\n  height: 30px;\n  background-color: #333;\n}\n.timeline .control + ul {\n  margin-left: 20px;\n}\n.timeline .control::after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 50%;\n  left: 50%;\n  border-top: 8px solid transparent;\n  border-left: 12px solid white;\n  border-bottom: 8px solid transparent;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n}\n.timeline .control._playing::after {\n  width: 4px;\n  height: 16px;\n  border-top: 0;\n  border-bottom: 0;\n  border-right: 4px solid white;\n  border-left: 4px solid white;\n}\n", ""]);
 
 	// exports
 
@@ -59208,7 +59241,7 @@
 
 
 	// module
-	exports.push([module.id, ".average {\n  position: absolute;\n  top: 2rem;\n  right: 2rem;\n  padding: .5rem 1rem;\n\n  background: white;\n  z-index: 1;\n}\n.average h2 {\n  margin: 0;\n}\n.average .value {\n  font-size: 2rem;\n}\n", ""]);
+	exports.push([module.id, ".average {\n  position: relative;\n  padding: 1rem 0;\n  background: white;\n}\n.average h2 {\n  margin: 0;\n}\n.average .value {\n  font-size: 2rem;\n}\n", ""]);
 
 	// exports
 
@@ -59323,14 +59356,14 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement('div', { className: 'chart' });
+	      return _react2.default.createElement('div', { className: 'chart' }, _react2.default.createElement('h2', null, this.props.title), _react2.default.createElement('div', { className: 'canvas' }));
 	    }
 	  }, {
 	    key: 'renderSparkLine',
 	    value: function renderSparkLine() {
-	      var el = _reactDom2.default.findDOMNode(this);
+	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
 	      var dateFormat = '%Y';
-	      var margin = { top: 10, left: 20, right: 20, bottom: 25 };
+	      var margin = { top: 10, left: 30, right: 20, bottom: 25 };
 	      var width = el.clientWidth;
 	      var height = el.clientHeight;
 	      var x = _d2.default.time.scale().range([0, width - margin.left - margin.right]).nice();
@@ -59349,7 +59382,7 @@
 	        return d.date;
 	      }));
 	      y.domain([0, _d2.default.max(data, function (d) {
-	        return d.value;
+	        return d.average_value;
 	      })]);
 
 	      // X Axis
@@ -59359,6 +59392,11 @@
 
 	      svg.append('g').attr('transform', 'translate(0, ' + (height - margin.bottom - margin.top) + ')').append('line').attr('class', 'domain-line').attr('x1', 0).attr('x2', width - margin.left - margin.right).attr('y1', 0).attr('y2', 0);
 
+	      // Y Axis
+	      var yAxis = _d2.default.svg.axis().scale(y).orient('left').outerTickSize(1).ticks(5);
+
+	      svg.append('g').attr('class', 'y axis').call(yAxis);
+
 	      // Draw line
 	      var line = _d2.default.svg.line().interpolate('basis').x(function (d) {
 	        return x(d.date);
@@ -59367,11 +59405,20 @@
 	      });
 
 	      svg.append('path').datum(data).attr('class', 'sparkline').attr('d', line);
+
+	      // Draw average line
+	      var avgLine = _d2.default.svg.line().interpolate('basis').x(function (d) {
+	        return x(d.date);
+	      }).y(function (d) {
+	        return y(d.average_value);
+	      });
+
+	      svg.append('path').datum(data).attr('class', 'avg-sparkline').attr('d', avgLine);
 	    }
 	  }, {
 	    key: 'clearView',
 	    value: function clearView() {
-	      var el = _reactDom2.default.findDOMNode(this);
+	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
 	      el.innerHTML = null;
 	    }
 	  }]);
@@ -59426,7 +59473,7 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: absolute;\n  bottom: 10rem;\n  right: 2rem;\n  /*padding: .5rem 1rem;*/\n  height: 200px;\n  width: 400px;\n\n  background: white;\n  z-index: 1;\n}\n.chart .sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n.chart .tick-label {\n  font-size: 11px;\n  text-anchor: middle;\n}\n\n\n/*.chart {\n  width: 100%;\n  height: rem(270px);\n  position: relative;\n\n  .axis {\n    &.y {\n      .domain {\n        stroke-width: 0;\n        stroke: transparent;\n        shape-rendering: crispEdges;\n      }\n    }\n    &.x {\n      .domain {\n        stroke-width: 0;\n        stroke: transparent;\n        shape-rendering: crispEdges;\n      }\n      .tick {\n        line {\n          shape-rendering: crispEdges;\n          stroke-width: 1;\n          stroke: rgba($white, 0.2);\n        }\n        text {\n          fill: $white;\n          font-family: $font-secondary;\n          font-size: rem($font-size-small);\n          letter-spacing: rem(1px);\n          shape-rendering: crispEdges;\n        }\n      }\n    }\n  }\n  &.line {\n    .handle {\n      shape-rendering: crispEdges;\n      fill: transparent;\n      stroke: $white;\n      stroke-width: 2;\n    }\n    .line-top {\n      stroke: #B8B8B8;\n      stroke-width: 2;\n      stroke-linecap: round;\n    }\n    .curstom-domain {\n      stroke: #B8B8B8;\n      stroke-width: 1;\n      shape-rendering: crispEdges;\n    }\n    .area {\n      shape-rendering: crispEdges;\n      fill-opacity: 0.3;\n      stroke-width: 0;\n    }\n    .line {\n      shape-rendering: optimizeSpeed;\n      fill: transparent;\n      stroke-width: 2;\n    }\n    text {\n      stroke: $white;\n    }\n  }\n}*/\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 1rem 0;\n\n  border-top: 1px solid #ccc;\n\n  background: white;\n}\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n.chart .axis {\n  font-size: 11px;\n}\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n.chart .tick-label {\n  font-size: 11px;\n  text-anchor: middle;\n}\n\n\n/*.chart {\n  width: 100%;\n  height: rem(270px);\n  position: relative;\n\n  .axis {\n    &.y {\n      .domain {\n        stroke-width: 0;\n        stroke: transparent;\n        shape-rendering: crispEdges;\n      }\n    }\n    &.x {\n      .domain {\n        stroke-width: 0;\n        stroke: transparent;\n        shape-rendering: crispEdges;\n      }\n      .tick {\n        line {\n          shape-rendering: crispEdges;\n          stroke-width: 1;\n          stroke: rgba($white, 0.2);\n        }\n        text {\n          fill: $white;\n          font-family: $font-secondary;\n          font-size: rem($font-size-small);\n          letter-spacing: rem(1px);\n          shape-rendering: crispEdges;\n        }\n      }\n    }\n  }\n  &.line {\n    .handle {\n      shape-rendering: crispEdges;\n      fill: transparent;\n      stroke: $white;\n      stroke-width: 2;\n    }\n    .line-top {\n      stroke: #B8B8B8;\n      stroke-width: 2;\n      stroke-linecap: round;\n    }\n    .curstom-domain {\n      stroke: #B8B8B8;\n      stroke-width: 1;\n      shape-rendering: crispEdges;\n    }\n    .area {\n      shape-rendering: crispEdges;\n      fill-opacity: 0.3;\n      stroke-width: 0;\n    }\n    .line {\n      shape-rendering: optimizeSpeed;\n      fill: transparent;\n      stroke-width: 2;\n    }\n    text {\n      stroke: $white;\n    }\n  }\n}*/\n", ""]);
 
 	// exports
 
@@ -69089,9 +69136,16 @@
 	   * Chart
 	   * @type {Object}
 	   */
-	  chart: {
-	    query: 'SELECT a.nam_2 AS name, b.${columnName} AS value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
-	  }
+	  charts: [{
+	    title: 'Lorem ipsum 1',
+	    query: 'SELECT a.nam_2 AS name, b.reven AS value, (SELECT AVG(reven) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+	  }, {
+	    title: 'Lorem ipsum 2',
+	    query: 'SELECT a.nam_2 AS name, b.taxes AS value, (SELECT AVG(taxes) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+	  }, {
+	    title: 'Lorem ipsum 3',
+	    query: 'SELECT a.nam_2 AS name, b.taxinc AS value, (SELECT AVG(taxinc) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+	  }]
 
 	};
 
