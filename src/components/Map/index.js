@@ -10,7 +10,8 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: this.props.date
+      codgov: props.codgov,
+      date: props.date
     };
   }
 
@@ -51,10 +52,20 @@ class Map extends React.Component {
           this.layer = layer;
           this.layer.setInteraction(true);
           this.layer.on('featureClick', (e, latlng, point, d) => {
+            this.setState({codgov: d.codgov});
             this.props.onChange(d);
           });
         });
     });
+  }
+
+  updateLayer(layerData) {
+    const layer = this.layer;
+    if (layer) {
+      this.getCartoCSS(layerData, cartocss => {
+        layer.getSubLayer(0).setCartoCSS(cartocss);
+      });
+    }
   }
 
   removeLayer() {
@@ -83,7 +94,11 @@ class Map extends React.Component {
       #${layerData.tableName} [${layerData.columnName} <= ${data[3]}] {polygon-fill: ${colors[3]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[2]}] {polygon-fill: ${colors[2]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
-      #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}`;
+      #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}
+      #${layerData.tableName} [codgov = '${this.state.codgov}'] {
+        line-color: #F00;
+        line-width: 3;
+      }`;
       cb(cartocss);
     });
   }

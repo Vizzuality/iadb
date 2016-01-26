@@ -44,14 +44,17 @@ class Chart extends React.Component {
   render() {
     return (
       <div className="chart">
+        <h2>{this.props.title}</h2>
+        <div className="canvas">
+        </div>
       </div>
     );
   }
 
   renderSparkLine() {
-    const el = ReactDOM.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
-    const margin = {top: 10, left: 20, right: 20, bottom: 25};
+    const margin = {top: 10, left: 30, right: 20, bottom: 25};
     const width = el.clientWidth;
     const height = el.clientHeight;
     const x = d3.time.scale().range([0, width - margin.left - margin.right]).nice();
@@ -70,7 +73,7 @@ class Chart extends React.Component {
 
     // Domain
     x.domain(d3.extent(data, (d) => d.date));
-    y.domain([0, d3.max(data, (d) => d.value)]);
+    y.domain([0, d3.max(data, (d) => d.average_value)]);
 
     // X Axis
     const xAxis = d3.svg.axis()
@@ -99,6 +102,17 @@ class Chart extends React.Component {
         .attr('y1', 0)
         .attr('y2', 0);
 
+    // Y Axis
+    const yAxis = d3.svg.axis()
+      .scale(y)
+      .orient('left')
+      .outerTickSize(1)
+      .ticks(5);
+
+    svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis);
+
     // Draw line
     const line = d3.svg.line()
       .interpolate('basis')
@@ -109,10 +123,21 @@ class Chart extends React.Component {
       .datum(data)
       .attr('class', 'sparkline')
       .attr('d', line);
+
+    // Draw average line
+    const avgLine = d3.svg.line()
+      .interpolate('basis')
+      .x((d) => x(d.date))
+      .y((d) => y(d.average_value));
+
+    svg.append('path')
+      .datum(data)
+      .attr('class', 'avg-sparkline')
+      .attr('d', avgLine);
   }
 
   clearView() {
-    const el = ReactDOM.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
     el.innerHTML = null;
   }
 

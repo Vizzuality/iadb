@@ -1,11 +1,7 @@
 .average {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  padding: .5rem 1rem;
-
+  position: relative;
+  padding: 1rem 0;
   background: white;
-  z-index: 1;
 
   h2 {
     margin: 0;
