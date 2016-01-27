@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8e740c4cb4f85073a653"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d5076655d5a16ba3fac3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -59186,7 +59186,7 @@
 	      }
 	      var val = this.state.value;
 	      var total = val || val === 0 ? val : '-';
-	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), _react2.default.createElement('div', { className: 'value' }, total));
+	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), _react2.default.createElement('div', { className: 'value' }, total), _react2.default.createElement('div', null, this.state.layerName), _react2.default.createElement('div', null, this.state.date.getFullYear()));
 	    }
 	  }]);
 
@@ -59396,13 +59396,19 @@
 
 	      svg.append('g').attr('class', 'y axis').call(yAxis);
 
-	      // Circle
-	      var focus = svg.append('g').append('circle').style('display', 'none').attr('class', 'focus').attr('r', 4);
+	      // Tooltip
+	      var tooltip = _d2.default.select('body').append('div').attr('class', 'tooltip').style('opacity', 0);
 
-	      var avgFocus = svg.append('g').append('circle').style('display', 'none').attr('class', 'avg-focus').attr('r', 4);
+	      function showTooltip(d) {
+	        tooltip.html('' + d.value).transition().duration(200).style('opacity', 1).style('top', _d2.default.event.pageY - 10 + 'px').style('left', _d2.default.event.pageX + 'px');
+	      }
+
+	      function hideTooltip() {
+	        tooltip.style('opacity', 0);
+	      }
 
 	      // Draw line
-	      var line = _d2.default.svg.line().interpolate('basis').x(function (d) {
+	      var line = _d2.default.svg.line().interpolate('linear').x(function (d) {
 	        return x(d.date);
 	      }).y(function (d) {
 	        return y(d.value);
@@ -59410,37 +59416,28 @@
 
 	      svg.append('path').datum(data).attr('class', 'sparkline').attr('d', line);
 
-	      // Rectangle to capture mouse
-	      var bisectDate = _d2.default.bisector(function (d) {
-	        return d.date;
-	      }).left;
-
-	      svg.append('rect').attr('width', width).attr('height', height).style('fill', 'none').style('pointer-events', 'all').on('mouseover', function () {
-	        avgFocus.style('display', null);
-	        focus.style('display', null);
-	      }).on('mouseout', function () {
-	        avgFocus.style('display', 'none');
-	        focus.style('display', 'none');
-	      }).on('mousemove', function () {
-	        var x0 = x.invert(_d2.default.mouse(this)[0]);
-	        var i = bisectDate(data, x0, 1);
-	        var d0 = data[i - 1];
-	        var d1 = data[i];
-	        if (d1 && d1.date) {
-	          var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-	          focus.attr('transform', 'translate(' + x(d.date) + ', ' + y(d.value) + ')');
-	          avgFocus.attr('transform', 'translate(' + x(d.date) + ', ' + y(d.average_value) + ')');
-	        }
-	      });
+	      svg.selectAll('.sparkline').data(data).enter().append('circle').attr('class', 'focus').attr('cx', function (d) {
+	        return x(d.date);
+	      }).attr('cy', function (d) {
+	        return y(d.value);
+	      }).attr('r', 2).on('mouseover', showTooltip).on('mouseout', hideTooltip);
 
 	      // Draw average line
-	      var avgLine = _d2.default.svg.line().interpolate('basis').x(function (d) {
-	        return x(d.date);
-	      }).y(function (d) {
-	        return y(d.average_value);
-	      });
+	      if (data[0].average_value) {
+	        var avgLine = _d2.default.svg.line().interpolate('linear').x(function (d) {
+	          return x(d.date);
+	        }).y(function (d) {
+	          return y(d.average_value);
+	        });
 
-	      svg.append('path').datum(data).attr('class', 'avg-sparkline').attr('d', avgLine);
+	        svg.append('path').datum(data).attr('class', 'avg-sparkline').attr('d', avgLine);
+
+	        svg.selectAll('.avg-sparkline').data(data).enter().append('circle').attr('class', 'avg-focus').attr('cx', function (d) {
+	          return x(d.date);
+	        }).attr('cy', function (d) {
+	          return y(d.average_value);
+	        }).attr('r', 2).on('mouseover', showTooltip).on('mouseout', hideTooltip);
+	      }
 	    }
 	  }, {
 	    key: 'clearView',
@@ -59500,7 +59497,7 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 1rem 0;\n\n  border-top: 1px solid #ccc;\n\n  background: white;\n}\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n.chart .axis {\n  font-size: 11px;\n}\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n.chart .tick-label {\n  font-size: 11px;\n  text-anchor: middle;\n}\n.chart .focus,\n  .chart .avg-focus {\n  fill: none;\n  stroke: #000;\n}\n.chart .avg-focus {\n  stroke: #f00;\n}\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 1rem 0;\n\n  border-top: 1px solid #ccc;\n\n  background: white;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n\n.chart .axis {\n  font-size: 11px;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .tick-label {\n  font-size: 11px;\n  text-anchor: middle;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #000;\n  stroke: #000;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: #f00;\n}\n\n.tooltip {\n  position: absolute;\n\n  font-size: 11px;\n\n  -webkit-transform: translate(-50%, -50%);\n\n          transform: translate(-50%, -50%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
 
 	// exports
 
@@ -69090,6 +69087,7 @@
 	  /**
 	   * Average info panel
 	   * @type {Object}
+	   * Required: name, average_value
 	   */
 	  average: {
 	    query: 'SELECT a.nam_2 AS name, AVG(b.${columnName}) AS average_value FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year} GROUP BY a.nam_2'
@@ -69114,6 +69112,7 @@
 	  /**
 	   * Timeline configuration
 	   * @type {Object}
+	   * Required: min, max
 	   */
 	  timeline: {
 	    // You should specify query or startDate and endDate
@@ -69129,7 +69128,7 @@
 	    // Enable play button
 	    play: true,
 	    // Miliseconds
-	    pause: 3000
+	    pause: 5000
 	  },
 
 	  /**
@@ -69162,6 +69161,8 @@
 	  /**
 	   * Chart
 	   * @type {Object}
+	   * Required: name, value, year
+	   * Optional: average_value
 	   */
 	  charts: [{
 	    title: 'Lorem ipsum 1',
