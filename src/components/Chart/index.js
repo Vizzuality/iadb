@@ -53,7 +53,7 @@ class Chart extends React.Component {
     let data = this.data;
     const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
-    const margin = {top: 10, left: 30, right: 20, bottom: 25};
+    const margin = {top: 15, left: 30, right: 20, bottom: 35};
     const width = el.clientWidth;
     const height = el.clientHeight;
     const x = d3.time.scale().range([0, width - margin.left - margin.right]).nice();
@@ -80,28 +80,20 @@ class Chart extends React.Component {
     const xAxis = d3.svg.axis()
       .scale(x)
       .orient('bottom')
-      .innerTickSize(-height)
       .ticks(d3.time.years, 2)
-      .outerTickSize(0)
+      .outerTickSize(1)
       .tickFormat(d3.time.format(dateFormat));
 
     svg.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', `translate(0, ${height - margin.bottom - margin.top})`)
-        .call(xAxis)
-      .selectAll('text')
-        .attr('class', 'tick-label')
-        .attr('y', margin.bottom / 4)
-        .attr('x', 0);
+      .attr('class', 'x axis')
+      .attr('transform', `translate(0, ${height - margin.bottom - margin.top})`)
+      .call(xAxis);
 
-    svg.append('g')
-        .attr('transform', `translate(0, ${height - margin.bottom - margin.top})`)
-      .append('line')
-        .attr('class', 'domain-line')
-        .attr('x1', 0)
-        .attr('x2', width - margin.left - margin.right)
-        .attr('y1', 0)
-        .attr('y2', 0);
+    svg.append('text')
+      .attr('class', 'x label')
+      .attr('x', width / 2)
+      .attr('y', height - 17)
+      .text('years');
 
     // Y Axis
     const yAxis = d3.svg.axis()
@@ -113,6 +105,14 @@ class Chart extends React.Component {
     svg.append('g')
       .attr('class', 'y axis')
       .call(yAxis);
+
+    if (this.props.unit) {
+      svg.append('text')
+      .attr('class', 'y label')
+      .attr('x', -4)
+      .attr('y', 0)
+      .text(this.props.unit);
+    }
 
     // Tooltip
     const tooltip = d3.select('body').append('div')
@@ -143,12 +143,12 @@ class Chart extends React.Component {
       .attr('class', 'sparkline')
       .attr('d', line);
 
-    svg.selectAll('.sparkline')
+    svg.selectAll('dot')
         .data(data).enter()
       .append('circle')
         .attr('class', 'focus')
-        .attr('cx', function(d) { return x(d.date); })
-        .attr('cy', function(d) { return y(d.value); })
+        .attr('cx', (d) => x(d.date))
+        .attr('cy', (d) => y(d.value))
         .attr('r', 2)
         .on('mouseover', showTooltip)
         .on('mouseout', hideTooltip);
@@ -165,12 +165,12 @@ class Chart extends React.Component {
           .attr('class', 'avg-sparkline')
           .attr('d', avgLine);
 
-      svg.selectAll('.avg-sparkline')
+      svg.selectAll('avg-dot')
           .data(data).enter()
         .append('circle')
           .attr('class', 'avg-focus')
-          .attr('cx', function(d) { return x(d.date); })
-          .attr('cy', function(d) { return y(d.average_value); })
+          .attr('cx', (d) => x(d.date))
+          .attr('cy', (d) => y(d.average_value))
           .attr('r', 2)
           .on('mouseover', showTooltip)
           .on('mouseout', hideTooltip);

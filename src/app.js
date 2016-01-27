@@ -46,6 +46,7 @@ class App extends React.Component {
           cartodbUser={config.app.cartodbUser}
           layerName={config.app.layerName}
           date={config.app.date}
+          unit={c.unit}
           codgov={config.app.codgov}
           title={c.title}
           query={c.query}

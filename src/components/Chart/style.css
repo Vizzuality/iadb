@@ -15,6 +15,13 @@
     font-size: 11px;
   }
 
+  .axis .tick line {
+    fill: none;
+    stroke-width: 1;
+    stroke: black;
+    shape-rendering: crispEdges;
+  }
+
   .sparkline,
   .avg-sparkline {
     fill: none;
@@ -34,9 +41,9 @@
     shape-rendering: crispEdges;
   }
 
-  .tick-label {
+  .label {
     font-size: 11px;
-    text-anchor: middle;
+    text-anchor: end;
   }
 
   .focus,
@@ -57,6 +64,8 @@
   position: absolute;
 
   font-size: 11px;
+
+  background: rgba(255, 255, 255, .8);
 
   transform: translate(-50%, -50%);
   pointer-events: none;
