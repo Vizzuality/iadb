@@ -16,6 +16,7 @@ export default {
   /**
    * Average info panel
    * @type {Object}
+   * Required: name, average_value
    */
   average: {
     query: 'SELECT a.nam_2 AS name, AVG(b.${columnName}) AS average_value FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year} GROUP BY a.nam_2'
@@ -40,6 +41,7 @@ export default {
   /**
    * Timeline configuration
    * @type {Object}
+   * Required: min, max
    */
   timeline: {
     // You should specify query or startDate and endDate
@@ -55,7 +57,7 @@ export default {
     // Enable play button
     play: true,
     // Miliseconds
-    pause: 3000
+    pause: 5000
   },
 
   /**
@@ -88,6 +90,8 @@ export default {
   /**
    * Chart
    * @type {Object}
+   * Required: name, value, year
+   * Optional: average_value
    */
   charts: [{
     title: 'Lorem ipsum 1',
