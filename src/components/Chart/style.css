@@ -41,11 +41,24 @@
 
   .focus,
   .avg-focus {
-    fill: none;
+    fill: #000;
     stroke: #000;
+    stroke-width: 0;
+    shape-rendering: optimizeSpeed;
+    cursor: pointer;
   }
 
   .avg-focus {
-    stroke: #f00;
+    fill: #f00;
   }
+}
+
+.tooltip {
+  position: absolute;
+
+  font-size: 11px;
+
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
 }

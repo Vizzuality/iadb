@@ -56,6 +56,8 @@ class Average extends React.Component {
       <div className="average">
         <h2>{this.state.name}</h2>
         <div className="value">{total}</div>
+        <div>{this.state.layerName}</div>
+        <div>{this.state.date.getFullYear()}</div>
       </div>
     );
   }
