@@ -18,9 +18,13 @@ To run the server:
 
 	npm start
 
+To only build:
+
+	npm run build
+
 To build and publish:
 	
-	npm run build && npm run publish
+	npm run publish
 
 ## Contributing
 
