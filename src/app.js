@@ -88,6 +88,10 @@ class App extends React.Component {
             codgov={config.app.codgov}
             query={config.average.query}
           />
+          <div className="chart-legend">
+            <div className="legend-average">National average per year</div>
+            <div className="legend-value">Average per year</div>
+          </div>
           {charts}
         </div>
       </div>
