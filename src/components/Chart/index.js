@@ -114,22 +114,27 @@ class Chart extends React.Component {
       .attr('class', 'y axis')
       .call(yAxis);
 
-    // Circle
-    const focus = svg.append('g')
-      .append('circle')
-      .style('display', 'none')
-      .attr('class', 'focus')
-      .attr('r', 4);
+    // Tooltip
+    const tooltip = d3.select('body').append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0);
 
-    const avgFocus = svg.append('g')
-      .append('circle')
-      .style('display', 'none')
-      .attr('class', 'avg-focus')
-      .attr('r', 4);
+    function showTooltip (d) {
+      tooltip
+        .html(`${d.value}`)
+        .transition().duration(200)
+        .style('opacity', 1)
+        .style('top', `${d3.event.pageY - 10}px`)
+        .style('left', `${d3.event.pageX}px`);
+    }
+
+    function hideTooltip () {
+      tooltip.style('opacity', 0);
+    }
 
     // Draw line
     const line = d3.svg.line()
-      .interpolate('basis')
+      .interpolate('linear')
       .x((d) => x(d.date))
       .y((d) => y(d.value));
 
@@ -138,47 +143,37 @@ class Chart extends React.Component {
       .attr('class', 'sparkline')
       .attr('d', line);
 
-    // Rectangle to capture mouse
-    const bisectDate = d3.bisector(d => d.date).left;
-
-    svg.append('rect')
-      .attr('width', width)
-      .attr('height', height)
-      .style('fill', 'none')
-      .style('pointer-events', 'all')
-      .on('mouseover', () => {
-        avgFocus.style('display', null);
-        focus.style('display', null);
-      })
-      .on('mouseout', () => {
-        avgFocus.style('display', 'none');
-        focus.style('display', 'none');
-      })
-      .on('mousemove', function () {
-        const x0 = x.invert(d3.mouse(this)[0]);
-        const i = bisectDate(data, x0, 1);
-        const d0 = data[i - 1];
-        const d1 = data[i];
-        if (d1 && d1.date) {
-          const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-          focus.attr('transform',`translate(${x(d.date)}, ${y(d.value)})`);
-          if (d.average_value) {
-            avgFocus.attr('transform',`translate(${x(d.date)}, ${y(d.average_value)})`);
-          }
-        }
-      });
+    svg.selectAll('.sparkline')
+        .data(data).enter()
+      .append('circle')
+        .attr('class', 'focus')
+        .attr('cx', function(d) { return x(d.date); })
+        .attr('cy', function(d) { return y(d.value); })
+        .attr('r', 2)
+        .on('mouseover', showTooltip)
+        .on('mouseout', hideTooltip);
 
     // Draw average line
     if (data[0].average_value) {
       const avgLine = d3.svg.line()
-        .interpolate('basis')
+        .interpolate('linear')
         .x((d) => x(d.date))
         .y((d) => y(d.average_value));
 
       svg.append('path')
-        .datum(data)
-        .attr('class', 'avg-sparkline')
-        .attr('d', avgLine);
+          .datum(data)
+          .attr('class', 'avg-sparkline')
+          .attr('d', avgLine);
+
+      svg.selectAll('.avg-sparkline')
+          .data(data).enter()
+        .append('circle')
+          .attr('class', 'avg-focus')
+          .attr('cx', function(d) { return x(d.date); })
+          .attr('cy', function(d) { return y(d.average_value); })
+          .attr('r', 2)
+          .on('mouseover', showTooltip)
+          .on('mouseout', hideTooltip);
     }
 
   }
