@@ -162,20 +162,25 @@ class Chart extends React.Component {
         if (d1 && d1.date) {
           const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
           focus.attr('transform',`translate(${x(d.date)}, ${y(d.value)})`);
-          avgFocus.attr('transform',`translate(${x(d.date)}, ${y(d.average_value)})`);
+          if (d.average_value) {
+            avgFocus.attr('transform',`translate(${x(d.date)}, ${y(d.average_value)})`);
+          }
         }
       });
 
     // Draw average line
-    const avgLine = d3.svg.line()
-      .interpolate('basis')
-      .x((d) => x(d.date))
-      .y((d) => y(d.average_value));
+    if (data[0].average_value) {
+      const avgLine = d3.svg.line()
+        .interpolate('basis')
+        .x((d) => x(d.date))
+        .y((d) => y(d.average_value));
 
-    svg.append('path')
-      .datum(data)
-      .attr('class', 'avg-sparkline')
-      .attr('d', avgLine);
+      svg.append('path')
+        .datum(data)
+        .attr('class', 'avg-sparkline')
+        .attr('d', avgLine);
+    }
+
   }
 
   clearView() {
