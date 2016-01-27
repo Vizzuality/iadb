@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d5076655d5a16ba3fac3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "364d07d75f4b3283b50a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -800,6 +800,7 @@
 	          cartodbUser: _config2.default.app.cartodbUser,
 	          layerName: _config2.default.app.layerName,
 	          date: _config2.default.app.date,
+	          unit: c.unit,
 	          codgov: _config2.default.app.codgov,
 	          title: c.title,
 	          query: c.query,
@@ -59362,7 +59363,7 @@
 	      var data = this.data;
 	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
 	      var dateFormat = '%Y';
-	      var margin = { top: 10, left: 30, right: 20, bottom: 25 };
+	      var margin = { top: 15, left: 30, right: 20, bottom: 35 };
 	      var width = el.clientWidth;
 	      var height = el.clientHeight;
 	      var x = _d2.default.time.scale().range([0, width - margin.left - margin.right]).nice();
@@ -59385,16 +59386,20 @@
 	      })]);
 
 	      // X Axis
-	      var xAxis = _d2.default.svg.axis().scale(x).orient('bottom').innerTickSize(-height).ticks(_d2.default.time.years, 2).outerTickSize(0).tickFormat(_d2.default.time.format(dateFormat));
+	      var xAxis = _d2.default.svg.axis().scale(x).orient('bottom').ticks(_d2.default.time.years, 2).outerTickSize(1).tickFormat(_d2.default.time.format(dateFormat));
 
-	      svg.append('g').attr('class', 'x axis').attr('transform', 'translate(0, ' + (height - margin.bottom - margin.top) + ')').call(xAxis).selectAll('text').attr('class', 'tick-label').attr('y', margin.bottom / 4).attr('x', 0);
+	      svg.append('g').attr('class', 'x axis').attr('transform', 'translate(0, ' + (height - margin.bottom - margin.top) + ')').call(xAxis);
 
-	      svg.append('g').attr('transform', 'translate(0, ' + (height - margin.bottom - margin.top) + ')').append('line').attr('class', 'domain-line').attr('x1', 0).attr('x2', width - margin.left - margin.right).attr('y1', 0).attr('y2', 0);
+	      svg.append('text').attr('class', 'x label').attr('x', width / 2).attr('y', height - 17).text('years');
 
 	      // Y Axis
 	      var yAxis = _d2.default.svg.axis().scale(y).orient('left').outerTickSize(1).ticks(5);
 
 	      svg.append('g').attr('class', 'y axis').call(yAxis);
+
+	      if (this.props.unit) {
+	        svg.append('text').attr('class', 'y label').attr('x', -4).attr('y', 0).text(this.props.unit);
+	      }
 
 	      // Tooltip
 	      var tooltip = _d2.default.select('body').append('div').attr('class', 'tooltip').style('opacity', 0);
@@ -59416,7 +59421,7 @@
 
 	      svg.append('path').datum(data).attr('class', 'sparkline').attr('d', line);
 
-	      svg.selectAll('.sparkline').data(data).enter().append('circle').attr('class', 'focus').attr('cx', function (d) {
+	      svg.selectAll('dot').data(data).enter().append('circle').attr('class', 'focus').attr('cx', function (d) {
 	        return x(d.date);
 	      }).attr('cy', function (d) {
 	        return y(d.value);
@@ -59432,7 +59437,7 @@
 
 	        svg.append('path').datum(data).attr('class', 'avg-sparkline').attr('d', avgLine);
 
-	        svg.selectAll('.avg-sparkline').data(data).enter().append('circle').attr('class', 'avg-focus').attr('cx', function (d) {
+	        svg.selectAll('avg-dot').data(data).enter().append('circle').attr('class', 'avg-focus').attr('cx', function (d) {
 	          return x(d.date);
 	        }).attr('cy', function (d) {
 	          return y(d.average_value);
@@ -59497,7 +59502,7 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 1rem 0;\n\n  border-top: 1px solid #ccc;\n\n  background: white;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n\n.chart .axis {\n  font-size: 11px;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .tick-label {\n  font-size: 11px;\n  text-anchor: middle;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #000;\n  stroke: #000;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: #f00;\n}\n\n.tooltip {\n  position: absolute;\n\n  font-size: 11px;\n\n  -webkit-transform: translate(-50%, -50%);\n\n          transform: translate(-50%, -50%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 1rem 0;\n\n  border-top: 1px solid #ccc;\n\n  background: white;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n\n.chart .axis {\n  font-size: 11px;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: black;\n  shape-rendering: crispEdges;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 11px;\n  text-anchor: end;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #000;\n  stroke: #000;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: #f00;\n}\n\n.tooltip {\n  position: absolute;\n\n  font-size: 11px;\n\n  background: rgba(255, 255, 255, .8);\n\n  -webkit-transform: translate(-50%, -50%);\n\n          transform: translate(-50%, -50%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
 
 	// exports
 
@@ -69166,13 +69171,16 @@
 	   */
 	  charts: [{
 	    title: 'Lorem ipsum 1',
-	    query: 'SELECT a.nam_2 AS name, b.reven AS value, (SELECT AVG(reven) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+	    query: 'SELECT a.nam_2 AS name, b.reven AS value, (SELECT AVG(reven) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    unit: null
 	  }, {
 	    title: 'Lorem ipsum 2',
-	    query: 'SELECT a.nam_2 AS name, b.taxes AS value, (SELECT AVG(taxes) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+	    query: 'SELECT a.nam_2 AS name, b.taxes AS value, (SELECT AVG(taxes) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    unit: null
 	  }, {
 	    title: 'Lorem ipsum 3',
-	    query: 'SELECT a.nam_2 AS name, b.taxinc AS value, (SELECT AVG(taxinc) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year'
+	    query: 'SELECT a.nam_2 AS name, b.taxinc AS value, (SELECT AVG(taxinc) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    unit: null
 	  }]
 
 	};
