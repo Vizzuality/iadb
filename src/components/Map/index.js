@@ -78,7 +78,7 @@ class Map extends React.Component {
   getCartoCSS(layerData, cb) {
     const colors = this.props.colors;
     const query = `SELECT CDB_JenksBins(array_agg(${layerData.columnName}::numeric), 7)
-      FROM ${layerData.tableName} where ${layerData.columnName}::numeric is not null`;
+      FROM ${layerData.tableName} where year = ${this.state.date.getFullYear()} and ${layerData.columnName}::numeric is not null`;
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (d) => {
       const data = d.rows[0].cdb_jenksbins;
@@ -87,7 +87,7 @@ class Map extends React.Component {
         polygon-opacity: 0.8;
         line-color: #FFF;
         line-width: 0.5;
-        line-opacity: 1;
+        line-opacity: 0.5;
       }
       #${layerData.tableName} [${layerData.columnName} <= ${data[6]}] {polygon-fill: ${colors[6]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[5]}] {polygon-fill: ${colors[5]};}
