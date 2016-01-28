@@ -20,8 +20,10 @@ class Average extends React.Component {
   }
 
   fetchData() {
+    let query = (this.state.layerData.total) ? this.props.queryTotal : this.props.queryPerc;
+    console.log(query);
     const username = this.props.cartodbUser;
-    const sql = this.props.query
+    const sql = query
       .replace(/\$\{columnName\}/g, this.state.layerName)
       .replace(/\$\{year\}/g, this.state.date.getFullYear())
       .replace(/\$\{codgov\}/g, this.state.codgov)

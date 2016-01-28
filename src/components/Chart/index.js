@@ -42,6 +42,9 @@ class Chart extends React.Component {
   }
 
   render() {
+    if (!this.state.codgov) {
+      return null;
+    }
     return (
       <div className="chart">
         <h2>{this.props.title}</h2>

@@ -63,22 +63,7 @@ class App extends React.Component {
   }
 
   render() {
-    // const charts = [];
-    //
-    // config.charts.forEach((c, i) => {
-    //   charts.push(
-    //     <Chart ref={`chart${i}`}
-    //       cartodbUser={config.app.cartodbUser}
-    //       layerName={config.app.layerName}
-    //       date={config.app.date}
-    //       unit={c.unit}
-    //       codgov={config.app.codgov}
-    //       title={c.title}
-    //       query={c.query}
-    //       key={i}
-    //     />
-    //   );
-    // });
+    const currentChart = _.find(config.charts, {columnName: config.app.layerName});
 
     return (
       <div>
@@ -98,7 +83,17 @@ class App extends React.Component {
             layerName={config.app.layerName}
             layerData={layerData}
             codgov={config.app.codgov}
-            query={config.average.query}
+            queryTotal={config.average.query_total}
+            queryPerc={config.average.query_perc}
+          />
+          <Chart ref='chart'
+            cartodbUser={config.app.cartodbUser}
+            layerName={config.app.layerName}
+            date={config.app.date}
+            unit={currentChart.unit}
+            codgov={config.app.codgov}
+            title={currentChart.title}
+            query={currentChart.query}
           />
         </div>
         <Map ref="map"
