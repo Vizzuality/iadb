@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d552143fc476fd2254d3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a72da6cf88f84c7897ff"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -784,9 +784,7 @@
 	      }
 	      this.refs.average.setState({ codgov: mapData.codgov, layerData: layerData });
 	      this.refs.map.updateLayer(layerData);
-	      // config.charts.forEach((c, i) => {
-	      //   this.refs[`chart${i}`].setState({codgov: mapData.codgov});
-	      // });
+	      this.refs.chart.setState({ codgov: mapData.codgov });
 	    }
 	  }, {
 	    key: 'onChangeTimeline',
@@ -794,7 +792,7 @@
 	      var layerData = this.refs.layers.state.layer;
 	      this.refs.map.setState({ date: this.refs.timeline.getCurrentDate() });
 	      this.refs.map.addLayer(layerData);
-	      // this.refs.average.setState({date: timelineData.date});
+	      this.refs.average.setState({ date: timelineData.date });
 	    }
 	  }, {
 	    key: 'onChangeLayers',
@@ -805,9 +803,7 @@
 	        layerName: layerData.columnName,
 	        layerData: layerData
 	      });
-	      // config.charts.forEach((c, i) => {
-	      //   this.refs[`chart${i}`].setState({layerName: layerData.columnName});
-	      // });
+	      this.refs.chart.setState({ layerName: layerData.columnName });
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
@@ -817,22 +813,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      // const charts = [];
-	      //
-	      // config.charts.forEach((c, i) => {
-	      //   charts.push(
-	      //     <Chart ref={`chart${i}`}
-	      //       cartodbUser={config.app.cartodbUser}
-	      //       layerName={config.app.layerName}
-	      //       date={config.app.date}
-	      //       unit={c.unit}
-	      //       codgov={config.app.codgov}
-	      //       title={c.title}
-	      //       query={c.query}
-	      //       key={i}
-	      //     />
-	      //   );
-	      // });
+	      var currentChart = _lodash2.default.find(_config2.default.charts, { columnName: _config2.default.app.layerName });
 
 	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('h1', null, 'Datos financieros municipales'), _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(299), width: '192', height: '31' })), _react2.default.createElement(_Layers2.default, { ref: 'layers',
 	        layerName: _config2.default.app.layerName,
@@ -844,7 +825,16 @@
 	        layerName: _config2.default.app.layerName,
 	        layerData: layerData,
 	        codgov: _config2.default.app.codgov,
-	        query: _config2.default.average.query
+	        queryTotal: _config2.default.average.query_total,
+	        queryPerc: _config2.default.average.query_perc
+	      }), _react2.default.createElement(_Chart2.default, { ref: 'chart',
+	        cartodbUser: _config2.default.app.cartodbUser,
+	        layerName: _config2.default.app.layerName,
+	        date: _config2.default.app.date,
+	        unit: currentChart.unit,
+	        codgov: _config2.default.app.codgov,
+	        title: currentChart.title,
+	        query: currentChart.query
 	      })), _react2.default.createElement(_Map2.default, { ref: 'map',
 	        cartodbUser: _config2.default.app.cartodbUser,
 	        mapOptions: _config2.default.map.mapOptions,
@@ -35830,6 +35820,8 @@
 	          cartocss = cartocss + ' #' + layerData.tableName + ' [codgov = \'' + _this3.state.codgov + '\'] {\n          line-color: #F00;\n          line-width: 3;\n        }';
 	        }
 	        cb(cartocss);
+	      }).fail(function (err) {
+	        throw err.responseText;
 	      });
 	    }
 	  }]);
@@ -55506,10 +55498,8 @@
 	        });
 
 	        result.push(_react2.default.createElement('li', {
-	          onClick: _this2.changeCategory.bind(_this2),
 	          className: activeClass,
-	          'data-category': key,
-	          key: key }, key, _react2.default.createElement('ul', null, layersResult)));
+	          key: key }, _react2.default.createElement('span', { 'data-category': key, onClick: _this2.changeCategory.bind(_this2) }, key), _react2.default.createElement('ul', null, layersResult)));
 	      });
 
 	      return _react2.default.createElement('div', { className: 'layers' }, _react2.default.createElement('ul', null, result));
@@ -55517,6 +55507,7 @@
 	  }, {
 	    key: 'changeCategory',
 	    value: function changeCategory(e) {
+	      e.stopPropagation();
 	      var value = e.currentTarget.getAttribute('data-category');
 	      var currentLayer = _lodash2.default.find(this.props.layers, { categoryName: value });
 	      this.setState({ layer: currentLayer });
@@ -55527,6 +55518,7 @@
 	  }, {
 	    key: 'setSelected',
 	    value: function setSelected(e) {
+	      e.stopPropagation();
 	      var value = e.currentTarget.value;
 	      var currentLayer = _lodash2.default.find(this.props.layers, { columnName: value });
 	      this.setState({ layer: currentLayer });
@@ -55590,7 +55582,7 @@
 
 
 	// module
-	exports.push([module.id, ".layers {\n  position: relative;\n  padding: 20px 20px 0 20px;\n  margin-bottom: 38px;\n\n  color: white;\n\n  background: #004b74;\n}\n.layers ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.layers > ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.layers > ul > li {\n  padding-bottom: 3px;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: .3;\n  border-bottom: 4px solid transparent;\n}\n.layers > ul > li._active {\n  opacity: 1;\n  border-color: white;\n}\n.layers > ul > li ul {\n  position: absolute;\n  padding: 10px 0;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n              -ms-grid-row-align: center;\n          align-items: center;\n  left: 0;\n  top: 100%;\n  width: 300px;\n  background: #333;\n}\n.layers > ul > li ul li {\n  margin: 0 20px;\n}\n.layers ul li ul {\n  display: none;\n}\n.layers li._active ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n", ""]);
+	exports.push([module.id, ".layers {\n  position: relative;\n  padding: 20px 20px 0 20px;\n  margin-bottom: 38px;\n\n  color: white;\n\n  background: #004b74;\n}\n.layers ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.layers > ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.layers > ul > li {\n  padding-bottom: 3px;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: .3;\n  border-bottom: 4px solid transparent;\n}\n.layers > ul > li > span {\n  cursor: pointer;\n}\n.layers > ul > li._active {\n  opacity: 1;\n  border-color: white;\n}\n.layers > ul > li ul {\n  position: absolute;\n  padding: 10px 0;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n              -ms-grid-row-align: center;\n          align-items: center;\n  left: 0;\n  top: 100%;\n  width: 300px;\n  background: #333;\n}\n.layers > ul > li ul li {\n  margin: 0 20px;\n}\n.layers ul li ul {\n  display: none;\n}\n.layers li._active ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n", ""]);
 
 	// exports
 
@@ -68784,8 +68776,9 @@
 	    value: function fetchData() {
 	      var _this2 = this;
 
+	      var query = this.state.layerData.total ? this.props.queryTotal : this.props.queryPerc;
 	      var username = this.props.cartodbUser;
-	      var sql = this.props.query.replace(/\$\{columnName\}/g, this.state.layerName).replace(/\$\{year\}/g, this.state.date.getFullYear()).replace(/\$\{codgov\}/g, this.state.codgov).replace(/\n/g, ' ');
+	      var sql = query.replace(/\$\{columnName\}/g, this.state.layerName).replace(/\$\{year\}/g, this.state.date.getFullYear()).replace(/\$\{codgov\}/g, this.state.codgov).replace(/\n/g, ' ');
 	      var url = 'https://' + username + '.cartodb.com/api/v2/sql?q=' + sql;
 	      _jquery2.default.getJSON(url, function (data) {
 	        var d = data.rows[0];
@@ -68794,6 +68787,8 @@
 	          value: d.average_value,
 	          natValue: d.nat_average_value
 	        });
+	      }).fail(function (err) {
+	        throw err.responseText;
 	      });
 	    }
 	  }, {
@@ -68976,6 +68971,8 @@
 	      _jquery2.default.getJSON(url, function (d) {
 	        _this2.data = d.rows;
 	        _this2.renderSparkLine();
+	      }).fail(function (err) {
+	        throw err.responseText;
 	      });
 	    }
 	  }, {
@@ -68994,15 +68991,19 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement('div', { className: 'chart' }, _react2.default.createElement('h2', null, this.props.title), _react2.default.createElement('div', { className: 'canvas' }));
+	      if (!this.state.codgov) {
+	        return null;
+	      }
+	      return _react2.default.createElement('div', { className: 'chart' }, _react2.default.createElement('div', { className: 'canvas' }));
 	    }
 	  }, {
 	    key: 'renderSparkLine',
 	    value: function renderSparkLine() {
 	      var data = this.data;
+
 	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
 	      var dateFormat = '%Y';
-	      var margin = { top: 15, left: 30, right: 20, bottom: 35 };
+	      var margin = { top: 15, left: 40, right: 20, bottom: 35 };
 	      var width = el.clientWidth;
 	      var height = el.clientHeight;
 	      var x = _d2.default.time.scale().range([0, width - margin.left - margin.right]).nice();
@@ -69021,18 +69022,18 @@
 	        return d.date;
 	      }));
 	      y.domain([0, _d2.default.max(data, function (d) {
-	        return d.average_value > d.value ? d.average_value : d.value;
+	        return d.average_value > d.nat_average_value ? d.average_value : d.nat_average_value;
 	      })]);
 
 	      // X Axis
-	      var xAxis = _d2.default.svg.axis().scale(x).orient('bottom').ticks(_d2.default.time.years, 2).outerTickSize(1).tickFormat(_d2.default.time.format(dateFormat));
+	      var xAxis = _d2.default.svg.axis().scale(x).orient('bottom').ticks(_d2.default.time.years, 2).outerTickSize(1).innerTickSize(0).tickFormat(_d2.default.time.format(dateFormat));
 
 	      svg.append('g').attr('class', 'x axis').attr('transform', 'translate(0, ' + (height - margin.bottom - margin.top) + ')').call(xAxis);
 
 	      svg.append('text').attr('class', 'x label').attr('x', width / 2).attr('y', height - 17).text('years');
 
 	      // Y Axis
-	      var yAxis = _d2.default.svg.axis().scale(y).orient('left').outerTickSize(1).ticks(5);
+	      var yAxis = _d2.default.svg.axis().scale(y).orient('left').outerTickSize(1).innerTickSize(0).ticks(5);
 
 	      svg.append('g').attr('class', 'y axis').call(yAxis);
 
@@ -69043,8 +69044,8 @@
 	      // Tooltip
 	      var tooltip = _d2.default.select('body').append('div').attr('class', 'tooltip').style('opacity', 0);
 
-	      function showTooltip(d) {
-	        tooltip.html('' + d.value).transition().duration(200).style('opacity', 1).style('top', _d2.default.event.pageY - 10 + 'px').style('left', _d2.default.event.pageX + 'px');
+	      function showTooltip(d, nat) {
+	        tooltip.html('' + (nat ? d.nat_average_value : d.average_value)).transition().duration(200).style('opacity', 1).style('top', _d2.default.event.pageY - 10 + 'px').style('left', _d2.default.event.pageX + 'px');
 	      }
 
 	      function hideTooltip() {
@@ -69055,7 +69056,7 @@
 	      var line = _d2.default.svg.line().interpolate('linear').x(function (d) {
 	        return x(d.date);
 	      }).y(function (d) {
-	        return y(d.value);
+	        return y(d.average_value);
 	      });
 
 	      svg.append('path').datum(data).attr('class', 'sparkline').attr('d', line);
@@ -69063,15 +69064,17 @@
 	      svg.selectAll('dot').data(data).enter().append('circle').attr('class', 'focus').attr('cx', function (d) {
 	        return x(d.date);
 	      }).attr('cy', function (d) {
-	        return y(d.value);
-	      }).attr('r', 2).on('mouseover', showTooltip).on('mouseout', hideTooltip);
+	        return y(d.average_value);
+	      }).attr('r', 1.5).on('mouseover', function (d) {
+	        showTooltip(d, false);
+	      }).on('mouseout', hideTooltip);
 
 	      // Draw average line
 	      if (data[0].average_value) {
 	        var avgLine = _d2.default.svg.line().interpolate('linear').x(function (d) {
 	          return x(d.date);
 	        }).y(function (d) {
-	          return y(d.average_value);
+	          return y(d.nat_average_value);
 	        });
 
 	        svg.append('path').datum(data).attr('class', 'avg-sparkline').attr('d', avgLine);
@@ -69079,8 +69082,10 @@
 	        svg.selectAll('avg-dot').data(data).enter().append('circle').attr('class', 'avg-focus').attr('cx', function (d) {
 	          return x(d.date);
 	        }).attr('cy', function (d) {
-	          return y(d.average_value);
-	        }).attr('r', 2).on('mouseover', showTooltip).on('mouseout', hideTooltip);
+	          return y(d.nat_average_value);
+	        }).attr('r', 1.5).on('mouseover', function (d) {
+	          showTooltip(d, true);
+	        }).on('mouseout', hideTooltip);
 	      }
 	    }
 	  }, {
@@ -69141,7 +69146,7 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px 0;\n\n  background: white;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 300px;\n}\n\n.chart .axis {\n  font-size: 11px;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: black;\n  shape-rendering: crispEdges;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: optimizeSpeed;\n}\n\n.chart .avg-sparkline {\n  stroke: #f00;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: #000;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 11px;\n  text-anchor: end;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #000;\n  stroke: #000;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: #f00;\n}\n\n.tooltip {\n  position: absolute;\n\n  font-size: 11px;\n\n  background: rgba(255, 255, 255, .8);\n\n  -webkit-transform: translate(-50%, -50%);\n\n          transform: translate(-50%, -50%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .avg-sparkline {\n  stroke: #00a3db;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: white;\n  stroke: white;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: #00a3db;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -100%);\n\n          transform: translate(-50%, -100%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
 
 	// exports
 
@@ -69176,7 +69181,8 @@
 	   * Required: name, average_value
 	   */
 	  average: {
-	    query: 'SELECT a.name AS name, round(AVG(b.${columnName})::numeric,2) AS average_value FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year} GROUP BY a.name'
+	    query_total: 'SELECT a.name AS name, b.${columnName} as average_value, (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year) FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year}',
+	    query_perc: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(reven)*1000000 as reven_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.${columnName}::numeric,2) as average_value, round((t.reven_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\' and b.year=${year}'
 	  },
 
 	  /**
@@ -69233,7 +69239,8 @@
 	    query: 'SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
 	    interactivity: 'codgov,reven, name',
 	    unit: 'M R$',
-	    categoryName: 'Revenue'
+	    categoryName: 'Revenue',
+	    total: true
 	  }, {
 	    name: 'Per capita',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69242,7 +69249,9 @@
 	    query: 'SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
 	    interactivity: 'codgov, reven_rate, name',
 	    unit: 'R$',
-	    categoryName: 'Revenue'
+	    categoryName: 'Revenue',
+
+	    total: false
 	  }, {
 	    name: 'Total',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69251,7 +69260,8 @@
 	    query: 'SELECT a.*, b.taxes FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
 	    interactivity: 'codgov,taxes, name',
 	    unit: 'M R$',
-	    categoryName: 'Taxes'
+	    categoryName: 'Taxes',
+	    total: true
 	  }, {
 	    name: 'Per capita',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69260,7 +69270,8 @@
 	    query: 'SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
 	    interactivity: 'codgov,tax_rate, name',
 	    unit: 'R$',
-	    categoryName: 'Taxes'
+	    categoryName: 'Taxes',
+	    total: false
 	  }, {
 	    name: 'Total',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69269,7 +69280,8 @@
 	    query: 'SELECT a.*, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
 	    interactivity: 'codgov,taxinc, name',
 	    unit: 'M R$',
-	    categoryName: 'Tax. Inc.'
+	    categoryName: 'Tax. Inc.',
+	    total: true
 	  }, {
 	    name: 'Per capita',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69278,7 +69290,8 @@
 	    query: 'SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0',
 	    interactivity: 'codgov,taxinc_rate, name',
 	    unit: 'R$',
-	    categoryName: 'Tax. Inc.'
+	    categoryName: 'Tax. Inc.',
+	    total: false
 	  }],
 
 	  /**
@@ -69291,32 +69304,39 @@
 	    title: 'Total',
 	    query: 'SELECT a.name AS name, b.reven as average_value, (SELECT AVG(reven) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
 	    columnName: 'reven',
-	    unit: 'M R$'
+	    unit: 'M R$',
+	    total: true
+
 	  }, {
 	    title: 'Per capita',
 	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(reven)*1000000 as reven_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.reven_rate::numeric,2) as average_value, round((t.reven_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
 	    columnName: 'reven_rate',
-	    unit: 'R$'
+	    unit: 'R$',
+	    total: false
 	  }, {
 	    title: 'Total',
 	    query: 'SELECT a.name AS name, b.taxes AS average_value, (SELECT AVG(taxes) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
 	    columnName: 'taxes',
-	    unit: 'M R$'
+	    unit: 'M R$',
+	    total: true
 	  }, {
 	    title: 'Per capita',
 	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxes)*1000000 as tax_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.tax_rate::numeric,2) as average_value, round((t.tax_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
 	    columnName: 'tax_rate',
-	    unit: 'R$'
+	    unit: 'R$',
+	    total: false
 	  }, {
 	    title: 'Total',
 	    query: 'SELECT a.name AS name, b.taxinc AS average_value, (SELECT AVG(taxinc) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
 	    columnName: 'taxinc',
-	    unit: 'M R$'
+	    unit: 'M R$',
+	    total: true
 	  }, {
 	    title: 'Per capita',
 	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxinc)*1000000 as taxinc_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.taxinc_rate::numeric,2) as average_value, round((t.taxinc_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
 	    columnName: 'taxinc_rate',
-	    unit: 'R$'
+	    unit: 'R$',
+	    total: false
 	  }]
 
 	};
