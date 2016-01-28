@@ -193,7 +193,9 @@ class Chart extends React.Component {
 
   clearView() {
     const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
-    el.innerHTML = null;
+    if (el) {
+      el.innerHTML = null;
+    }
   }
 
 }
