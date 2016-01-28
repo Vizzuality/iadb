@@ -13,7 +13,8 @@ const config = {
   entry: [
     'webpack/hot/only-dev-server',
     './index.html',
-    './app.js'
+    './app.js',
+    './login.html'
   ],
 
   output: {
