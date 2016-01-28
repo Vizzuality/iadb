@@ -34,8 +34,8 @@
 
   .control {
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
 
     & + ul {
       margin-left: 20px;
