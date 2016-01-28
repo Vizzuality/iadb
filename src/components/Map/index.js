@@ -58,7 +58,7 @@ class Map extends React.Component {
           this.layer.setInteraction(true);
           this.layer.on('featureOver', _.debounce((e, latlng, point, d) => {
             this.tooltip
-              .html(`${d.codgov}`)
+              .html(`${d.name}`)
               .transition().duration(50)
               .style('opacity', 1)
               .style('top', `${point.y}px`)
