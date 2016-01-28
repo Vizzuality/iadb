@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "366f6e8744460afbd57e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0c2e623758802788b200"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -782,7 +782,7 @@
 	        this.refs.dashboard.className = 'dashboard';
 	        _reactDom2.default.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
 	      }
-	      // this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
+	      this.refs.average.setState({ codgov: mapData.codgov, layerData: layerData });
 	      this.refs.map.updateLayer(layerData);
 	      // config.charts.forEach((c, i) => {
 	      //   this.refs[`chart${i}`].setState({codgov: mapData.codgov});
@@ -801,10 +801,10 @@
 	    value: function onChangeLayers(layerData) {
 	      this.refs.map.setState({ date: this.refs.timeline.getCurrentDate() });
 	      this.refs.map.addLayer(layerData);
-	      // this.refs.average.setState({
-	      //   layerName: layerData.columnName,
-	      //   layerData: layerData
-	      // });
+	      this.refs.average.setState({
+	        layerName: layerData.columnName,
+	        layerData: layerData
+	      });
 	      // config.charts.forEach((c, i) => {
 	      //   this.refs[`chart${i}`].setState({layerName: layerData.columnName});
 	      // });
@@ -836,6 +836,13 @@
 	        layerName: _config2.default.app.layerName,
 	        layers: _config2.default.layers,
 	        onChange: this.onChangeLayers.bind(this)
+	      }), _react2.default.createElement(_Average2.default, { ref: 'average',
+	        cartodbUser: _config2.default.app.cartodbUser,
+	        date: _config2.default.app.date,
+	        layerName: _config2.default.app.layerName,
+	        layerData: layerData,
+	        codgov: _config2.default.app.codgov,
+	        query: _config2.default.average.query
 	      })), _react2.default.createElement(_Map2.default, { ref: 'map',
 	        cartodbUser: _config2.default.app.cartodbUser,
 	        mapOptions: _config2.default.map.mapOptions,
@@ -46055,7 +46062,7 @@
 
 
 	// module
-	exports.push([module.id, ".layers {\n  position: relative;\n  padding: 20px 20px 0 20px;\n\n  color: white;\n\n  background: #004b74;\n}\n.layers ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.layers > ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.layers > ul > li {\n  padding-bottom: 3px;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: .3;\n  border-bottom: 4px solid transparent;\n}\n.layers > ul > li._active {\n  opacity: 1;\n  border-color: white;\n}\n.layers > ul > li ul {\n  position: absolute;\n  padding: 10px 0;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n              -ms-grid-row-align: center;\n          align-items: center;\n  left: 0;\n  top: 100%;\n  width: 300px;\n  background: #333;\n}\n.layers > ul > li ul li {\n  margin: 0 20px;\n}\n.layers ul li ul {\n  display: none;\n}\n.layers li._active ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n", ""]);
+	exports.push([module.id, ".layers {\n  position: relative;\n  padding: 20px 20px 0 20px;\n  margin-bottom: 38px;\n\n  color: white;\n\n  background: #004b74;\n}\n.layers ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.layers > ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.layers > ul > li {\n  padding-bottom: 3px;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: .3;\n  border-bottom: 4px solid transparent;\n}\n.layers > ul > li._active {\n  opacity: 1;\n  border-color: white;\n}\n.layers > ul > li ul {\n  position: absolute;\n  padding: 10px 0;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n              -ms-grid-row-align: center;\n          align-items: center;\n  left: 0;\n  top: 100%;\n  width: 300px;\n  background: #333;\n}\n.layers > ul > li ul li {\n  margin: 0 20px;\n}\n.layers ul li ul {\n  display: none;\n}\n.layers li._active ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n", ""]);
 
 	// exports
 
@@ -59235,6 +59242,7 @@
 	    _this.state = {
 	      name: null,
 	      value: null,
+	      natValue: null,
 	      codgov: props.codgov,
 	      layerName: props.layerName,
 	      layerData: props.layerData,
@@ -59255,7 +59263,8 @@
 	        var d = data.rows[0];
 	        _this2.setState({
 	          name: d.name,
-	          value: d.average_value
+	          value: d.average_value,
+	          natValue: d.nat_average_value
 	        });
 	      });
 	    }
@@ -59280,11 +59289,11 @@
 	    key: 'render',
 	    value: function render() {
 	      if (!this.state.name) {
-	        return null;
+	        return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, 'Seleccione un municipio en el mapa'));
 	      }
-	      var val = this.state.value;
-	      var total = val || val === 0 ? val : '-';
-	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), _react2.default.createElement('div', { className: 'value' }, total, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)), _react2.default.createElement('div', null, this.state.layerData.name), _react2.default.createElement('div', null, this.state.date.getFullYear()));
+	      var avgNat = this.state.natValue || this.state.natValue === 0 ? this.state.natValue : '-';
+	      var avgMun = this.state.value || this.state.value === 0 ? this.state.value : '-';
+	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media nacional'), _react2.default.createElement('div', { className: 'nat-value' }, avgNat, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media municipal'), _react2.default.createElement('div', { className: 'value' }, avgMun, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)))));
 	    }
 	  }]);
 
@@ -59339,7 +59348,7 @@
 
 
 	// module
-	exports.push([module.id, ".average {\n  position: relative;\n  padding: 1rem 0;\n  background: white;\n}\n.average h2 {\n  margin: 0;\n}\n.average .value {\n  font-size: 2rem;\n}\n.average .value .unit {\n  font-size: 50%;\n}\n", ""]);
+	exports.push([module.id, ".average {\n  position: relative;\n  padding: 10px 20px 20px 20px;\n\n  color: white;\n\n  background: #333;\n}\n.average h2 {\n  margin: 0 auto;\n  max-width: 80%;\n  font-size: 13px;\n  text-align: center;\n  text-transform: uppercase;\n}\n.average .value,\n  .average .nat-value {\n  font-size: 20px;\n  font-weight: bold;\n}\n.average .value .unit, .average .nat-value .unit {\n  font-size: 70%;\n}\n.average .value {\n  color: #00a3db;\n}\n.average .panels {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.average .panel {\n  width: 50%;\n  padding: 0 10px;\n  box-sizing: content-box;\n}\n.average .panel h3 {\n  font-size: 10px;\n  font-weight: normal;\n  text-transform: uppercase;\n}\n", ""]);
 
 	// exports
 
