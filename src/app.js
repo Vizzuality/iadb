@@ -119,7 +119,7 @@ class App extends React.Component {
 
 }
 
-if (document.cookie !== 'iadb_demo_access=false') {
+if (document.cookie !== 'iadb_demo_access=true') {
   window.location.href = 'login.html'
 } else {
   ReactDOM.render(<App />, document.getElementById('app'));
