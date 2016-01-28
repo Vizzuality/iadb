@@ -64,6 +64,9 @@ class Map extends React.Component {
               .style('top', `${point.y}px`)
               .style('left', `${point.x}px`);
           }, 5));
+          this.layer.on('featureOver', _.debounce(() => {
+            this.tooltip.style('opacity', 0);
+          }, 1000));
           this.layer.on('featureClick', (e, latlng, point, d) => {
             this.setState({codgov: d.codgov});
             this.props.onChange(d);

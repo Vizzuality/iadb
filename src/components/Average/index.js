@@ -38,8 +38,12 @@ class Average extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.state);
     if (!this.state.codgov) {
       return;
+    }
+    if (!this.state.name) {
+      this.fetchData();
     }
     if (prevState.codgov !== this.state.codgov ||
         prevState.layerName !== this.state.layerName ||
