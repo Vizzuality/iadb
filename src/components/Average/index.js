@@ -69,12 +69,12 @@ class Average extends React.Component {
         <h2>{this.state.name}</h2>
         <div className="panels">
           <div className="panel">
-            <h3>Media nacional</h3>
             <div className="nat-value">{avgNat} <span className="unit">{this.state.layerData.unit}</span></div>
+            <h3>Media nacional</h3>
           </div>
           <div className="panel">
-            <h3>Media municipal</h3>
             <div className="value">{avgMun} <span className="unit">{this.state.layerData.unit}</span></div>
+            <h3>Media municipal</h3>
           </div>
         </div>
       </div>

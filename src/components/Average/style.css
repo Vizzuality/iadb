@@ -30,14 +30,18 @@
 
   .panels {
     display: flex;
+    margin-top: 10px;
   }
-  
+
   .panel {
     width: 50%;
     padding: 0 10px;
     box-sizing: content-box;
 
+    text-align: center;
+
     h3 {
+      margin: 0;
       font-size: 10px;
       font-weight: normal;
       text-transform: uppercase;
