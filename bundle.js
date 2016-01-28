@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9b347a9838660f085974"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3e6815ac139ed129d680"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -46327,7 +46327,7 @@
 
 
 	// module
-	exports.push([module.id, ".timeline {\n  position: absolute;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  bottom: 3rem;\n  left: 2rem;\n  right: 2rem;\n\n  z-index: 1;\n}\n.timeline ul {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.timeline li {\n  position: relative;\n  padding: 5px 10px;\n  font-size: 10px;\n  font-weight: bold;\n  cursor: pointer;\n}\n.timeline li._active, .timeline li:hover {\n  color: white;\n  background-color: #004b74;\n}\n.timeline .control {\n  position: relative;\n  width: 26px;\n  height: 26px;\n}\n.timeline .control + ul {\n  margin-left: 20px;\n}\n.timeline .control::after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 50%;\n  left: 50%;\n  border-top: 8px solid transparent;\n  border-left: 12px solid #333;\n  border-bottom: 8px solid transparent;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n}\n.timeline .control._playing::after {\n  width: 4px;\n  height: 16px;\n  border-top: 0;\n  border-bottom: 0;\n  border-right: 4px solid #333;\n  border-left: 4px solid #333;\n}\n", ""]);
+	exports.push([module.id, ".timeline {\n  position: absolute;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 5px 10px;\n  bottom: 3rem;\n  left: 2rem;\n  right: 2rem;\n\n  background: white;\n\n  z-index: 1;\n}\n.timeline ul {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.timeline li {\n  position: relative;\n  padding: 5px 10px;\n  font-size: 10px;\n  font-weight: bold;\n  cursor: pointer;\n}\n.timeline li._active, .timeline li:hover {\n  color: white;\n  background-color: #004b74;\n}\n.timeline .control {\n  position: relative;\n  width: 26px;\n  height: 26px;\n}\n.timeline .control + ul {\n  margin-left: 20px;\n}\n.timeline .control::after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 50%;\n  left: 50%;\n  border-top: 8px solid transparent;\n  border-left: 12px solid #333;\n  border-bottom: 8px solid transparent;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n}\n.timeline .control._playing::after {\n  width: 4px;\n  height: 16px;\n  border-top: 0;\n  border-bottom: 0;\n  border-right: 4px solid #333;\n  border-left: 4px solid #333;\n}\n", ""]);
 
 	// exports
 
@@ -69274,32 +69274,32 @@
 	   * Optional: average_value
 	   */
 	  charts: [{
-	    title: 'Revenue',
+	    title: 'Total',
 	    query: 'SELECT a.nam_2 AS name, b.reven as average_value, (SELECT AVG(reven) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
 	    columnName: 'reven',
 	    unit: 'M R$'
 	  }, {
-	    title: 'Revenue per capita',
+	    title: 'Per capita',
 	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(reven)*1000000 as reven_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.nam_2 AS name, round(b.reven_rate::numeric,2) as average_value, round((t.reven_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
 	    columnName: 'reven_rate',
 	    unit: 'R$'
 	  }, {
-	    title: 'Taxes',
+	    title: 'Total',
 	    query: 'SELECT a.nam_2 AS name, b.taxes AS average_value, (SELECT AVG(taxes) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
 	    columnName: 'taxes',
 	    unit: 'M R$'
 	  }, {
-	    title: 'Taxes per capita',
+	    title: 'Per capita',
 	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxes)*1000000 as tax_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.nam_2 AS name, round(b.tax_rate::numeric,2) as average_value, round((t.tax_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
 	    columnName: 'tax_rate',
 	    unit: 'R$'
 	  }, {
-	    title: 'Tax. Inc.',
+	    title: 'Total',
 	    query: 'SELECT a.nam_2 AS name, b.taxinc AS average_value, (SELECT AVG(taxinc) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
 	    columnName: 'taxinc',
 	    unit: 'M R$'
 	  }, {
-	    title: 'Tax. Inc. per capita',
+	    title: 'Per capita',
 	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxinc)*1000000 as taxinc_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.nam_2 AS name, round(b.taxinc_rate::numeric,2) as average_value, round((t.taxinc_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
 	    columnName: 'taxinc_rate',
 	    unit: 'R$'
