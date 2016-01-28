@@ -49,7 +49,6 @@ class Chart extends React.Component {
     }
     return (
       <div className="chart">
-        <h2>{this.props.title}</h2>
         <div className="canvas">
         </div>
       </div>
@@ -58,9 +57,10 @@ class Chart extends React.Component {
 
   renderSparkLine() {
     let data = this.data;
+
     const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
-    const margin = {top: 15, left: 30, right: 20, bottom: 35};
+    const margin = {top: 15, left: 40, right: 20, bottom: 35};
     const width = el.clientWidth;
     const height = el.clientHeight;
     const x = d3.time.scale().range([0, width - margin.left - margin.right]).nice();
@@ -80,7 +80,7 @@ class Chart extends React.Component {
     // Domain
     x.domain(d3.extent(data, (d) => d.date));
     y.domain([0, d3.max(data, (d) => {
-      return d.average_value > d.value ? d.average_value : d.value;
+      return d.average_value > d.nat_average_value ? d.average_value : d.nat_average_value;
     })]);
 
     // X Axis
@@ -89,6 +89,7 @@ class Chart extends React.Component {
       .orient('bottom')
       .ticks(d3.time.years, 2)
       .outerTickSize(1)
+      .innerTickSize(0)
       .tickFormat(d3.time.format(dateFormat));
 
     svg.append('g')
@@ -107,6 +108,7 @@ class Chart extends React.Component {
       .scale(y)
       .orient('left')
       .outerTickSize(1)
+      .innerTickSize(0)
       .ticks(5);
 
     svg.append('g')
@@ -126,9 +128,9 @@ class Chart extends React.Component {
       .attr('class', 'tooltip')
       .style('opacity', 0);
 
-    function showTooltip (d) {
+    function showTooltip (d, nat) {
       tooltip
-        .html(`${d.value}`)
+        .html(`${nat ? d.nat_average_value : d.average_value}`)
         .transition().duration(200)
         .style('opacity', 1)
         .style('top', `${d3.event.pageY - 10}px`)
@@ -143,7 +145,7 @@ class Chart extends React.Component {
     const line = d3.svg.line()
       .interpolate('linear')
       .x((d) => x(d.date))
-      .y((d) => y(d.value));
+      .y((d) => y(d.average_value));
 
     svg.append('path')
       .datum(data)
@@ -155,9 +157,11 @@ class Chart extends React.Component {
       .append('circle')
         .attr('class', 'focus')
         .attr('cx', (d) => x(d.date))
-        .attr('cy', (d) => y(d.value))
-        .attr('r', 2)
-        .on('mouseover', showTooltip)
+        .attr('cy', (d) => y(d.average_value))
+        .attr('r', 1.5)
+        .on('mouseover', (d) => {
+          showTooltip(d, false);
+        })
         .on('mouseout', hideTooltip);
 
     // Draw average line
@@ -165,7 +169,7 @@ class Chart extends React.Component {
       const avgLine = d3.svg.line()
         .interpolate('linear')
         .x((d) => x(d.date))
-        .y((d) => y(d.average_value));
+        .y((d) => y(d.nat_average_value));
 
       svg.append('path')
           .datum(data)
@@ -177,9 +181,11 @@ class Chart extends React.Component {
         .append('circle')
           .attr('class', 'avg-focus')
           .attr('cx', (d) => x(d.date))
-          .attr('cy', (d) => y(d.average_value))
-          .attr('r', 2)
-          .on('mouseover', showTooltip)
+          .attr('cy', (d) => y(d.nat_average_value))
+          .attr('r', 1.5)
+          .on('mouseover', (d) => {
+            showTooltip(d, true);
+          })
           .on('mouseout', hideTooltip);
     }
 
@@ -187,7 +193,9 @@ class Chart extends React.Component {
 
   clearView() {
     const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
-    el.innerHTML = null;
+    if (el) {
+      el.innerHTML = null;
+    }
   }
 
 }

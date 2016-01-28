@@ -32,7 +32,8 @@ export default {
     mapOptions: {
       zoom: 5,
       center: [-16.78350556192777, -54.0087890625],
-      zoomControl: false
+      zoomControl: false,
+      scrollWheelZoom: false
     },
     zoomOptions: {
       position: 'topright'

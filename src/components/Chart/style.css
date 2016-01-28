@@ -1,71 +1,83 @@
 .chart {
   position: relative;
-  padding: 20px 0;
+  padding: 20px;
 
-  background: white;
+  color: white;
+  background: #333;
 
   .canvas {
     height: 200px;
-    width: 300px;
+    width: 100%;
   }
 
   .axis {
-    font-size: 11px;
+    font-size: 10px;
+    stroke: white;
   }
 
   .axis .tick line {
     fill: none;
     stroke-width: 1;
-    stroke: black;
+    stroke: white;
     shape-rendering: crispEdges;
+  }
+
+  .axis .tick text {
+    stroke-width: 0;
+    fill: white;
   }
 
   .sparkline,
   .avg-sparkline {
     fill: none;
-    stroke: #000;
+    stroke: white;
     stroke-width: 1;
-    shape-rendering: optimizeSpeed;
+    shape-rendering: crispEdges;
   }
 
   .avg-sparkline {
-    stroke: #f00;
+    stroke: #00a3db;
   }
 
   .domain-line {
     fill: none;
-    stroke: #000;
+    stroke: white;
     stroke-width: 1;
     shape-rendering: crispEdges;
   }
 
   .label {
-    font-size: 11px;
+    font-size: 10px;
+    color: white;
     text-anchor: end;
+    stroke-width: 0;
+    fill: white;
   }
 
   .focus,
   .avg-focus {
-    fill: #000;
-    stroke: #000;
+    fill: white;
+    stroke: white;
     stroke-width: 0;
     shape-rendering: optimizeSpeed;
     cursor: pointer;
   }
 
   .avg-focus {
-    fill: #f00;
+    fill: #00a3db;
   }
 }
 
 .tooltip {
   position: absolute;
+  padding: 2px 4px;
 
-  font-size: 11px;
+  font-size: 10px;
+  font-weight: bold;
 
-  background: rgba(255, 255, 255, .8);
+  background: white;
 
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -100%);
   pointer-events: none;
   z-index: 1;
 }
