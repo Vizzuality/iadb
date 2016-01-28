@@ -34,9 +34,7 @@ class App extends React.Component {
     }
     this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
     this.refs.map.updateLayer(layerData);
-    // config.charts.forEach((c, i) => {
-    //   this.refs[`chart${i}`].setState({codgov: mapData.codgov});
-    // });
+    this.refs.chart.setState({codgov: mapData.codgov});
   }
 
   onChangeTimeline(timelineData) {
@@ -53,9 +51,7 @@ class App extends React.Component {
       layerName: layerData.columnName,
       layerData: layerData
     });
-    // config.charts.forEach((c, i) => {
-    //   this.refs[`chart${i}`].setState({layerName: layerData.columnName});
-    // });
+    this.refs.chart.setState({layerName: layerData.columnName});
   }
 
   shouldComponentUpdate() {
