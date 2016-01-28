@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2d97043eac3c234b4e99"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9b347a9838660f085974"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -817,20 +817,22 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var charts = [];
-
-	      _config2.default.charts.forEach(function (c, i) {
-	        charts.push(_react2.default.createElement(_Chart2.default, { ref: 'chart' + i,
-	          cartodbUser: _config2.default.app.cartodbUser,
-	          layerName: _config2.default.app.layerName,
-	          date: _config2.default.app.date,
-	          unit: c.unit,
-	          codgov: _config2.default.app.codgov,
-	          title: c.title,
-	          query: c.query,
-	          key: i
-	        }));
-	      });
+	      // const charts = [];
+	      //
+	      // config.charts.forEach((c, i) => {
+	      //   charts.push(
+	      //     <Chart ref={`chart${i}`}
+	      //       cartodbUser={config.app.cartodbUser}
+	      //       layerName={config.app.layerName}
+	      //       date={config.app.date}
+	      //       unit={c.unit}
+	      //       codgov={config.app.codgov}
+	      //       title={c.title}
+	      //       query={c.query}
+	      //       key={i}
+	      //     />
+	      //   );
+	      // });
 
 	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('h1', null, 'Datos financieros municipales'), _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(299), width: '192', height: '31' })), _react2.default.createElement(_Layers2.default, { ref: 'layers',
 	        layerName: _config2.default.app.layerName,
@@ -861,49 +863,6 @@
 	        pause: _config2.default.timeline.pause,
 	        onChange: this.onChangeTimeline.bind(this)
 	      }));
-
-	      // return (
-	      //   <div>
-	      //     <Map ref="map"
-	      //       cartodbUser={config.app.cartodbUser}
-	      //       mapOptions={config.map.mapOptions}
-	      //       basemap={config.map.basemap}
-	      //       colors={config.map.colors}
-	      //       date={config.app.date}
-	      //       codgov={config.app.codgov}
-	      //       onChange={this.onMapChange.bind(this)}
-	      //     />
-	      //     <Layers ref="layers"
-	      //       layerName={config.app.layerName}
-	      //       layers={config.layers}
-	      //       onChange={this.onChangeLayers.bind(this)}
-	      //     />
-	      //     <Timeline ref="timeline"
-	      //       cartodbUser={config.app.cartodbUser}
-	      //       query={config.timeline.query}
-	      //       step={config.timeline.step}
-	      //       format={config.timeline.format}
-	      //       play={config.timeline.play}
-	      //       pause={config.timeline.pause}
-	      //       onChange={this.onChangeTimeline.bind(this)}
-	      //     />
-	      //     <div ref="dashboard" className="dashboard _hidden">
-	      //       <Average ref="average"
-	      //         cartodbUser={config.app.cartodbUser}
-	      //         date={config.app.date}
-	      //         layerName={config.app.layerName}
-	      //         layerData={layerData}
-	      //         codgov={config.app.codgov}
-	      //         query={config.average.query}
-	      //       />
-	      //       <div className="chart-legend">
-	      //         <div className="legend-average">National average per year</div>
-	      //         <div className="legend-value">Average per year</div>
-	      //       </div>
-	      //       {charts}
-	      //     </div>
-	      //   </div>
-	      // );
 	    }
 	  }]);
 
@@ -69316,16 +69275,34 @@
 	   */
 	  charts: [{
 	    title: 'Revenue',
-	    query: 'SELECT a.nam_2 AS name, b.reven AS value, (SELECT AVG(reven) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    query: 'SELECT a.nam_2 AS name, b.reven as average_value, (SELECT AVG(reven) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    columnName: 'reven',
 	    unit: 'M R$'
+	  }, {
+	    title: 'Revenue per capita',
+	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(reven)*1000000 as reven_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.nam_2 AS name, round(b.reven_rate::numeric,2) as average_value, round((t.reven_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
+	    columnName: 'reven_rate',
+	    unit: 'R$'
 	  }, {
 	    title: 'Taxes',
-	    query: 'SELECT a.nam_2 AS name, b.taxes AS value, (SELECT AVG(taxes) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    query: 'SELECT a.nam_2 AS name, b.taxes AS average_value, (SELECT AVG(taxes) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    columnName: 'taxes',
 	    unit: 'M R$'
 	  }, {
+	    title: 'Taxes per capita',
+	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxes)*1000000 as tax_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.nam_2 AS name, round(b.tax_rate::numeric,2) as average_value, round((t.tax_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
+	    columnName: 'tax_rate',
+	    unit: 'R$'
+	  }, {
 	    title: 'Tax. Inc.',
-	    query: 'SELECT a.nam_2 AS name, b.taxinc AS value, (SELECT AVG(taxinc) as average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    query: 'SELECT a.nam_2 AS name, b.taxinc AS average_value, (SELECT AVG(taxinc) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' ORDER BY b.year',
+	    columnName: 'taxinc',
 	    unit: 'M R$'
+	  }, {
+	    title: 'Tax. Inc. per capita',
+	    query: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxinc)*1000000 as taxinc_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.nam_2 AS name, round(b.taxinc_rate::numeric,2) as average_value, round((t.taxinc_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\'  ORDER BY b.year',
+	    columnName: 'taxinc_rate',
+	    unit: 'R$'
 	  }]
 
 	};
