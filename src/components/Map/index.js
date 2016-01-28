@@ -87,8 +87,8 @@ class Map extends React.Component {
         polygon-fill: ${colors[0]};
         polygon-opacity: 1;
         line-color: #FFF;
-        line-width: 0.5;
-        line-opacity: 1;
+        line-width: 0.3;
+        line-opacity: 0.7;
       }
       #${layerData.tableName} [${layerData.columnName} <= ${data[6]}] {polygon-fill: ${colors[6]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[5]}] {polygon-fill: ${colors[5]};}

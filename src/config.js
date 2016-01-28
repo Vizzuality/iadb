@@ -74,7 +74,7 @@ export default {
     columnName: 'reven',
     buckets: 7,
     query: 'SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-    interactivity: 'codgov,reven',
+    interactivity: 'codgov,reven, name',
     unit: 'M R$',
     categoryName:'Revenue'
   }, {
@@ -82,46 +82,46 @@ export default {
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'reven_rate',
     buckets: 7,
-    query: 'SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} ',
-    interactivity: 'codgov, reven_rate',
+    query: 'SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
+    interactivity: 'codgov, reven_rate, name',
     unit: 'R$',
     categoryName:'Revenue'
   }, {
-    name: 'Taxes',
+    name: 'Total',
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'taxes',
     buckets: 7,
     query: 'SELECT a.*, b.taxes FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-    interactivity: 'codgov,taxes',
+    interactivity: 'codgov,taxes, name',
     unit: 'M R$',
     categoryName: 'Taxes'
   },
   {
-    name: 'Taxes per capita',
+    name: 'Per capita',
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'tax_rate',
     buckets: 7,
-    query: 'SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} ',
-    interactivity: 'codgov,tax_rate',
+    query: 'SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
+    interactivity: 'codgov,tax_rate, name',
     unit: 'R$',
     categoryName:'Taxes'
   }, {
-    name: 'Tax. Inc.',
+    name: 'Total',
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'taxinc',
     buckets: 7,
     query: 'SELECT a.*, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-    interactivity: 'codgov,taxinc',
+    interactivity: 'codgov,taxinc, name',
     unit: 'M R$',
     categoryName: 'Tax. Inc.'
   },
   {
-    name: 'Tax. Inc. per capita',
+    name: 'Per capita',
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'taxinc_rate',
     buckets: 7,
-    query: 'SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} ',
-    interactivity: 'codgov,taxinc_rate',
+    query: 'SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0',
+    interactivity: 'codgov,taxinc_rate, name',
     unit: 'R$',
     categoryName: 'Tax. Inc.'
   },],
