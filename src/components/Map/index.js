@@ -84,10 +84,10 @@ class Map extends React.Component {
       const data = d.rows[0].cdb_jenksbins;
       let cartocss = `#${layerData.tableName}{
         polygon-fill: ${colors[0]};
-        polygon-opacity: 0.8;
+        polygon-opacity: 1;
         line-color: #FFF;
         line-width: 0.5;
-        line-opacity: 0.5;
+        line-opacity: 1;
       }
       #${layerData.tableName} [${layerData.columnName} <= ${data[6]}] {polygon-fill: ${colors[6]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[5]}] {polygon-fill: ${colors[5]};}
