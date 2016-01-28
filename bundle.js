@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "45bb6944cbc52a9dd44e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bb0003b44e1ef64d80a7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -69105,7 +69105,7 @@
 	        return x(d.date);
 	      }).attr('cy', function (d) {
 	        return y(d.average_value);
-	      }).attr('r', 1.5).on('mouseover', function (d) {
+	      }).attr('r', 2).on('mouseover', function (d) {
 	        showTooltip(d, false);
 	      }).on('mouseout', hideTooltip);
 
@@ -69123,7 +69123,7 @@
 	          return x(d.date);
 	        }).attr('cy', function (d) {
 	          return y(d.nat_average_value);
-	        }).attr('r', 1.5).on('mouseover', function (d) {
+	        }).attr('r', 2).on('mouseover', function (d) {
 	          showTooltip(d, true);
 	        }).on('mouseout', hideTooltip);
 	      }
@@ -69188,7 +69188,7 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: white;\n  stroke: white;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: #00a3db;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -100%);\n\n          transform: translate(-50%, -100%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #00a3db;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: white;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -100%);\n\n          transform: translate(-50%, -100%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
 
 	// exports
 
