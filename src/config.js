@@ -19,7 +19,7 @@ export default {
    * Required: name, average_value
    */
   average: {
-    query: 'SELECT a.name AS name, round(AVG(b.${columnName})::numeric,2) AS average_value FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year} GROUP BY a.nam_2'
+    query: 'SELECT a.name AS name, round(AVG(b.${columnName})::numeric,2) AS average_value FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year} GROUP BY a.name'
   },
 
   /**
