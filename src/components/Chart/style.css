@@ -32,7 +32,6 @@
     fill: none;
     stroke: #00a3db;
     stroke-width: 1;
-    shape-rendering: crispEdges;
   }
 
   .avg-sparkline {
@@ -56,15 +55,14 @@
 
   .focus,
   .avg-focus {
-    fill: white;
-    stroke: white;
+    fill: #00a3db;
     stroke-width: 0;
     shape-rendering: optimizeSpeed;
     cursor: pointer;
   }
 
   .avg-focus {
-    fill: #00a3db;
+    fill: white;
   }
 }
 

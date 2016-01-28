@@ -158,7 +158,7 @@ class Chart extends React.Component {
         .attr('class', 'focus')
         .attr('cx', (d) => x(d.date))
         .attr('cy', (d) => y(d.average_value))
-        .attr('r', 1.5)
+        .attr('r', 2)
         .on('mouseover', (d) => {
           showTooltip(d, false);
         })
@@ -182,7 +182,7 @@ class Chart extends React.Component {
           .attr('class', 'avg-focus')
           .attr('cx', (d) => x(d.date))
           .attr('cy', (d) => y(d.nat_average_value))
-          .attr('r', 1.5)
+          .attr('r', 2)
           .on('mouseover', (d) => {
             showTooltip(d, true);
           })
