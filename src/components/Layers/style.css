@@ -25,6 +25,10 @@
       opacity: .3;
       border-bottom: 4px solid transparent;
 
+      & > span {
+        cursor: pointer;
+      }
+
       &._active {
         opacity: 1;
         border-color: white;

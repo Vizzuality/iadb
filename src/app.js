@@ -43,7 +43,7 @@ class App extends React.Component {
     const layerData = this.refs.layers.state.layer;
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
-    // this.refs.average.setState({date: timelineData.date});
+    this.refs.average.setState({date: timelineData.date});
   }
 
   onChangeLayers(layerData) {

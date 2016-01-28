@@ -43,10 +43,9 @@ class Layers extends React.Component {
 
       result.push(
         <li
-          onClick={this.changeCategory.bind(this)}
           className={activeClass}
-          data-category={key}
-          key={key}>{key}
+          key={key}>
+          <span data-category={key} onClick={this.changeCategory.bind(this)}>{key}</span>
           <ul>
             {layersResult}
           </ul>
@@ -62,6 +61,7 @@ class Layers extends React.Component {
   }
 
   changeCategory(e) {
+    e.stopPropagation();
     const value = e.currentTarget.getAttribute('data-category');
     const currentLayer = _.find(this.props.layers, {categoryName: value});
     this.setState({layer: currentLayer});
@@ -71,6 +71,7 @@ class Layers extends React.Component {
   }
 
   setSelected(e) {
+    e.stopPropagation();
     const value = e.currentTarget.value;
     const currentLayer = _.find(this.props.layers, {columnName: value});
     this.setState({layer: currentLayer});
