@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>IADB</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+  </head>
+  <body>
+    <input id="passwordInput" type="password" placeholder="Password">
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var pI = document.getElementById('passwordInput');
+        pI.addEventListener('input', function() {
+          if (btoa(pI.value) === 'aWFkYnZpenp1YWxpdHk=') {
+            document.cookie = 'iadb_demo_access=true'
+            window.location.href = 'index.html';
+          } else {
+            document.cookie = 'iadb_demo_access=false'
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

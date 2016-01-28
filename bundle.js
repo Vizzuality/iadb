@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "66e4cde1103106504b00"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c4a16ff7af17087ddae8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -550,7 +550,8 @@
 
 	__webpack_require__(1);
 	__webpack_require__(3);
-	module.exports = __webpack_require__(4);
+	__webpack_require__(4);
+	module.exports = __webpack_require__(301);
 
 
 /***/ },
@@ -859,7 +860,11 @@
 	  return App;
 	}(_react2.default.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	if (document.cookie === 'iadb_demo_access=false') {
+	  window.location.href = 'login.html';
+	} else {
+	  _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	}
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(186); if (makeExportsHot(module, __webpack_require__(69))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "app.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module)))
@@ -69390,6 +69395,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "c8d01c65b951fcdf9d4958258b6af8b9.png";
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "login.html";
 
 /***/ }
 /******/ ]);
