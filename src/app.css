@@ -49,7 +49,7 @@ h2 {
   bottom: auto;
   width: 300px;
 
-  z-index: 1;
+  z-index: 2;
 
   .title {
     padding: 20px;
@@ -80,7 +80,7 @@ h2 {
 
   background-color: white;
 
-  z-index: 1;
+  z-index: 2;
 
   .logo {
     display: block;
@@ -88,7 +88,7 @@ h2 {
 }
 
 /* Chart */
-.chart-legend {
+/*.chart-legend {
   padding: 20px 0;
   border-top: 1px solid #ccc;
 
@@ -115,7 +115,7 @@ h2 {
     position: relative;
     padding-left: 25px;
   }
-}
+}*/
 
 ._hidden {
   display: none;
