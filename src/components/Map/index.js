@@ -42,13 +42,14 @@ class Map extends React.Component {
     this.removeLayer();
     this.getCartoCSS(layerData, cartocss => {
       cartodbConfig.sublayers = [{
-        sql: layerData.query.replace('${year}', this.state.date.getFullYear()),
+        sql: layerData.query.replace(/\$\{year\}/g, this.state.date.getFullYear()),
         cartocss: cartocss,
         interactivity: layerData.interactivity
       }];
       cartodb.createLayer(this.map, cartodbConfig)
         .addTo(this.map)
         .done(layer => {
+          this.removeLayer();
           this.layer = layer;
           this.layer.setInteraction(true);
           this.layer.on('featureClick', (e, latlng, point, d) => {
@@ -77,7 +78,7 @@ class Map extends React.Component {
   getCartoCSS(layerData, cb) {
     const colors = this.props.colors;
     const query = `SELECT CDB_JenksBins(array_agg(${layerData.columnName}::numeric), 7)
-      FROM ${layerData.tableName}`;
+      FROM ${layerData.tableName} where ${layerData.columnName}::numeric is not null`;
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (d) => {
       const data = d.rows[0].cdb_jenksbins;
