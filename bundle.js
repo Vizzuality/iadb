@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4ec0e121b56efbbe7449"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "510f1f5dba55bc0d94c1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -35785,7 +35785,7 @@
 	          _this2.layer = layer;
 	          _this2.layer.setInteraction(true);
 	          _this2.layer.on('featureOver', _.debounce(function (e, latlng, point, d) {
-	            _this2.tooltip.html('' + d.codgov).transition().duration(50).style('opacity', 1).style('top', point.y + 'px').style('left', point.x + 'px');
+	            _this2.tooltip.html('' + d.name).transition().duration(50).style('opacity', 1).style('top', point.y + 'px').style('left', point.x + 'px');
 	          }, 5));
 	          _this2.layer.on('featureClick', function (e, latlng, point, d) {
 	            _this2.setState({ codgov: d.codgov });
