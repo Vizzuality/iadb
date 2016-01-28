@@ -41,3 +41,16 @@
 .leaflet-top .leaflet-control {
   margin-top: 20px;
 }
+
+.map-tooltip {
+  position: absolute;
+  padding: 10px;
+
+  font-size: 10px;
+  text-transform: uppercase;
+
+  background: white;
+
+  transform: translate(10px, 10px);
+  pointer-events: none;
+}

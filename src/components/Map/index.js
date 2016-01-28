@@ -1,6 +1,7 @@
 'use strict';
 
 import './style.css';
+import d3 from 'd3';
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -16,6 +17,8 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
+    this.tooltip = d3.select('body').append('div')
+      .attr('class', 'map-tooltip');
     this.createMap();
   }
 
@@ -53,6 +56,14 @@ class Map extends React.Component {
           this.removeLayer();
           this.layer = layer;
           this.layer.setInteraction(true);
+          this.layer.on('featureOver', _.debounce((e, latlng, point, d) => {
+            this.tooltip
+              .html(`${d.codgov}`)
+              .transition().duration(50)
+              .style('opacity', 1)
+              .style('top', `${point.y}px`)
+              .style('left', `${point.x}px`);
+          }, 5));
           this.layer.on('featureClick', (e, latlng, point, d) => {
             this.setState({codgov: d.codgov});
             this.props.onChange(d);
