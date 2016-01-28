@@ -1,9 +1,12 @@
 .timeline {
   position: absolute;
   display: flex;
+  padding: 5px 10px;
   bottom: 3rem;
   left: 2rem;
   right: 2rem;
+
+  background: white;
 
   z-index: 1;
 
