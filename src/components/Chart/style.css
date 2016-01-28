@@ -30,13 +30,13 @@
   .sparkline,
   .avg-sparkline {
     fill: none;
-    stroke: white;
+    stroke: #00a3db;
     stroke-width: 1;
     shape-rendering: crispEdges;
   }
 
   .avg-sparkline {
-    stroke: #00a3db;
+    stroke: white;
   }
 
   .domain-line {
