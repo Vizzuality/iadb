@@ -10,7 +10,7 @@ export default {
     cartodbUser: 'iadb',
     layerName: 'reven',
     date: new Date(2000, 0, 1),
-    codgov: '0762918753'
+    codgov: null
   },
 
   /**

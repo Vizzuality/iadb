@@ -82,7 +82,7 @@ class Map extends React.Component {
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (d) => {
       const data = d.rows[0].cdb_jenksbins;
-      const cartocss = `#${layerData.tableName}{
+      let cartocss = `#${layerData.tableName}{
         polygon-fill: ${colors[0]};
         polygon-opacity: 0.8;
         line-color: #FFF;
@@ -96,10 +96,14 @@ class Map extends React.Component {
       #${layerData.tableName} [${layerData.columnName} <= ${data[2]}] {polygon-fill: ${colors[2]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}
-      #${layerData.tableName} [codgov = '${this.state.codgov}'] {
-        line-color: #F00;
-        line-width: 3;
-      }`;
+      `;
+
+      if (this.state.codgov) {
+        cartocss = `${cartocss} #${layerData.tableName} [codgov = '${this.state.codgov}'] {
+          line-color: #F00;
+          line-width: 3;
+        }`;
+      }
       cb(cartocss);
     });
   }

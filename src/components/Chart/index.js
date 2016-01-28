@@ -36,7 +36,9 @@ class Chart extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    if (this.state.codgov) {
+      this.fetchData();
+    }
   }
 
   render() {
