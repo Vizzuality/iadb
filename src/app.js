@@ -87,6 +87,11 @@ class App extends React.Component {
             <h1>Datos financieros municipales</h1>
             <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
           </div>
+          <Layers ref="layers"
+            layerName={config.app.layerName}
+            layers={config.layers}
+            onChange={this.onChangeLayers.bind(this)}
+          />
         </div>
         <Map ref="map"
           cartodbUser={config.app.cartodbUser}

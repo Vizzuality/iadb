@@ -1,16 +1,14 @@
 .layers {
-  position: absolute;
-  top: 50%;
-  left: 2rem;
-  padding: .5rem;
+  padding: 20px;
 
-  transform: translateY(-50%);
+  color: white;
 
-  background: white;
-
-  z-index: 1;
+  background: #004b74;
 
   ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 0;
     padding: 0;
     list-style: none;
