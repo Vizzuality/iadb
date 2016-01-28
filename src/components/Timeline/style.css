@@ -5,6 +5,8 @@
   left: 2rem;
   right: 2rem;
 
+  background: white;
+
   z-index: 1;
 
   ul {
