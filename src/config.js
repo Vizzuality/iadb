@@ -30,7 +30,7 @@ export default {
     // More info: [http://leafletjs.com/reference.html#map-options]
     mapOptions: {
       zoom: 5,
-      center: [-16.78350556192777, -54.0087890625]
+      center: [-13.752724664396975,-48.1201171875]
     },
     // Basemap url
     basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
