@@ -91,11 +91,21 @@ class App extends React.Component {
         <Map ref="map"
           cartodbUser={config.app.cartodbUser}
           mapOptions={config.map.mapOptions}
+          zoomOptions={config.map.zoomOptions}
           basemap={config.map.basemap}
           colors={config.map.colors}
           date={config.app.date}
           codgov={config.app.codgov}
           onChange={this.onMapChange.bind(this)}
+        />
+        <Timeline ref="timeline"
+          cartodbUser={config.app.cartodbUser}
+          query={config.timeline.query}
+          step={config.timeline.step}
+          format={config.timeline.format}
+          play={config.timeline.play}
+          pause={config.timeline.pause}
+          onChange={this.onChangeTimeline.bind(this)}
         />
       </div>
     );
