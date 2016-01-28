@@ -33,9 +33,9 @@ export default {
       center: [-16.78350556192777, -54.0087890625]
     },
     // Basemap url
-    basemap: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
     // Legend colors
-    colors: ['#FFFFCC', '#C7E9B4', '#7FCDBB', '#41B6C4', '#1D91C0', '#225EA8', '#0C2C84']
+    colors: ['#FFFFFF','#D3E0E7', '#ABC4D1', '#7FA5B9', '#5587A2', '#306D8E', '#0A5279']
   },
 
   /**
