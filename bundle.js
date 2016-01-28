@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0c2e623758802788b200"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2d97043eac3c234b4e99"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -59293,7 +59293,7 @@
 	      }
 	      var avgNat = this.state.natValue || this.state.natValue === 0 ? this.state.natValue : '-';
 	      var avgMun = this.state.value || this.state.value === 0 ? this.state.value : '-';
-	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media nacional'), _react2.default.createElement('div', { className: 'nat-value' }, avgNat, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media municipal'), _react2.default.createElement('div', { className: 'value' }, avgMun, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)))));
+	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('div', { className: 'nat-value' }, avgNat, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)), _react2.default.createElement('h3', null, 'Media nacional')), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('div', { className: 'value' }, avgMun, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)), _react2.default.createElement('h3', null, 'Media municipal'))));
 	    }
 	  }]);
 
@@ -59348,7 +59348,7 @@
 
 
 	// module
-	exports.push([module.id, ".average {\n  position: relative;\n  padding: 10px 20px 20px 20px;\n\n  color: white;\n\n  background: #333;\n}\n.average h2 {\n  margin: 0 auto;\n  max-width: 80%;\n  font-size: 13px;\n  text-align: center;\n  text-transform: uppercase;\n}\n.average .value,\n  .average .nat-value {\n  font-size: 20px;\n  font-weight: bold;\n}\n.average .value .unit, .average .nat-value .unit {\n  font-size: 70%;\n}\n.average .value {\n  color: #00a3db;\n}\n.average .panels {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.average .panel {\n  width: 50%;\n  padding: 0 10px;\n  box-sizing: content-box;\n}\n.average .panel h3 {\n  font-size: 10px;\n  font-weight: normal;\n  text-transform: uppercase;\n}\n", ""]);
+	exports.push([module.id, ".average {\n  position: relative;\n  padding: 10px 20px 20px 20px;\n\n  color: white;\n\n  background: #333;\n}\n.average h2 {\n  margin: 0 auto;\n  max-width: 80%;\n  font-size: 13px;\n  text-align: center;\n  text-transform: uppercase;\n}\n.average .value,\n  .average .nat-value {\n  font-size: 20px;\n  font-weight: bold;\n}\n.average .value .unit, .average .nat-value .unit {\n  font-size: 70%;\n}\n.average .value {\n  color: #00a3db;\n}\n.average .panels {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  margin-top: 10px;\n}\n.average .panel {\n  width: 50%;\n  padding: 0 10px;\n  box-sizing: content-box;\n  text-align: center;\n}\n.average .panel h3 {\n  margin: 0;\n  font-size: 10px;\n  font-weight: normal;\n  text-transform: uppercase;\n}\n", ""]);
 
 	// exports
 
