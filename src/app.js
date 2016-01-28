@@ -32,30 +32,30 @@ class App extends React.Component {
       this.refs.dashboard.className = 'dashboard';
       ReactDOM.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
     }
-    this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
+    // this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
     this.refs.map.updateLayer(layerData);
-    config.charts.forEach((c, i) => {
-      this.refs[`chart${i}`].setState({codgov: mapData.codgov});
-    });
+    // config.charts.forEach((c, i) => {
+    //   this.refs[`chart${i}`].setState({codgov: mapData.codgov});
+    // });
   }
 
   onChangeTimeline(timelineData) {
     const layerData = this.refs.layers.state.layer;
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
-    this.refs.average.setState({date: timelineData.date});
+    // this.refs.average.setState({date: timelineData.date});
   }
 
   onChangeLayers(layerData) {
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
-    this.refs.average.setState({
-      layerName: layerData.columnName,
-      layerData: layerData
-    });
-    config.charts.forEach((c, i) => {
-      this.refs[`chart${i}`].setState({layerName: layerData.columnName});
-    });
+    // this.refs.average.setState({
+    //   layerName: layerData.columnName,
+    //   layerData: layerData
+    // });
+    // config.charts.forEach((c, i) => {
+    //   this.refs[`chart${i}`].setState({layerName: layerData.columnName});
+    // });
   }
 
   shouldComponentUpdate() {
