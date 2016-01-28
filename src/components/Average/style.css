@@ -9,5 +9,9 @@
 
   .value {
     font-size: 2rem;
+
+    .unit {
+      font-size: 50%;
+    }
   }
 }

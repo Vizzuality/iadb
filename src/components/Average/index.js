@@ -13,6 +13,7 @@ class Average extends React.Component {
       value: null,
       codgov: props.codgov,
       layerName: props.layerName,
+      layerData: props.layerData,
       date: props.date
     };
   }
@@ -35,6 +36,9 @@ class Average extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (!this.state.codgov) {
+      return;
+    }
     if (prevState.codgov !== this.state.codgov ||
         prevState.layerName !== this.state.layerName ||
         prevState.date !== this.state.date) {
@@ -43,7 +47,9 @@ class Average extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    if (this.state.codgov) {
+      this.fetchData();
+    }
   }
 
   render() {
@@ -55,8 +61,8 @@ class Average extends React.Component {
     return (
       <div className="average">
         <h2>{this.state.name}</h2>
-        <div className="value">{total}</div>
-        <div>{this.state.layerName}</div>
+        <div className="value">{total} <span className="unit">{this.state.layerData.unit}</span></div>
+        <div>{this.state.layerData.name}</div>
         <div>{this.state.date.getFullYear()}</div>
       </div>
     );

@@ -1,6 +1,7 @@
 'use strict';
 
 import './app.css';
+import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from './components/Map';
@@ -10,11 +11,28 @@ import Average from './components/Average';
 import Chart from './components/Chart';
 import config from './config';
 
+let layerData = null;
+
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.getCurrentLayer();
+  }
+
+  getCurrentLayer() {
+    const layerName = this.refs.layers ? this.refs.layers.state.layer : config.app.layerName;
+    layerData = _.find(config.layers, {columnName: layerName});
+    return layerData;
+  }
 
   onMapChange(mapData) {
     const layerData = this.refs.layers.state.layer;
-    this.refs.average.setState({codgov: mapData.codgov});
+    if (mapData.codgov) {
+      this.refs.dashboard.className = 'dashboard';
+      ReactDOM.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
+    }
+    this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
     this.refs.map.updateLayer(layerData);
     config.charts.forEach((c, i) => {
       this.refs[`chart${i}`].setState({codgov: mapData.codgov});
@@ -31,10 +49,17 @@ class App extends React.Component {
   onChangeLayers(layerData) {
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
-    this.refs.average.setState({layerName: layerData.columnName});
+    this.refs.average.setState({
+      layerName: layerData.columnName,
+      layerData: layerData
+    });
     config.charts.forEach((c, i) => {
       this.refs[`chart${i}`].setState({layerName: layerData.columnName});
     });
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   render() {
@@ -80,11 +105,12 @@ class App extends React.Component {
           pause={config.timeline.pause}
           onChange={this.onChangeTimeline.bind(this)}
         />
-        <div className="dashboard">
+        <div ref="dashboard" className="dashboard _hidden">
           <Average ref="average"
             cartodbUser={config.app.cartodbUser}
             date={config.app.date}
             layerName={config.app.layerName}
+            layerData={layerData}
             codgov={config.app.codgov}
             query={config.average.query}
           />

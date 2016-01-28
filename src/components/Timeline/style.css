@@ -3,9 +3,13 @@
   display: flex;
   bottom: 3rem;
   left: 2rem;
-  right: 370px;
+  right: 2rem;
 
   z-index: 1;
+
+  &._collapsed {
+    right: 370px;
+  }
 
   ul {
     position: relative;

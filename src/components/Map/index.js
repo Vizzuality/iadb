@@ -42,13 +42,14 @@ class Map extends React.Component {
     this.removeLayer();
     this.getCartoCSS(layerData, cartocss => {
       cartodbConfig.sublayers = [{
-        sql: layerData.query.replace('${year}', this.state.date.getFullYear()),
+        sql: layerData.query.replace(/\$\{year\}/g, this.state.date.getFullYear()),
         cartocss: cartocss,
         interactivity: layerData.interactivity
       }];
       cartodb.createLayer(this.map, cartodbConfig)
         .addTo(this.map)
         .done(layer => {
+          this.removeLayer();
           this.layer = layer;
           this.layer.setInteraction(true);
           this.layer.on('featureClick', (e, latlng, point, d) => {
@@ -77,11 +78,11 @@ class Map extends React.Component {
   getCartoCSS(layerData, cb) {
     const colors = this.props.colors;
     const query = `SELECT CDB_JenksBins(array_agg(${layerData.columnName}::numeric), 7)
-      FROM ${layerData.tableName}`;
+      FROM ${layerData.tableName} where ${layerData.columnName}::numeric is not null`;
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (d) => {
       const data = d.rows[0].cdb_jenksbins;
-      const cartocss = `#${layerData.tableName}{
+      let cartocss = `#${layerData.tableName}{
         polygon-fill: ${colors[0]};
         polygon-opacity: 0.8;
         line-color: #FFF;
@@ -95,10 +96,14 @@ class Map extends React.Component {
       #${layerData.tableName} [${layerData.columnName} <= ${data[2]}] {polygon-fill: ${colors[2]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}
-      #${layerData.tableName} [codgov = '${this.state.codgov}'] {
-        line-color: #F00;
-        line-width: 3;
-      }`;
+      `;
+
+      if (this.state.codgov) {
+        cartocss = `${cartocss} #${layerData.tableName} [codgov = '${this.state.codgov}'] {
+          line-color: #F00;
+          line-width: 3;
+        }`;
+      }
       cb(cartocss);
     });
   }
