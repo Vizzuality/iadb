@@ -1,18 +1,57 @@
 .layers {
-  position: absolute;
-  top: 50%;
-  left: 2rem;
-  padding: .5rem;
+  position: relative;
+  padding: 20px 20px 0 20px;
+  margin-bottom: 38px;
 
-  transform: translateY(-50%);
+  color: white;
 
-  background: white;
-
-  z-index: 1;
+  background: #004b74;
 
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  & > ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > li {
+      padding-bottom: 3px;
+      font-weight: bold;
+      text-transform: uppercase;
+      opacity: .3;
+      border-bottom: 4px solid transparent;
+
+      &._active {
+        opacity: 1;
+        border-color: white;
+      }
+
+      ul {
+        position: absolute;
+        padding: 10px 0;
+        justify-content: center;
+        align-items: center;
+        left: 0;
+        top: 100%;
+        width: 300px;
+        background: #333;
+
+        li {
+          margin: 0 20px;
+        }
+      }
+    }
+  }
+
+  ul li ul {
+    display: none;
+  }
+
+  li._active ul {
+    display: flex;;
   }
 }

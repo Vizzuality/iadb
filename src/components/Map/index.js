@@ -32,6 +32,7 @@ class Map extends React.Component {
   createMap() {
     this.map = L.map(ReactDOM.findDOMNode(this), this.props.mapOptions);
     L.tileLayer(this.props.basemap).addTo(this.map);
+    L.control.zoom(this.props.zoomOptions).addTo(this.map);
   }
 
   addLayer(layerData) {
