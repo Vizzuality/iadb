@@ -33,10 +33,8 @@ class App extends React.Component {
       ReactDOM.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
     }
     this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
-    this.refs.map.updateLayer(layerData);
-    config.charts.forEach((c, i) => {
-      this.refs[`chart${i}`].setState({codgov: mapData.codgov});
-    });
+    this.refs.map.updateTopLayer(layerData);
+    this.refs.chart.setState({codgov: mapData.codgov});
   }
 
   onChangeTimeline(timelineData) {
@@ -53,9 +51,7 @@ class App extends React.Component {
       layerName: layerData.columnName,
       layerData: layerData
     });
-    config.charts.forEach((c, i) => {
-      this.refs[`chart${i}`].setState({layerName: layerData.columnName});
-    });
+    this.refs.chart.setState({layerName: layerData.columnName});
   }
 
   shouldComponentUpdate() {
@@ -63,38 +59,50 @@ class App extends React.Component {
   }
 
   render() {
-    const charts = [];
-
-    config.charts.forEach((c, i) => {
-      charts.push(
-        <Chart ref={`chart${i}`}
-          cartodbUser={config.app.cartodbUser}
-          layerName={config.app.layerName}
-          date={config.app.date}
-          unit={c.unit}
-          codgov={config.app.codgov}
-          title={c.title}
-          query={c.query}
-          key={i}
-        />
-      );
-    });
+    const currentChart = _.find(config.charts, {columnName: config.app.layerName});
 
     return (
       <div>
+        <div className="brand">
+          <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
+        </div>
+        <div ref="dashboard" className="dashboard">
+          <div className="title">
+            <h1>Datos financieros municipales</h1>
+          </div>
+          <Layers ref="layers"
+            layerName={config.app.layerName}
+            layers={config.layers}
+            onChange={this.onChangeLayers.bind(this)}
+          />
+          <Average ref="average"
+            cartodbUser={config.app.cartodbUser}
+            date={config.app.date}
+            layerName={config.app.layerName}
+            layerData={layerData}
+            codgov={config.app.codgov}
+            queryTotal={config.average.query_total}
+            queryPerc={config.average.query_perc}
+          />
+          <Chart ref='chart'
+            cartodbUser={config.app.cartodbUser}
+            layerName={config.app.layerName}
+            date={config.app.date}
+            unit={currentChart.unit}
+            codgov={config.app.codgov}
+            title={currentChart.title}
+            query={currentChart.query}
+          />
+        </div>
         <Map ref="map"
           cartodbUser={config.app.cartodbUser}
           mapOptions={config.map.mapOptions}
+          zoomOptions={config.map.zoomOptions}
           basemap={config.map.basemap}
           colors={config.map.colors}
           date={config.app.date}
           codgov={config.app.codgov}
           onChange={this.onMapChange.bind(this)}
-        />
-        <Layers ref="layers"
-          layerName={config.app.layerName}
-          layers={config.layers}
-          onChange={this.onChangeLayers.bind(this)}
         />
         <Timeline ref="timeline"
           cartodbUser={config.app.cartodbUser}
@@ -105,25 +113,14 @@ class App extends React.Component {
           pause={config.timeline.pause}
           onChange={this.onChangeTimeline.bind(this)}
         />
-        <div ref="dashboard" className="dashboard _hidden">
-          <Average ref="average"
-            cartodbUser={config.app.cartodbUser}
-            date={config.app.date}
-            layerName={config.app.layerName}
-            layerData={layerData}
-            codgov={config.app.codgov}
-            query={config.average.query}
-          />
-          <div className="chart-legend">
-            <div className="legend-average">National average per year</div>
-            <div className="legend-value">Average per year</div>
-          </div>
-          {charts}
-        </div>
       </div>
     );
   }
 
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+if (document.cookie !== 'iadb_demo_access=true') {
+  window.location.href = 'login.html'
+} else {
+  ReactDOM.render(<App />, document.getElementById('app'));
+}
