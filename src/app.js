@@ -33,7 +33,7 @@ class App extends React.Component {
       ReactDOM.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
     }
     this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
-    this.refs.map.updateLayer(layerData);
+    this.refs.map.updateTopLayer(layerData);
     this.refs.chart.setState({codgov: mapData.codgov});
   }
 
@@ -63,10 +63,12 @@ class App extends React.Component {
 
     return (
       <div>
+        <div className="brand">
+          <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
+        </div>
         <div ref="dashboard" className="dashboard">
-          <div className="brand">
+          <div className="title">
             <h1>Datos financieros municipales</h1>
-            <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
           </div>
           <Layers ref="layers"
             layerName={config.app.layerName}
