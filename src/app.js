@@ -82,6 +82,12 @@ class App extends React.Component {
 
     return (
       <div>
+        <div ref="dashboard" className="dashboard">
+          <div className="brand">
+            <h1>Datos financieros municipales</h1>
+            <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
+          </div>
+        </div>
         <Map ref="map"
           cartodbUser={config.app.cartodbUser}
           mapOptions={config.map.mapOptions}
@@ -91,37 +97,51 @@ class App extends React.Component {
           codgov={config.app.codgov}
           onChange={this.onMapChange.bind(this)}
         />
-        <Layers ref="layers"
-          layerName={config.app.layerName}
-          layers={config.layers}
-          onChange={this.onChangeLayers.bind(this)}
-        />
-        <Timeline ref="timeline"
-          cartodbUser={config.app.cartodbUser}
-          query={config.timeline.query}
-          step={config.timeline.step}
-          format={config.timeline.format}
-          play={config.timeline.play}
-          pause={config.timeline.pause}
-          onChange={this.onChangeTimeline.bind(this)}
-        />
-        <div ref="dashboard" className="dashboard _hidden">
-          <Average ref="average"
-            cartodbUser={config.app.cartodbUser}
-            date={config.app.date}
-            layerName={config.app.layerName}
-            layerData={layerData}
-            codgov={config.app.codgov}
-            query={config.average.query}
-          />
-          <div className="chart-legend">
-            <div className="legend-average">National average per year</div>
-            <div className="legend-value">Average per year</div>
-          </div>
-          {charts}
-        </div>
       </div>
     );
+
+    // return (
+    //   <div>
+    //     <Map ref="map"
+    //       cartodbUser={config.app.cartodbUser}
+    //       mapOptions={config.map.mapOptions}
+    //       basemap={config.map.basemap}
+    //       colors={config.map.colors}
+    //       date={config.app.date}
+    //       codgov={config.app.codgov}
+    //       onChange={this.onMapChange.bind(this)}
+    //     />
+    //     <Layers ref="layers"
+    //       layerName={config.app.layerName}
+    //       layers={config.layers}
+    //       onChange={this.onChangeLayers.bind(this)}
+    //     />
+    //     <Timeline ref="timeline"
+    //       cartodbUser={config.app.cartodbUser}
+    //       query={config.timeline.query}
+    //       step={config.timeline.step}
+    //       format={config.timeline.format}
+    //       play={config.timeline.play}
+    //       pause={config.timeline.pause}
+    //       onChange={this.onChangeTimeline.bind(this)}
+    //     />
+    //     <div ref="dashboard" className="dashboard _hidden">
+    //       <Average ref="average"
+    //         cartodbUser={config.app.cartodbUser}
+    //         date={config.app.date}
+    //         layerName={config.app.layerName}
+    //         layerData={layerData}
+    //         codgov={config.app.codgov}
+    //         query={config.average.query}
+    //       />
+    //       <div className="chart-legend">
+    //         <div className="legend-average">National average per year</div>
+    //         <div className="legend-value">Average per year</div>
+    //       </div>
+    //       {charts}
+    //     </div>
+    //   </div>
+    // );
   }
 
 }

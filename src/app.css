@@ -1,5 +1,31 @@
 @import "normalize.css/normalize.css";
-@import "./styles/base.css";
+
+/* Base styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow: hidden;
+  min-width: 1000px;
+  min-height: 680px;
+}
+
+h1, h2 {
+  margin-top: 0;
+  margin-bottom: .3rem;
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
 
 #app {
   position: absolute;
@@ -9,21 +35,41 @@
   height: 100%;
 }
 
+/* Dashboard module */
 .dashboard {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  top: 30px;
+  left: 30px;
+  right: auto;
+  bottom: auto;
   width: 300px;
-  padding: 20px;
 
-  background: white;
-
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
   z-index: 1;
 }
 
+.brand {
+  padding: 20px;
+  color: white;
+  text-transform: uppercase;
+
+  background-color: #004b74;
+
+  h1 {
+    margin: 0;
+
+    font-size: 32px;
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+
+  .logo {
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+
+/* Chart */
 .chart-legend {
   padding: 20px 0;
   border-top: 1px solid #ccc;
