@@ -27,6 +27,8 @@ class Chart extends React.Component {
     $.getJSON(url, (d) => {
       this.data = d.rows;
       this.renderSparkLine();
+    }).fail((err) => {
+      throw err.responseText;
     });
   }
 

@@ -120,6 +120,8 @@ class Map extends React.Component {
         }`;
       }
       cb(cartocss);
+    }).fail((err) => {
+      throw err.responseText;
     });
   }
 

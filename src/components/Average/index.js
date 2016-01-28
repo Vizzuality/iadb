@@ -21,7 +21,6 @@ class Average extends React.Component {
 
   fetchData() {
     let query = (this.state.layerData.total) ? this.props.queryTotal : this.props.queryPerc;
-    console.log(query);
     const username = this.props.cartodbUser;
     const sql = query
       .replace(/\$\{columnName\}/g, this.state.layerName)
@@ -36,6 +35,8 @@ class Average extends React.Component {
         value: d.average_value,
         natValue: d.nat_average_value
       });
+    }).fail((err) => {
+      throw err.responseText;
     });
   }
 
