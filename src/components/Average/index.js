@@ -38,7 +38,6 @@ class Average extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state);
     if (!this.state.codgov) {
       return;
     }
