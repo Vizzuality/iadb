@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a72da6cf88f84c7897ff"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1e3a37ece62c6aae9949"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -69092,7 +69092,9 @@
 	    key: 'clearView',
 	    value: function clearView() {
 	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
-	      el.innerHTML = null;
+	      if (el) {
+	        el.innerHTML = null;
+	      }
 	    }
 	  }]);
 
@@ -69194,7 +69196,8 @@
 	    mapOptions: {
 	      zoom: 5,
 	      center: [-16.78350556192777, -54.0087890625],
-	      zoomControl: false
+	      zoomControl: false,
+	      scrollWheelZoom: false
 	    },
 	    zoomOptions: {
 	      position: 'topright'
