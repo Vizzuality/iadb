@@ -32,7 +32,7 @@ class App extends React.Component {
       this.refs.dashboard.className = 'dashboard';
       ReactDOM.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
     }
-    // this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
+    this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
     this.refs.map.updateLayer(layerData);
     // config.charts.forEach((c, i) => {
     //   this.refs[`chart${i}`].setState({codgov: mapData.codgov});
@@ -49,10 +49,10 @@ class App extends React.Component {
   onChangeLayers(layerData) {
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
-    // this.refs.average.setState({
-    //   layerName: layerData.columnName,
-    //   layerData: layerData
-    // });
+    this.refs.average.setState({
+      layerName: layerData.columnName,
+      layerData: layerData
+    });
     // config.charts.forEach((c, i) => {
     //   this.refs[`chart${i}`].setState({layerName: layerData.columnName});
     // });
@@ -91,6 +91,14 @@ class App extends React.Component {
             layerName={config.app.layerName}
             layers={config.layers}
             onChange={this.onChangeLayers.bind(this)}
+          />
+          <Average ref="average"
+            cartodbUser={config.app.cartodbUser}
+            date={config.app.date}
+            layerName={config.app.layerName}
+            layerData={layerData}
+            codgov={config.app.codgov}
+            query={config.average.query}
           />
         </div>
         <Map ref="map"
