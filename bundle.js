@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b75d6ed7891925fba1d9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "366f6e8744460afbd57e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -777,18 +777,16 @@
 	  }, {
 	    key: 'onMapChange',
 	    value: function onMapChange(mapData) {
-	      var _this2 = this;
-
 	      var layerData = this.refs.layers.state.layer;
 	      if (mapData.codgov) {
 	        this.refs.dashboard.className = 'dashboard';
 	        _reactDom2.default.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
 	      }
-	      this.refs.average.setState({ codgov: mapData.codgov, layerData: layerData });
+	      // this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
 	      this.refs.map.updateLayer(layerData);
-	      _config2.default.charts.forEach(function (c, i) {
-	        _this2.refs['chart' + i].setState({ codgov: mapData.codgov });
-	      });
+	      // config.charts.forEach((c, i) => {
+	      //   this.refs[`chart${i}`].setState({codgov: mapData.codgov});
+	      // });
 	    }
 	  }, {
 	    key: 'onChangeTimeline',
@@ -796,22 +794,20 @@
 	      var layerData = this.refs.layers.state.layer;
 	      this.refs.map.setState({ date: this.refs.timeline.getCurrentDate() });
 	      this.refs.map.addLayer(layerData);
-	      this.refs.average.setState({ date: timelineData.date });
+	      // this.refs.average.setState({date: timelineData.date});
 	    }
 	  }, {
 	    key: 'onChangeLayers',
 	    value: function onChangeLayers(layerData) {
-	      var _this3 = this;
-
 	      this.refs.map.setState({ date: this.refs.timeline.getCurrentDate() });
 	      this.refs.map.addLayer(layerData);
-	      this.refs.average.setState({
-	        layerName: layerData.columnName,
-	        layerData: layerData
-	      });
-	      _config2.default.charts.forEach(function (c, i) {
-	        _this3.refs['chart' + i].setState({ layerName: layerData.columnName });
-	      });
+	      // this.refs.average.setState({
+	      //   layerName: layerData.columnName,
+	      //   layerData: layerData
+	      // });
+	      // config.charts.forEach((c, i) => {
+	      //   this.refs[`chart${i}`].setState({layerName: layerData.columnName});
+	      // });
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
@@ -836,7 +832,11 @@
 	        }));
 	      });
 
-	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('h1', null, 'Datos financieros municipales'), _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(299), width: '192', height: '31' }))), _react2.default.createElement(_Map2.default, { ref: 'map',
+	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('h1', null, 'Datos financieros municipales'), _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(299), width: '192', height: '31' })), _react2.default.createElement(_Layers2.default, { ref: 'layers',
+	        layerName: _config2.default.app.layerName,
+	        layers: _config2.default.layers,
+	        onChange: this.onChangeLayers.bind(this)
+	      })), _react2.default.createElement(_Map2.default, { ref: 'map',
 	        cartodbUser: _config2.default.app.cartodbUser,
 	        mapOptions: _config2.default.map.mapOptions,
 	        zoomOptions: _config2.default.map.zoomOptions,
@@ -20959,7 +20959,7 @@
 
 
 	// module
-	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/* Base styles */\nbody {\n  font-family: Arial, sans-serif;\n  line-height: 1.4;\n  color: #333;\n\n  background: white;\n\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\nbody {\n  overflow: hidden;\n  min-width: 1000px;\n  min-height: 680px;\n}\n\nh1, h2 {\n  margin-top: 0;\n  margin-bottom: .3rem;\n}\n\nh1 {\n  font-size: 1.8rem;\n}\n\nh2 {\n  font-size: 1.2rem;\n}\n\n#app {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n/* Dashboard module */\n.dashboard {\n  position: absolute;\n  top: 30px;\n  left: 30px;\n  right: auto;\n  bottom: auto;\n  width: 300px;\n\n  z-index: 1;\n}\n\n.brand {\n  padding: 20px;\n  color: white;\n  text-transform: uppercase;\n\n  background-color: #004b74;\n}\n\n.brand h1 {\n  margin: 0;\n  font-size: 32px;\n  letter-spacing: 0.5px;\n  line-height: 1;\n}\n\n.brand .logo {\n  display: block;\n  margin-top: 20px;\n}\n\n\n/* Chart */\n.chart-legend {\n  padding: 20px 0;\n  border-top: 1px solid #ccc;\n\n  font-size: 11px;\n}\n.chart-legend .legend-average::before,\n  .chart-legend .legend-value::before {\n  position: absolute;\n  display: block;\n  left: 0;\n  top: 50%;\n  content: \"\";\n  height: 2px;\n  width: 20px;\n  background: red;\n}\n.chart-legend .legend-value::before {\n  background-color: black;\n}\n.chart-legend .legend-average,\n  .chart-legend .legend-value {\n  position: relative;\n  padding-left: 25px;\n}\n\n._hidden {\n  display: none;\n}\n", ""]);
+	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/* Base styles */\nbody {\n  font-family: \"Montserrat\", Arial, sans-serif;\n  font-size: 13px;\n  line-height: 1.4;\n  color: #333;\n\n  background: white;\n\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\nbody {\n  overflow: hidden;\n  min-width: 1000px;\n  min-height: 680px;\n}\n\nh1, h2 {\n  margin-top: 0;\n  margin-bottom: .3rem;\n}\n\nh1 {\n  font-size: 1.8rem;\n}\n\nh2 {\n  font-size: 1.2rem;\n}\n\n#app {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n/* Dashboard module */\n.dashboard {\n  position: absolute;\n  top: 30px;\n  left: 30px;\n  right: auto;\n  bottom: auto;\n  width: 300px;\n\n  z-index: 1;\n}\n\n.brand {\n  padding: 20px;\n  color: white;\n  text-transform: uppercase;\n\n  background-color: #004b74;\n}\n\n.brand h1 {\n  margin: 0;\n  font-size: 32px;\n  letter-spacing: 0.5px;\n  line-height: 1;\n}\n\n.brand .logo {\n  display: block;\n  margin-top: 20px;\n}\n\n\n/* Chart */\n.chart-legend {\n  padding: 20px 0;\n  border-top: 1px solid #ccc;\n\n  font-size: 11px;\n}\n.chart-legend .legend-average::before,\n  .chart-legend .legend-value::before {\n  position: absolute;\n  display: block;\n  left: 0;\n  top: 50%;\n  content: \"\";\n  height: 2px;\n  width: 20px;\n  background: red;\n}\n.chart-legend .legend-value::before {\n  background-color: black;\n}\n.chart-legend .legend-average,\n  .chart-legend .legend-value {\n  position: relative;\n  padding-left: 25px;\n}\n\n._hidden {\n  display: none;\n}\n", ""]);
 
 	// exports
 
@@ -35847,7 +35847,7 @@
 	      var url = 'https://' + this.props.cartodbUser + '.cartodb.com/api/v2/sql?q=' + query;
 	      _jquery2.default.getJSON(url, function (d) {
 	        var data = d.rows[0].cdb_jenksbins;
-	        var cartocss = '#' + layerData.tableName + '{\n        polygon-fill: ' + colors[0] + ';\n        polygon-opacity: 0.8;\n        line-color: #FFF;\n        line-width: 0.5;\n        line-opacity: 0.5;\n      }\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[6] + '] {polygon-fill: ' + colors[6] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[5] + '] {polygon-fill: ' + colors[5] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[4] + '] {polygon-fill: ' + colors[4] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[3] + '] {polygon-fill: ' + colors[3] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[2] + '] {polygon-fill: ' + colors[2] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[1] + '] {polygon-fill: ' + colors[1] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[0] + '] {polygon-fill: ' + colors[0] + ';}\n      ';
+	        var cartocss = '#' + layerData.tableName + '{\n        polygon-fill: ' + colors[0] + ';\n        polygon-opacity: 1;\n        line-color: #FFF;\n        line-width: 0.5;\n        line-opacity: 1;\n      }\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[6] + '] {polygon-fill: ' + colors[6] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[5] + '] {polygon-fill: ' + colors[5] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[4] + '] {polygon-fill: ' + colors[4] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[3] + '] {polygon-fill: ' + colors[3] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[2] + '] {polygon-fill: ' + colors[2] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[1] + '] {polygon-fill: ' + colors[1] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[0] + '] {polygon-fill: ' + colors[0] + ';}\n      ';
 
 	        if (_this3.state.codgov) {
 	          cartocss = cartocss + ' #' + layerData.tableName + ' [codgov = \'' + _this3.state.codgov + '\'] {\n          line-color: #F00;\n          line-width: 3;\n        }';
@@ -45938,16 +45938,13 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Layers).call(this, props));
 
-	    _this.state = { layer: _lodash2.default.find(props.layers, { columnName: props.layerName }) };
+	    _this.state = {
+	      layer: _lodash2.default.find(props.layers, { columnName: props.layerName })
+	    };
 	    return _this;
 	  }
 
 	  _createClass(Layers, [{
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate() {
-	      return false;
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
@@ -45955,16 +45952,42 @@
 	      if (!this.props.layers || !this.props.layers.length) {
 	        return null;
 	      }
-	      var layers = this.props.layers.map(function (d, i) {
-	        return _react2.default.createElement('li', { key: i }, _react2.default.createElement('label', { htmlFor: 'layer_' + i }, _react2.default.createElement('input', {
-	          defaultChecked: _this2.state.layer.columnName === d.columnName,
-	          id: 'layer_' + i,
-	          name: 'layer',
-	          onChange: _this2.setSelected.bind(_this2),
-	          defaultValue: d.columnName,
-	          type: _this2.props.multiple ? 'checkbox' : 'radio' }), ' ', d.name));
+
+	      var groups = _lodash2.default.groupBy(this.props.layers, 'categoryName');
+
+	      var result = [];
+
+	      _lodash2.default.each(groups, function (layers, key) {
+	        var layersResult = [];
+	        var activeClass = key === _this2.state.layer.categoryName ? '_active' : null;
+	        layers.forEach(function (d, i) {
+	          layersResult.push(_react2.default.createElement('li', { key: key + '_' + i }, _react2.default.createElement('label', { htmlFor: 'layer_' + key + '_' + i }, _react2.default.createElement('input', {
+	            checked: _this2.state.layer.columnName === d.columnName,
+	            id: 'layer_' + key + '_' + i,
+	            name: 'layer',
+	            onChange: _this2.setSelected.bind(_this2),
+	            defaultValue: d.columnName,
+	            type: _this2.props.multiple ? 'checkbox' : 'radio' }), ' ', d.name)));
+	        });
+
+	        result.push(_react2.default.createElement('li', {
+	          onClick: _this2.changeCategory.bind(_this2),
+	          className: activeClass,
+	          'data-category': key,
+	          key: key }, key, _react2.default.createElement('ul', null, layersResult)));
 	      });
-	      return _react2.default.createElement('div', { className: 'layers' }, _react2.default.createElement('ul', null, layers));
+
+	      return _react2.default.createElement('div', { className: 'layers' }, _react2.default.createElement('ul', null, result));
+	    }
+	  }, {
+	    key: 'changeCategory',
+	    value: function changeCategory(e) {
+	      var value = e.currentTarget.getAttribute('data-category');
+	      var currentLayer = _lodash2.default.find(this.props.layers, { categoryName: value });
+	      this.setState({ layer: currentLayer });
+	      if (this.props.onChange && typeof this.props.onChange === 'function') {
+	        this.props.onChange(currentLayer);
+	      }
 	    }
 	  }, {
 	    key: 'setSelected',
@@ -46032,7 +46055,7 @@
 
 
 	// module
-	exports.push([module.id, ".layers {\n  position: absolute;\n  top: 50%;\n  left: 2rem;\n  padding: .5rem;\n\n  -webkit-transform: translateY(-50%);\n\n          transform: translateY(-50%);\n\n  background: white;\n\n  z-index: 1;\n}\n.layers ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n", ""]);
+	exports.push([module.id, ".layers {\n  position: relative;\n  padding: 20px 20px 0 20px;\n\n  color: white;\n\n  background: #004b74;\n}\n.layers ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.layers > ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.layers > ul > li {\n  padding-bottom: 3px;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: .3;\n  border-bottom: 4px solid transparent;\n}\n.layers > ul > li._active {\n  opacity: 1;\n  border-color: white;\n}\n.layers > ul > li ul {\n  position: absolute;\n  padding: 10px 0;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n              -ms-grid-row-align: center;\n          align-items: center;\n  left: 0;\n  top: 100%;\n  width: 300px;\n  background: #333;\n}\n.layers > ul > li ul li {\n  margin: 0 20px;\n}\n.layers ul li ul {\n  display: none;\n}\n.layers li._active ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n", ""]);
 
 	// exports
 
@@ -69191,7 +69214,7 @@
 	    // Basemap url
 	    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
 	    // Legend colors
-	    colors: ['#FFFFFF', '#D3E0E7', '#ABC4D1', '#7FA5B9', '#5587A2', '#306D8E', '#0A5279']
+	    colors: ['#F8D368', '#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F']
 	  },
 
 	  /**
@@ -69221,21 +69244,23 @@
 	   * @type {Object}
 	   */
 	  layers: [{
-	    name: 'Revenue',
+	    name: 'Total',
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'reven',
 	    buckets: 7,
 	    query: 'SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
 	    interactivity: 'codgov,reven',
-	    unit: 'M R$'
+	    unit: 'M R$',
+	    categoryName: 'Revenue'
 	  }, {
-	    name: 'Revenue per capita',
+	    name: 'Per capita',
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'reven_rate',
 	    buckets: 7,
 	    query: 'SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} ',
 	    interactivity: 'codgov, reven_rate',
-	    unit: 'R$'
+	    unit: 'R$',
+	    categoryName: 'Revenue'
 	  }, {
 	    name: 'Taxes',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69243,7 +69268,8 @@
 	    buckets: 7,
 	    query: 'SELECT a.*, b.taxes FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
 	    interactivity: 'codgov,taxes',
-	    unit: 'M R$'
+	    unit: 'M R$',
+	    categoryName: 'Taxes'
 	  }, {
 	    name: 'Taxes per capita',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69251,7 +69277,8 @@
 	    buckets: 7,
 	    query: 'SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} ',
 	    interactivity: 'codgov,tax_rate',
-	    unit: 'R$'
+	    unit: 'R$',
+	    categoryName: 'Taxes'
 	  }, {
 	    name: 'Tax. Inc.',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69259,7 +69286,8 @@
 	    buckets: 7,
 	    query: 'SELECT a.*, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
 	    interactivity: 'codgov,taxinc',
-	    unit: 'M R$'
+	    unit: 'M R$',
+	    categoryName: 'Tax. Inc.'
 	  }, {
 	    name: 'Tax. Inc. per capita',
 	    tableName: 'table_3fiscal_primera_serie',
@@ -69267,7 +69295,8 @@
 	    buckets: 7,
 	    query: 'SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} ',
 	    interactivity: 'codgov,taxinc_rate',
-	    unit: 'R$'
+	    unit: 'R$',
+	    categoryName: 'Tax. Inc.'
 	  }],
 
 	  /**
