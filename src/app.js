@@ -55,6 +55,11 @@ class App extends React.Component {
     this.refs.chart.setState({layerName: layerData.columnName});
   }
 
+  onLayerChange(layerData) {
+    console.log(layerData);
+    // this.refs.legend.setState({min: , max: , buckets: });
+  }
+
   shouldComponentUpdate() {
     return false;
   }
@@ -94,7 +99,9 @@ class App extends React.Component {
             title={currentChart.title}
             query={currentChart.query}
           />
-          <Legend />
+          <Legend ref='legend'
+            colors={config.map.colors}
+          />
         </div>
         <Map ref="map"
           cartodbUser={config.app.cartodbUser}
@@ -106,6 +113,7 @@ class App extends React.Component {
           codgov={config.app.codgov}
           cartocssQuery={config.map.cartocssQuery}
           onChange={this.onMapChange.bind(this)}
+          onLayerChange={this.onLayerChange.bind(this)}
         />
         <Timeline ref="timeline"
           cartodbUser={config.app.cartodbUser}

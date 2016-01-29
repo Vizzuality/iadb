@@ -93,6 +93,9 @@ class Map extends React.Component {
               this.setState({codgov: d.codgov});
               this.props.onChange(d);
             });
+          if (this.props.onLayerChange && typeof this.props.onLayerChange === 'function') {
+            this.props.onLayerChange(layerData);
+          }
         });
     });
   }
@@ -136,6 +139,8 @@ class Map extends React.Component {
       #${layerData.tableName} [${layerData.columnName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}
       `;
+      layerData.min = data.min;
+      layerData.max = data.max;
       cb(cartocss);
     }).fail((err) => {
       throw err.responseText;
