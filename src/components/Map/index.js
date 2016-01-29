@@ -120,7 +120,7 @@ class Map extends React.Component {
       .replace(/\$\{year\}/g, this.state.date.getFullYear());
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (d) => {
-      const data = d.rows[0].cdb_jenksbins;
+      const data = d.rows[0].buckets;
       const cartocss = `#${layerData.tableName}{
         polygon-fill: ${colors[0]};
         polygon-opacity: 1;
