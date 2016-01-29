@@ -197,6 +197,12 @@ export default {
     columnName:'taxinc_rate',
     unit: 'R$',
     total: false
+  },{
+    title: 'Total',
+    query: require('raw!./queries/chart-id.psql').replace(/\n/g, ' '),
+    columnName:'indicator',
+    unit: null,
+    total: true
   }]
 
 };

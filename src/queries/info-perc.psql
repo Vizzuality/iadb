@@ -37,8 +37,8 @@ t as (
 )
 
 SELECT a.name AS name,
-  round(b.${columnName}::numeric,2) as average_value,
-  round((t.column_total/s.value)::numeric,2) as nat_average_value,
+  round(b.${columnName}::numeric,3) as average_value,
+  round((t.column_total/s.value)::numeric,3) as nat_average_value,
   b.year
 FROM bra_poladm2 a
   JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov
