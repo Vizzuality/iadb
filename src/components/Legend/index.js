@@ -27,11 +27,11 @@ class Legend extends React.Component {
 
     return (
       <div className="legend">
-        <div className="legend-value">{this.state.min.toFixed(2)}</div>
+        <div className="legend-value">{this.state.min.toFixed(0)}</div>
         <div className="buckets">
           {buckets}
         </div>
-        <div className="legend-value">{this.state.max.toFixed(2)}</div>
+        <div className="legend-value">{this.state.max.toFixed(0)}</div>
       </div>
     );
   }

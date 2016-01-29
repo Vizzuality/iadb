@@ -154,7 +154,7 @@ class Map extends React.Component {
         polygon-fill: transparent;
         polygon-opacity: 0;
         line-color: #F11810;
-        line-width: 3;
+        line-width: 5;
         line-opacity: 1;
       }`;
 
