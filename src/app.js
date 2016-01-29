@@ -50,6 +50,7 @@ class App extends React.Component {
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
     this.refs.average.setState({date: timelineData.date});
+    this.refs.chart.setState({date: timelineData.date});
   }
 
   onChangeLayers(layerData) {

@@ -198,6 +198,18 @@ class Chart extends React.Component {
           .on('mouseout', hideTooltip);
     }
 
+    // Vertical line
+    svg.selectAll('avg-line')
+      .data(data).enter()
+    .append('line')
+      .attr('class', 'year-line')
+      .attr('x1', (d) => x(d.date))
+      .attr('x2', (d) => x(d.date))
+      .attr('y1', 0)
+      .attr('y2', (d) => {
+        return d.year === this.state.date.getFullYear() ? height - margin.bottom - margin.top : 0;
+      });
+
   }
 
   clearView() {
