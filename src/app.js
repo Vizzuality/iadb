@@ -14,6 +14,12 @@ import config from './config';
 
 let layerData = null;
 
+function getCookie(name) {
+  var regexp = new RegExp(`(?:^${name}|;\s*${name})=(.*?)(?:;|$)`, 'g');
+  var result = regexp.exec(document.cookie);
+  return (result === null) ? null : result[1];
+}
+
 class App extends React.Component {
 
   constructor(props) {
@@ -133,7 +139,7 @@ class App extends React.Component {
 
 }
 
-if (document.cookie !== 'iadb_demo_access=true') {
+if (getCookie('iadb_demo_access') === true) {
   window.location.href = 'login.html'
 } else {
   ReactDOM.render(<App />, document.getElementById('app'));
