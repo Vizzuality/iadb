@@ -86,7 +86,10 @@ class Chart extends React.Component {
     // Domain
     x.domain(d3.extent(data, (d) => d.date));
     y.domain([0, d3.max(data, (d) => {
-      return d.average_value > d.nat_average_value ? d.average_value : d.nat_average_value;
+      const nValue = d.nat_average_value || 0;
+      const value = d.average_value || 0;
+      const max = value > nValue ? value : nValue;
+      return max;
     })]);
 
     // X Axis
@@ -163,7 +166,7 @@ class Chart extends React.Component {
       .append('circle')
         .attr('class', 'focus')
         .attr('cx', (d) => x(d.date))
-        .attr('cy', (d) => y(d.average_value))
+        .attr('cy', (d) => y(d.average_value || 0))
         .attr('r', 2)
         .on('mouseover', (d) => {
           showTooltip(d, false);
@@ -171,11 +174,11 @@ class Chart extends React.Component {
         .on('mouseout', hideTooltip);
 
     // Draw average line
-    if (data[0].average_value) {
+    if (data[0].nat_average_value) {
       const avgLine = d3.svg.line()
         .interpolate('linear')
         .x((d) => x(d.date))
-        .y((d) => y(d.nat_average_value));
+        .y((d) => y(d.nat_average_value || 0));
 
       svg.append('path')
           .datum(data)
@@ -194,6 +197,18 @@ class Chart extends React.Component {
           })
           .on('mouseout', hideTooltip);
     }
+
+    // Vertical line
+    svg.selectAll('avg-line')
+      .data(data).enter()
+    .append('line')
+      .attr('class', 'year-line')
+      .attr('x1', (d) => x(d.date))
+      .attr('x2', (d) => x(d.date))
+      .attr('y1', 0)
+      .attr('y2', (d) => {
+        return d.year === this.state.date.getFullYear() ? height - margin.bottom - margin.top : 0;
+      });
 
   }
 

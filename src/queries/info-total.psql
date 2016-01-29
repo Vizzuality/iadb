@@ -7,10 +7,13 @@ with u as (
 	FROM ${tableName})
 
 SELECT a.name AS name,
-  round(b.${columnName}::numeric,3) as average_value,
-  u.rank, u.nat_average_value, b.year, v.p${year}
-FROM bra_poladm2 a 
-JOIN ${tableName} b ON a.codgov=b.codgov
-JOIN u ON a.codgov=u.codgov and b.year=u.year
-JOIN table_2bra_seriepob v on a.codgov=v.codgov
+  round(b.${columnName}::numeric, 3) as average_value,
+  u.rank,
+  u.nat_average_value,
+  b.year,
+  v.p${year}
+FROM bra_poladm2 a
+  JOIN ${tableName} b ON a.codgov=b.codgov
+  JOIN u ON a.codgov=u.codgov and b.year=u.year
+  JOIN table_2bra_seriepob v on a.codgov=v.codgov
 WHERE a.codgov=${codgov} AND b.year=${year}

@@ -166,7 +166,6 @@ export default {
     columnName:'reven',
     unit: 'M R$',
     total: true
-
   },{
     title: 'Per capita',
     query: require('raw!./queries/chart-reven-rate.psql').replace(/\n/g, ' '),

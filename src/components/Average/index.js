@@ -15,7 +15,8 @@ class Average extends React.Component {
       codgov: props.codgov,
       layerName: props.layerName,
       layerData: props.layerData,
-      date: props.date
+      date: props.date,
+      rank: null
     };
   }
 
@@ -35,7 +36,8 @@ class Average extends React.Component {
       this.setState({
         name: d.name,
         value: d.average_value,
-        natValue: d.nat_average_value
+        natValue: d.nat_average_value,
+        rank: d.rank
       });
     }).fail((err) => {
       throw err.responseText;
@@ -63,6 +65,7 @@ class Average extends React.Component {
   }
 
   render() {
+    let rank = null;
     if (!this.state.name) {
       return (
         <div className="average">
@@ -70,11 +73,20 @@ class Average extends React.Component {
         </div>
       );
     }
+    if (this.state.rank) {
+      rank = <div className="panels">
+        <div className="panel">
+          <h3>Ranking</h3>
+          <div className="nat-value">{this.state.rank}</div>
+        </div>
+      </div>;
+    }
     const avgNat = (this.state.natValue || this.state.natValue === 0) ? this.state.natValue : '-';
     const avgMun = (this.state.value || this.state.value === 0) ? this.state.value : '-';
     return (
       <div className="average">
         <h2>{this.state.name}</h2>
+        {rank}
         <div className="panels">
           <div className="panel">
             <div className="nat-value">{avgNat} <span className="unit">{this.state.layerData.unit}</span></div>
