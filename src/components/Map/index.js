@@ -139,8 +139,8 @@ class Map extends React.Component {
       #${layerData.tableName} [${layerData.columnName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}
       `;
-      layerData.min = data.min;
-      layerData.max = data.max;
+      layerData.min = d.rows[0].min;
+      layerData.max = d.rows[0].max;
       cb(cartocss);
     }).fail((err) => {
       throw err.responseText;

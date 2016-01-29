@@ -56,8 +56,11 @@ class App extends React.Component {
   }
 
   onLayerChange(layerData) {
-    console.log(layerData);
-    // this.refs.legend.setState({min: , max: , buckets: });
+    this.refs.legend.setState({
+      min: layerData.min,
+      max: layerData.max,
+      buckets: layerData.buckets
+    });
   }
 
   shouldComponentUpdate() {
