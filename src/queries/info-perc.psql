@@ -33,15 +33,18 @@ s as (
 ),
 t as (
   select sum(${relatedColumn}::numeric)*1000000 as column_total, year
-  from table_3fiscal_primera_serie group by year
-)
+  from ${tableName} group by year
+),
+f as ( 
+  select rank() over(partition by year order by ${columnName} desc), codgov, year, count(${columnName}) over(partition by year) as maxRank 
+  from ${tableName})
 
-SELECT a.name AS name,
-  round(b.${columnName}::numeric,3) as average_value,
-  round((t.column_total/s.value)::numeric,3) as nat_average_value,
-  b.year
-FROM bra_poladm2 a
-  JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov
-  join s on b.year=s.year
-  join t on b.year=t.year
-WHERE a.codgov=${codgov} and b.year=${year}
+select round(d.${columnName}::numeric,3) as average_value,
+round((t.column_total/s.value)::numeric,3) as nat_average_value, t.year, d.codgov, p${year}, a.name, f.rank, f.maxRank
+from t 
+join s on t.year=s.year 
+join ${tableName} d on t.year=d.year
+join table_2bra_seriepob v on d.codgov=v.codgov
+join bra_poladm2 a on d.codgov=a.codgov
+join f on d.codgov=f.codgov and s.year=f.year
+where d.codgov= ${codgov} and t.year=${year}
