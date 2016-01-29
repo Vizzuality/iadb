@@ -122,7 +122,7 @@ export default {
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'taxinc',
     buckets: 7,
-    query: require('raw!./queries/layer-taxes-inc.psql').replace(/\n/g, ' '),
+    query: require('raw!./queries/layer-tax-inc.psql').replace(/\n/g, ' '),
     interactivity: 'codgov,taxinc,name',
     unit: 'M R$',
     categoryName: 'Tax. Inc.',
@@ -134,7 +134,7 @@ export default {
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'taxinc_rate',
     buckets: 7,
-    query: require('raw!./queries/layer-taxes-inc-rate.psql').replace(/\n/g, ' '),
+    query: require('raw!./queries/layer-tax-inc-rate.psql').replace(/\n/g, ' '),
     interactivity: 'codgov,taxinc_rate,name',
     unit: 'R$',
     categoryName: 'Tax. Inc.',
@@ -175,13 +175,13 @@ export default {
     total: false
   },  {
     title: 'Total',
-    query: require('raw!./queries/chart-taxes-inc.psql').replace(/\n/g, ' '),
+    query: require('raw!./queries/chart-tax-inc.psql').replace(/\n/g, ' '),
     columnName:'taxinc',
     unit: 'M R$',
     total: true
   },{
     title: 'Per capita',
-    query: require('raw!./queries/chart-taxes-inc-rate.psql').replace(/\n/g, ' '),
+    query: require('raw!./queries/chart-tax-inc-rate.psql').replace(/\n/g, ' '),
     columnName:'taxinc_rate',
     unit: 'R$',
     total: false
