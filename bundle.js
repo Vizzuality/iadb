@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0a6bdcded9a88f5145ed"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0029931a0b4fca2f4c81"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -69565,13 +69565,13 @@
 /* 303 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.name AS name,\n  b.${columnName} as average_value,\n  (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year)\nFROM bra_poladm2 a JOIN table_3fiscal_primera_serie b\n  ON a.codgov::integer=b.codgov\nWHERE a.codgov='${codgov}' AND year=${year}\n"
+	module.exports = "SELECT a.name AS name,\n  b.${columnName} as average_value,\n  (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year)\nFROM bra_poladm2 a JOIN table_3fiscal_primera_serie b\n  ON a.codgov=b.codgov\nWHERE a.codgov=${codgov} AND year=${year}\n"
 
 /***/ },
 /* 304 */
 /***/ function(module, exports) {
 
-	module.exports = "with r as (\n  SELECT\n    sum(p2000) p2000,\n    sum(p2001) p2001,\n    sum(p2002) p2002,\n    sum(p2003) p2003,\n    sum(p2004) p2004,\n    sum(p2005) p2005,\n    sum(p2006) p2006,\n    sum(p2007) p2007,\n    sum(p2008) p2008,\n    sum(p2009) p2009,\n    sum(p2010) p2010,\n    sum(p2011) p2011,\n    sum(p2012) p2012\n  FROM table_2bra_seriepob\n),\ns as (\n  select 2000 as year, p2000 as value from r\n  union select 2001 as year, p2001 as value from r\n  union select 2002 as year, p2002 as value from r\n  union select 2003 as year, p2003 as value from r\n  union select 2004 as year, p2004 as value from r\n  union select 2005 as year, p2005 as value from r\n  union select 2006 as year, p2006 as value from r\n  union select 2007 as year, p2007 as value from r\n  union select 2008 as year, p2008 as value from r\n  union select 2009 as year, p2009 as value from r\n  union select 2010 as year, p2010 as value from r\n  union select 2011 as year, p2011 as value from r\n  union select 2012 as year, p2012 as value from r\n  order by year asc\n),\nt as (\n  select sum(${relatedColumn}::numeric)*1000000 as column_total, year\n  from table_3fiscal_primera_serie group by year\n)\n\nSELECT a.name AS name,\n  round(b.${columnName}::numeric,2) as average_value,\n  round((t.column_total/s.value)::numeric,2) as nat_average_value,\n  b.year\nFROM bra_poladm2 a\n  JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov\n  join s on b.year=s.year\n  join t on b.year=t.year\nWHERE a.codgov='${codgov}' and b.year=${year}\n"
+	module.exports = "with r as (\n  SELECT\n    sum(p2000) p2000,\n    sum(p2001) p2001,\n    sum(p2002) p2002,\n    sum(p2003) p2003,\n    sum(p2004) p2004,\n    sum(p2005) p2005,\n    sum(p2006) p2006,\n    sum(p2007) p2007,\n    sum(p2008) p2008,\n    sum(p2009) p2009,\n    sum(p2010) p2010,\n    sum(p2011) p2011,\n    sum(p2012) p2012\n  FROM table_2bra_seriepob\n),\ns as (\n  select 2000 as year, p2000 as value from r\n  union select 2001 as year, p2001 as value from r\n  union select 2002 as year, p2002 as value from r\n  union select 2003 as year, p2003 as value from r\n  union select 2004 as year, p2004 as value from r\n  union select 2005 as year, p2005 as value from r\n  union select 2006 as year, p2006 as value from r\n  union select 2007 as year, p2007 as value from r\n  union select 2008 as year, p2008 as value from r\n  union select 2009 as year, p2009 as value from r\n  union select 2010 as year, p2010 as value from r\n  union select 2011 as year, p2011 as value from r\n  union select 2012 as year, p2012 as value from r\n  order by year asc\n),\nt as (\n  select sum(${relatedColumn}::numeric)*1000000 as column_total, year\n  from table_3fiscal_primera_serie group by year\n)\n\nSELECT a.name AS name,\n  round(b.${columnName}::numeric,2) as average_value,\n  round((t.column_total/s.value)::numeric,2) as nat_average_value,\n  b.year\nFROM bra_poladm2 a\n  JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov\n  join s on b.year=s.year\n  join t on b.year=t.year\nWHERE a.codgov=${codgov} and b.year=${year}\n"
 
 /***/ },
 /* 305 */
@@ -69589,73 +69589,73 @@
 /* 307 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}\n"
+	module.exports = "SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE year=${year}\n"
 
 /***/ },
 /* 308 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 \n"
+	module.exports = "SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 \n"
 
 /***/ },
 /* 309 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.*, b.taxes \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov::integer=b.codgov \nWHERE year=${year}"
+	module.exports = "SELECT a.*, b.taxes \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov=b.codgov \nWHERE year=${year}"
 
 /***/ },
 /* 310 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov \nJOIN table_2bra_seriepob c  ON a.codgov=c.codgov \nWHERE year=${year} and c.p${year} !=0 "
+	module.exports = "SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov \nJOIN table_2bra_seriepob c  ON a.codgov=c.codgov \nWHERE year=${year} and c.p${year} !=0 "
 
 /***/ },
 /* 311 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.*, b.taxinc \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov::integer=b.codgov \nWHERE year=${year}"
+	module.exports = "SELECT a.*, b.taxinc \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov=b.codgov \nWHERE year=${year}"
 
 /***/ },
 /* 312 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov \njoin table_2bra_seriepob c on a.codgov=c.codgov \nWHERE year=${year} and c.p${year} !=0"
+	module.exports = "SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov \njoin table_2bra_seriepob c on a.codgov=c.codgov \nWHERE year=${year} and c.p${year} !=0"
 
 /***/ },
 /* 313 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.name AS name, b.reven as average_value, (\n\tSELECT AVG(reven) as nat_average_value \n\tFROM table_3fiscal_primera_serie \n\tWHERE year=b.year \n\tGROUP BY year), b.year \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov::integer=b.codgov \nWHERE a.codgov='${codgov}' ORDER BY b.year"
+	module.exports = "SELECT a.name AS name, b.reven as average_value, (\n\tSELECT AVG(reven) as nat_average_value \n\tFROM table_3fiscal_primera_serie \n\tWHERE year=b.year \n\tGROUP BY year), b.year \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov=b.codgov \nWHERE a.codgov=${codgov} ORDER BY b.year"
 
 /***/ },
 /* 314 */
 /***/ function(module, exports) {
 
-	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(reven)*1000000 as reven_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.reven_rate::numeric,2) as average_value, round((t.reven_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov='${codgov}'  ORDER BY b.year"
+	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(reven)*1000000 as reven_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.reven_rate::numeric,2) as average_value, round((t.reven_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=${codgov}  ORDER BY b.year"
 
 /***/ },
 /* 315 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.name AS name, b.taxes AS average_value, (SELECT AVG(taxes) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov='${codgov}' ORDER BY b.year"
+	module.exports = "SELECT a.name AS name, b.taxes AS average_value, (SELECT AVG(taxes) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE a.codgov=${codgov} ORDER BY b.year"
 
 /***/ },
 /* 316 */
 /***/ function(module, exports) {
 
-	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxes)*1000000 as tax_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.tax_rate::numeric,2) as average_value, round((t.tax_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov='${codgov}'  ORDER BY b.year"
+	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxes)*1000000 as tax_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.tax_rate::numeric,2) as average_value, round((t.tax_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=${codgov}  ORDER BY b.year"
 
 /***/ },
 /* 317 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.name AS name, b.taxinc AS average_value, (SELECT AVG(taxinc) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov='${codgov}' ORDER BY b.year"
+	module.exports = "SELECT a.name AS name, b.taxinc AS average_value, (SELECT AVG(taxinc) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE a.codgov=${codgov} ORDER BY b.year"
 
 /***/ },
 /* 318 */
 /***/ function(module, exports) {
 
-	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxinc)*1000000 as taxinc_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.taxinc_rate::numeric,2) as average_value, round((t.taxinc_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov='${codgov}'  ORDER BY b.year"
+	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxinc)*1000000 as taxinc_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.taxinc_rate::numeric,2) as average_value, round((t.taxinc_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=${codgov}  ORDER BY b.year"
 
 /***/ },
 /* 319 */
