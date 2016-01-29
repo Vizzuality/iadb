@@ -120,3 +120,45 @@ h2 {
 ._hidden {
   display: none;
 }
+
+#landing {
+  background-color: rgba(255,255,255,.8);
+  height: 100vw;
+}
+
+.title-container{
+  display: inline-block;
+  position: absolute;
+  top: 20vh;
+  left: 9vw;
+}
+
+.title-container .title {
+  text-transform: uppercase;
+  font-size: 77px;
+  line-height: 94px;
+  letter-spacing: 1.1px;
+  background-color: #004b74;
+  color: #FFF;
+  display: table;
+  padding: 0px 15px;
+  margin: 12px 0px;
+}
+
+.subtitle {
+  width: 485px;
+  font-size: 24px;
+}
+
+.landing-button,
+.landing-button:active,
+.landing-button:visited {
+  color: #FFF;
+  background-color: #333;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 24px;
+  padding: 5px 12px;
+  font-weight: bold;
+
+}
