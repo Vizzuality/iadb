@@ -11,7 +11,7 @@ SELECT a.name AS name,
   u.rank,
   u.nat_average_value,
   b.year,
-  v.p${year}
+  v.p${year} as population
 FROM bra_poladm2 a
   JOIN ${tableName} b ON a.codgov=b.codgov
   JOIN u ON a.codgov=u.codgov and b.year=u.year

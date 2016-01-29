@@ -40,7 +40,7 @@ f as (
   from ${tableName})
 
 select round(d.${columnName}::numeric,3) as average_value,
-round((t.column_total/s.value)::numeric,3) as nat_average_value, t.year, d.codgov, p${year}, a.name, f.rank, f.maxRank
+round((t.column_total/s.value)::numeric,3) as nat_average_value, t.year, d.codgov, p${year} as population, a.name, f.rank, f.maxRank
 from t 
 join s on t.year=s.year 
 join ${tableName} d on t.year=d.year
