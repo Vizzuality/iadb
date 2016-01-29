@@ -140,6 +140,18 @@ export default {
     categoryName: 'Tax. Inc.',
     total: false,
     relatedColumn:'taxinc'
+  },
+  {
+    name: 'Total',
+    tableName: 'table_3fiscal_segunda_serie',
+    columnName: 'indicator',
+    buckets: 7,
+    query: require('raw!./queries/layer-id.psql').replace(/\n/g, ' '),
+    interactivity: 'codgov,indicator,name',
+    unit: null,
+    categoryName: 'I. D.',
+    total: true,
+    relatedColumn:null
   },],
 
   /**
