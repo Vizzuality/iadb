@@ -41,7 +41,7 @@ SELECT a.name AS name,
   round((t.column_total/s.value)::numeric,2) as nat_average_value,
   b.year
 FROM bra_poladm2 a
-  JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov
+  JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov
   join s on b.year=s.year
   join t on b.year=t.year
-WHERE a.codgov='${codgov}' and b.year=${year}
+WHERE a.codgov=${codgov} and b.year=${year}
