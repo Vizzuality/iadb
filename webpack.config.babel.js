@@ -13,6 +13,7 @@ const config = {
   entry: [
     'webpack/hot/only-dev-server',
     './index.html',
+    './landing.html',
     './app.js',
     './login.html'
   ],
