@@ -8,9 +8,8 @@
 
   h2 {
     margin: 0 auto;
-    max-width: 80%;
     font-size: 13px;
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
   }
 
@@ -35,10 +34,9 @@
 
   .panel {
     width: 50%;
-    padding: 0 10px;
     box-sizing: content-box;
 
-    text-align: center;
+    text-align: left;
 
     h3 {
       margin: 0;
