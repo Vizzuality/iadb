@@ -136,10 +136,10 @@ class Chart extends React.Component {
 
     function showTooltip (d, nat) {
       tooltip
-        .html(`${nat ? d.nat_average_value : d.average_value}`)
+        .html(`${nat ? d.nat_average_value.toFixed(2) : d.average_value.toFixed(2)}`)
         .transition().duration(200)
         .style('opacity', 1)
-        .style('top', `${d3.event.pageY - 10}px`)
+        .style('top', `${d3.event.pageY}px`)
         .style('left', `${d3.event.pageX}px`);
     }
 

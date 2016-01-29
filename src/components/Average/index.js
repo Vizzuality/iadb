@@ -23,9 +23,11 @@ class Average extends React.Component {
     let query = (this.state.layerData.total) ? this.props.queryTotal : this.props.queryPerc;
     const username = this.props.cartodbUser;
     const sql = query
+      .replace(/\$\{relatedColumn\}/g, this.state.layerData.relatedColumn || '')
       .replace(/\$\{columnName\}/g, this.state.layerName)
       .replace(/\$\{year\}/g, this.state.date.getFullYear())
       .replace(/\$\{codgov\}/g, this.state.codgov);
+
     const url = `https:\/\/${username}.cartodb.com/api/v2/sql?q=${sql}`;
     $.getJSON(url, data => {
       const d = data.rows[0];
