@@ -16,7 +16,9 @@ class Average extends React.Component {
       layerName: props.layerName,
       layerData: props.layerData,
       date: props.date,
-      rank: null
+      rank: null,
+      maxRank: null,
+      population: null
     };
   }
 
