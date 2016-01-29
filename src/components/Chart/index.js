@@ -58,7 +58,13 @@ class Chart extends React.Component {
   renderSparkLine() {
     let data = this.data;
 
-    const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
+    const oEl = ReactDOM.findDOMNode(this);
+
+    if (!oEl) {
+      return;
+    }
+
+    const el = oEl.getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
     const margin = {top: 15, left: 40, right: 20, bottom: 35};
     const width = el.clientWidth;
@@ -192,9 +198,10 @@ class Chart extends React.Component {
   }
 
   clearView() {
-    const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
+    const el = ReactDOM.findDOMNode(this);
     if (el) {
-      el.innerHTML = null;
+      const chartsElement = el.getElementsByClassName('canvas')[0];
+      chartsElement.innerHTML = null;
     }
   }
 
