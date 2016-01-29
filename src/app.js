@@ -9,9 +9,16 @@ import Layers from './components/Layers';
 import Timeline from './components/Timeline';
 import Average from './components/Average';
 import Chart from './components/Chart';
+import Legend from './components/Legend';
 import config from './config';
 
 let layerData = null;
+
+function getCookie(name) {
+  var regexp = new RegExp(`(?:^${name}|;\s*${name})=(.*?)(?:;|$)`, 'g');
+  var result = regexp.exec(document.cookie);
+  return (result === null) ? null : result[1];
+}
 
 class App extends React.Component {
 
@@ -54,6 +61,14 @@ class App extends React.Component {
     this.refs.chart.setState({layerName: layerData.columnName});
   }
 
+  onLayerChange(layerData) {
+    this.refs.legend.setState({
+      min: layerData.min,
+      max: layerData.max,
+      buckets: layerData.buckets
+    });
+  }
+
   shouldComponentUpdate() {
     return false;
   }
@@ -93,6 +108,9 @@ class App extends React.Component {
             title={currentChart.title}
             query={currentChart.query}
           />
+          <Legend ref='legend'
+            colors={config.map.colors}
+          />
         </div>
         <Map ref="map"
           cartodbUser={config.app.cartodbUser}
@@ -102,7 +120,9 @@ class App extends React.Component {
           colors={config.map.colors}
           date={config.app.date}
           codgov={config.app.codgov}
+          cartocssQuery={config.map.cartocssQuery}
           onChange={this.onMapChange.bind(this)}
+          onLayerChange={this.onLayerChange.bind(this)}
         />
         <Timeline ref="timeline"
           cartodbUser={config.app.cartodbUser}
@@ -119,7 +139,7 @@ class App extends React.Component {
 
 }
 
-if (document.cookie !== 'iadb_demo_access=true') {
+if (getCookie('iadb_demo_access') === true) {
   window.location.href = 'login.html'
 } else {
   ReactDOM.render(<App />, document.getElementById('app'));

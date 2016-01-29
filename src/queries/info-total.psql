@@ -1,0 +1,6 @@
+SELECT a.name AS name,
+  b.${columnName} as average_value,
+  (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year)
+FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b
+  ON a.codgov=b.codgov
+WHERE a.codgov=${codgov} AND year=${year}

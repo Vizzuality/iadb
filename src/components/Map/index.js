@@ -93,6 +93,9 @@ class Map extends React.Component {
               this.setState({codgov: d.codgov});
               this.props.onChange(d);
             });
+          if (this.props.onLayerChange && typeof this.props.onLayerChange === 'function') {
+            this.props.onLayerChange(layerData);
+          }
         });
     });
   }
@@ -114,11 +117,13 @@ class Map extends React.Component {
 
   getCartoCSS(layerData, cb) {
     const colors = this.props.colors;
-    const query = `SELECT CDB_JenksBins(array_agg(${layerData.columnName}::numeric), 7)
-      FROM ${layerData.tableName} where year = ${this.state.date.getFullYear()} and ${layerData.columnName}::numeric is not null`;
+    const query = this.props.cartocssQuery
+      .replace(/\$\{columnName\}/g, layerData.columnName)
+      .replace(/\$\{tableName\}/g, layerData.tableName)
+      .replace(/\$\{year\}/g, this.state.date.getFullYear());
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (d) => {
-      const data = d.rows[0].cdb_jenksbins;
+      const data = d.rows[0].buckets;
       const cartocss = `#${layerData.tableName}{
         polygon-fill: ${colors[0]};
         polygon-opacity: 1;
@@ -134,6 +139,8 @@ class Map extends React.Component {
       #${layerData.tableName} [${layerData.columnName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}
       `;
+      layerData.min = d.rows[0].min;
+      layerData.max = d.rows[0].max;
       cb(cartocss);
     }).fail((err) => {
       throw err.responseText;

@@ -1,0 +1,17 @@
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+
+  .buckets {
+    display: flex;
+  }
+
+  .bucket {
+    width: 30px;
+    height: 10px;
+    margin: 0 1px;
+    background-color: #ddd;
+  }
+}

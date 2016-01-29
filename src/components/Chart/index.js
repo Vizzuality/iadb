@@ -58,7 +58,13 @@ class Chart extends React.Component {
   renderSparkLine() {
     let data = this.data;
 
-    const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
+    const oEl = ReactDOM.findDOMNode(this);
+
+    if (!oEl) {
+      return;
+    }
+
+    const el = oEl.getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
     const margin = {top: 15, left: 40, right: 20, bottom: 35};
     const width = el.clientWidth;
@@ -130,10 +136,10 @@ class Chart extends React.Component {
 
     function showTooltip (d, nat) {
       tooltip
-        .html(`${nat ? d.nat_average_value : d.average_value}`)
+        .html(`${nat ? d.nat_average_value.toFixed(2) : d.average_value.toFixed(2)}`)
         .transition().duration(200)
         .style('opacity', 1)
-        .style('top', `${d3.event.pageY - 10}px`)
+        .style('top', `${d3.event.pageY}px`)
         .style('left', `${d3.event.pageX}px`);
     }
 
@@ -192,9 +198,10 @@ class Chart extends React.Component {
   }
 
   clearView() {
-    const el = ReactDOM.findDOMNode(this).getElementsByClassName('canvas')[0];
+    const el = ReactDOM.findDOMNode(this);
     if (el) {
-      el.innerHTML = null;
+      const chartsElement = el.getElementsByClassName('canvas')[0];
+      chartsElement.innerHTML = null;
     }
   }
 

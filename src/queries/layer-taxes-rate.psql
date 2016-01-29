@@ -1,0 +1,5 @@
+SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate 
+FROM bra_poladm2 a 
+JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov 
+JOIN table_2bra_seriepob c  ON a.codgov=c.codgov 
+WHERE year=${year} and c.p${year} !=0 
