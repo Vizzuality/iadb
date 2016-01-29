@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "669916e83a0168d57652"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ee06cf4c746c3878003f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -35862,21 +35862,22 @@
 	      if (this.state.codgov) {
 	        (function () {
 	          var el = _reactDom2.default.findDOMNode(_this3);
-	          var cartocss = '#' + layerData.tableName + ' [codgov = \'' + _this3.state.codgov + '\'] {\n        polygon-fill: transparent;\n        polygon-opacity: 0;\n        line-color: #F11810;\n        line-width: 3;\n        line-opacity: 1;\n      }';
+	          var cartocss = '#bra_poladm2 [codgov=' + _this3.state.codgov + '] {\n        polygon-fill: transparent;\n        polygon-opacity: 0;\n        line-color: #F11810;\n        line-width: 3;\n        line-opacity: 1;\n      }';
 
 	          el.classList.add('_loading');
 
 	          if (_this3.topLayer) {
 	            _this3.topLayer.setCartoCSS(cartocss);
 	          } else {
-	            cartodb.createLayer(_this3.map, {
+	            var cartodbConfig = {
 	              'user_name': _this3.props.cartodbUser,
 	              type: 'cartodb',
 	              sublayers: [{
 	                sql: 'SELECT the_geom_webmercator, codgov FROM bra_poladm2',
 	                cartocss: cartocss
 	              }]
-	            }).addTo(_this3.map, 1).done(function (topLayer) {
+	            };
+	            cartodb.createLayer(_this3.map, cartodbConfig).addTo(_this3.map, 1).done(function (topLayer) {
 	              _this3.topLayer = topLayer;
 	              _this3.topLayer.on('load', function () {
 	                el.classList.remove('_loading');
