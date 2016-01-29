@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "42252cdf59f160764844"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c577662d8a5ae936c89b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -551,7 +551,7 @@
 	__webpack_require__(1);
 	__webpack_require__(3);
 	__webpack_require__(4);
-	module.exports = __webpack_require__(301);
+	module.exports = __webpack_require__(310);
 
 
 /***/ },
@@ -728,7 +728,11 @@
 
 	var _Chart2 = _interopRequireDefault(_Chart);
 
-	var _config = __webpack_require__(299);
+	var _Legend = __webpack_require__(299);
+
+	var _Legend2 = _interopRequireDefault(_Legend);
+
+	var _config = __webpack_require__(302);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -807,6 +811,15 @@
 	      this.refs.chart.setState({ layerName: layerData.columnName });
 	    }
 	  }, {
+	    key: 'onLayerChange',
+	    value: function onLayerChange(layerData) {
+	      this.refs.legend.setState({
+	        min: layerData.min,
+	        max: layerData.max,
+	        buckets: layerData.buckets
+	      });
+	    }
+	  }, {
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate() {
 	      return false;
@@ -816,7 +829,7 @@
 	    value: function render() {
 	      var currentChart = _lodash2.default.find(_config2.default.charts, { columnName: _config2.default.app.layerName });
 
-	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(300), width: '192', height: '31' })), _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'title' }, _react2.default.createElement('h1', null, 'Datos financieros municipales')), _react2.default.createElement(_Layers2.default, { ref: 'layers',
+	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(309), width: '192', height: '31' })), _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'title' }, _react2.default.createElement('h1', null, 'Datos financieros municipales')), _react2.default.createElement(_Layers2.default, { ref: 'layers',
 	        layerName: _config2.default.app.layerName,
 	        layers: _config2.default.layers,
 	        onChange: this.onChangeLayers.bind(this)
@@ -836,6 +849,8 @@
 	        codgov: _config2.default.app.codgov,
 	        title: currentChart.title,
 	        query: currentChart.query
+	      }), _react2.default.createElement(_Legend2.default, { ref: 'legend',
+	        colors: _config2.default.map.colors
 	      })), _react2.default.createElement(_Map2.default, { ref: 'map',
 	        cartodbUser: _config2.default.app.cartodbUser,
 	        mapOptions: _config2.default.map.mapOptions,
@@ -844,7 +859,9 @@
 	        colors: _config2.default.map.colors,
 	        date: _config2.default.app.date,
 	        codgov: _config2.default.app.codgov,
-	        onChange: this.onMapChange.bind(this)
+	        cartocssQuery: _config2.default.map.cartocssQuery,
+	        onChange: this.onMapChange.bind(this),
+	        onLayerChange: this.onLayerChange.bind(this)
 	      }), _react2.default.createElement(_Timeline2.default, { ref: 'timeline',
 	        cartodbUser: _config2.default.app.cartodbUser,
 	        query: _config2.default.timeline.query,
@@ -35792,6 +35809,9 @@
 	            _this2.setState({ codgov: d.codgov });
 	            _this2.props.onChange(d);
 	          });
+	          if (_this2.props.onLayerChange && typeof _this2.props.onLayerChange === 'function') {
+	            _this2.props.onLayerChange(layerData);
+	          }
 	        });
 	      });
 	    }
@@ -35816,11 +35836,13 @@
 	    key: 'getCartoCSS',
 	    value: function getCartoCSS(layerData, cb) {
 	      var colors = this.props.colors;
-	      var query = 'SELECT CDB_JenksBins(array_agg(' + layerData.columnName + '::numeric), 7)\n      FROM ' + layerData.tableName + ' where year = ' + this.state.date.getFullYear() + ' and ' + layerData.columnName + '::numeric is not null';
+	      var query = this.props.cartocssQuery.replace(/\$\{columnName\}/g, layerData.columnName).replace(/\$\{tableName\}/g, layerData.tableName).replace(/\$\{year\}/g, this.state.date.getFullYear());
 	      var url = 'https://' + this.props.cartodbUser + '.cartodb.com/api/v2/sql?q=' + query;
 	      _jquery2.default.getJSON(url, function (d) {
-	        var data = d.rows[0].cdb_jenksbins;
+	        var data = d.rows[0].buckets;
 	        var cartocss = '#' + layerData.tableName + '{\n        polygon-fill: ' + colors[0] + ';\n        polygon-opacity: 1;\n        line-color: #FFF;\n        line-width: 0.3;\n        line-opacity: 0.7;\n      }\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[6] + '] {polygon-fill: ' + colors[6] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[5] + '] {polygon-fill: ' + colors[5] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[4] + '] {polygon-fill: ' + colors[4] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[3] + '] {polygon-fill: ' + colors[3] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[2] + '] {polygon-fill: ' + colors[2] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[1] + '] {polygon-fill: ' + colors[1] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[0] + '] {polygon-fill: ' + colors[0] + ';}\n      ';
+	        layerData.min = d.rows[0].min;
+	        layerData.max = d.rows[0].max;
 	        cb(cartocss);
 	      }).fail(function (err) {
 	        throw err.responseText;
@@ -68818,7 +68840,8 @@
 
 	      var query = this.state.layerData.total ? this.props.queryTotal : this.props.queryPerc;
 	      var username = this.props.cartodbUser;
-	      var sql = query.replace(/\$\{columnName\}/g, this.state.layerName).replace(/\$\{year\}/g, this.state.date.getFullYear()).replace(/\$\{codgov\}/g, this.state.codgov).replace(/\n/g, ' ');
+	      var sql = query.replace(/\$\{relatedColumn\}/g, this.state.layerData.relatedColumn || '').replace(/\$\{columnName\}/g, this.state.layerName).replace(/\$\{year\}/g, this.state.date.getFullYear()).replace(/\$\{codgov\}/g, this.state.codgov);
+
 	      var url = 'https://' + username + '.cartodb.com/api/v2/sql?q=' + sql;
 	      _jquery2.default.getJSON(url, function (data) {
 	        var d = data.rows[0];
@@ -69041,7 +69064,13 @@
 	    value: function renderSparkLine() {
 	      var data = this.data;
 
-	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
+	      var oEl = _reactDom2.default.findDOMNode(this);
+
+	      if (!oEl) {
+	        return;
+	      }
+
+	      var el = oEl.getElementsByClassName('canvas')[0];
 	      var dateFormat = '%Y';
 	      var margin = { top: 15, left: 40, right: 20, bottom: 35 };
 	      var width = el.clientWidth;
@@ -69085,7 +69114,7 @@
 	      var tooltip = _d2.default.select('body').append('div').attr('class', 'tooltip').style('opacity', 0);
 
 	      function showTooltip(d, nat) {
-	        tooltip.html('' + (nat ? d.nat_average_value : d.average_value)).transition().duration(200).style('opacity', 1).style('top', _d2.default.event.pageY - 10 + 'px').style('left', _d2.default.event.pageX + 'px');
+	        tooltip.html('' + (nat ? d.nat_average_value.toFixed(2) : d.average_value.toFixed(2))).transition().duration(200).style('opacity', 1).style('top', _d2.default.event.pageY + 'px').style('left', _d2.default.event.pageX + 'px');
 	      }
 
 	      function hideTooltip() {
@@ -69131,9 +69160,10 @@
 	  }, {
 	    key: 'clearView',
 	    value: function clearView() {
-	      var el = _reactDom2.default.findDOMNode(this).getElementsByClassName('canvas')[0];
+	      var el = _reactDom2.default.findDOMNode(this);
 	      if (el) {
-	        el.innerHTML = null;
+	        var chartsElement = el.getElementsByClassName('canvas')[0];
+	        chartsElement.innerHTML = null;
 	      }
 	    }
 	  }]);
@@ -69188,13 +69218,145 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #00a3db;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: white;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -100%);\n\n          transform: translate(-50%, -100%);\n  pointer-events: none;\n  z-index: 1;\n}\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #00a3db;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: white;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -100%);\n\n          transform: translate(-50%, -100%);\n  pointer-events: none;\n  z-index: 3;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
 /* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(6), RootInstanceProvider = __webpack_require__(14), ReactMount = __webpack_require__(16), React = __webpack_require__(69); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var _createClass = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	}();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	__webpack_require__(300);
+
+	var _react = __webpack_require__(69);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	  if (!self) {
+	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== "function" && superClass !== null) {
+	    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var Legend = function (_React$Component) {
+	  _inherits(Legend, _React$Component);
+
+	  function Legend(props) {
+	    _classCallCheck(this, Legend);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Legend).call(this, props));
+
+	    _this.state = {
+	      min: props.min,
+	      max: props.max,
+	      buckets: props.buckets,
+	      colors: props.colors
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Legend, [{
+	    key: 'render',
+	    value: function render() {
+	      var buckets = this.state.colors.slice(0, this.state.buckets).map(function (a, i) {
+	        return _react2.default.createElement('div', { className: 'bucket', style: { backgroundColor: a }, key: i });
+	      });
+
+	      if (!this.state.min && this.state.min !== 0 || !this.state.max && this.state.max !== 0) {
+	        return null;
+	      }
+
+	      return _react2.default.createElement('div', { className: 'legend' }, _react2.default.createElement('div', { className: 'legend-value' }, this.state.min.toFixed(2)), _react2.default.createElement('div', { className: 'buckets' }, buckets), _react2.default.createElement('div', { className: 'legend-value' }, this.state.max.toFixed(2)));
+	    }
+	  }]);
+
+	  return Legend;
+	}(_react2.default.Component);
+
+	exports.default = Legend;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(186); if (makeExportsHot(module, __webpack_require__(69))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module)))
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(301);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(176)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(301, function() {
+				var newContent = __webpack_require__(301);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(175)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".legend {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin: 10px 0;\n}\n.legend .buckets {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.legend .bucket {\n  width: 30px;\n  height: 10px;\n  margin: 0 1px;\n  background-color: #ddd;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(6), RootInstanceProvider = __webpack_require__(14), ReactMount = __webpack_require__(16), React = __webpack_require__(69); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -69223,8 +69385,8 @@
 	   * Required: name, average_value
 	   */
 	  average: {
-	    query_total: 'SELECT a.name AS name, b.${columnName} as average_value, (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year) FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year}',
-	    query_perc: 'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(${relatedColumn}::numeric)*1000000 as column_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.${columnName}::numeric,2) as average_value, round((t.column_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\' and b.year=${year}'
+	    query_total: __webpack_require__(303).replace(/\n/g, ' '),
+	    query_perc: __webpack_require__(304).replace(/\n/g, ' ')
 	  },
 
 	  /**
@@ -69243,9 +69405,10 @@
 	      position: 'topright'
 	    },
 	    // Basemap url
-	    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
+	    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?' + 'access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
 	    // Legend colors
-	    colors: ['#F8D368', '#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F']
+	    colors: ['#F8D368', '#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F'],
+	    cartocssQuery: __webpack_require__(305).replace(/\n/g, ' ')
 	  },
 
 	  /**
@@ -69255,7 +69418,7 @@
 	   */
 	  timeline: {
 	    // You should specify query or startDate and endDate
-	    query: 'SELECT MIN(year), MAX(year) FROM table_3fiscal_primera_serie',
+	    query: __webpack_require__(306).replace(/\n/g, ' '),
 	    // You should specify query or startDate and endDate
 	    startDate: null,
 	    // You should specify query or startDate and endDate
@@ -69279,22 +69442,22 @@
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'reven',
 	    buckets: 7,
-	    query: 'SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-	    interactivity: 'codgov,reven, name',
+	    query: __webpack_require__(307).replace(/\n/g, ' '),
+	    interactivity: 'codgov,reven,name',
 	    unit: 'M R$',
 	    categoryName: 'Revenue',
+	    relatedColumn: null,
 	    total: true
 	  }, {
 	    name: 'Per capita',
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'reven_rate',
 	    buckets: 7,
-	    query: 'SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
-	    interactivity: 'codgov, reven_rate, name',
+	    query: __webpack_require__(308).replace(/\n/g, ' '),
+	    interactivity: 'codgov, reven_rate,name',
 	    unit: 'R$',
 	    categoryName: 'Revenue',
 	    relatedColumn: 'reven',
-
 	    total: false
 	  }, {
 	    name: 'Total',
@@ -69302,17 +69465,18 @@
 	    columnName: 'taxes',
 	    buckets: 7,
 	    query: 'SELECT a.*, b.taxes FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-	    interactivity: 'codgov,taxes, name',
+	    interactivity: 'codgov,taxes,name',
 	    unit: 'M R$',
 	    categoryName: 'Taxes',
-	    total: true
+	    total: true,
+	    relatedColumn: null
 	  }, {
 	    name: 'Per capita',
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'tax_rate',
 	    buckets: 7,
 	    query: 'SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
-	    interactivity: 'codgov,tax_rate, name',
+	    interactivity: 'codgov,tax_rate,name',
 	    unit: 'R$',
 	    categoryName: 'Taxes',
 	    total: false,
@@ -69323,17 +69487,18 @@
 	    columnName: 'taxinc',
 	    buckets: 7,
 	    query: 'SELECT a.*, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-	    interactivity: 'codgov,taxinc, name',
+	    interactivity: 'codgov,taxinc,name',
 	    unit: 'M R$',
 	    categoryName: 'Tax. Inc.',
-	    total: true
+	    total: true,
+	    relatedColumn: null
 	  }, {
 	    name: 'Per capita',
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'taxinc_rate',
 	    buckets: 7,
 	    query: 'SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0',
-	    interactivity: 'codgov,taxinc_rate, name',
+	    interactivity: 'codgov,taxinc_rate,name',
 	    unit: 'R$',
 	    categoryName: 'Tax. Inc.',
 	    total: false,
@@ -69391,13 +69556,49 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module)))
 
 /***/ },
-/* 300 */
+/* 303 */
+/***/ function(module, exports) {
+
+	module.exports = "SELECT a.name AS name,\n  b.${columnName} as average_value,\n  (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year)\nFROM bra_poladm2 a JOIN table_3fiscal_primera_serie b\n  ON a.codgov::integer=b.codgov\nWHERE a.codgov='${codgov}' AND year=${year}\n"
+
+/***/ },
+/* 304 */
+/***/ function(module, exports) {
+
+	module.exports = "with r as (\n  SELECT\n    sum(p2000) p2000,\n    sum(p2001) p2001,\n    sum(p2002) p2002,\n    sum(p2003) p2003,\n    sum(p2004) p2004,\n    sum(p2005) p2005,\n    sum(p2006) p2006,\n    sum(p2007) p2007,\n    sum(p2008) p2008,\n    sum(p2009) p2009,\n    sum(p2010) p2010,\n    sum(p2011) p2011,\n    sum(p2012) p2012\n  FROM table_2bra_seriepob\n),\ns as (\n  select 2000 as year, p2000 as value from r\n  union select 2001 as year, p2001 as value from r\n  union select 2002 as year, p2002 as value from r\n  union select 2003 as year, p2003 as value from r\n  union select 2004 as year, p2004 as value from r\n  union select 2005 as year, p2005 as value from r\n  union select 2006 as year, p2006 as value from r\n  union select 2007 as year, p2007 as value from r\n  union select 2008 as year, p2008 as value from r\n  union select 2009 as year, p2009 as value from r\n  union select 2010 as year, p2010 as value from r\n  union select 2011 as year, p2011 as value from r\n  union select 2012 as year, p2012 as value from r\n  order by year asc\n),\nt as (\n  select sum(${relatedColumn}::numeric)*1000000 as column_total, year\n  from table_3fiscal_primera_serie group by year\n)\n\nSELECT a.name AS name,\n  round(b.${columnName}::numeric,2) as average_value,\n  round((t.column_total/s.value)::numeric,2) as nat_average_value,\n  b.year\nFROM bra_poladm2 a\n  JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov\n  join s on b.year=s.year\n  join t on b.year=t.year\nWHERE a.codgov='${codgov}' and b.year=${year}\n"
+
+/***/ },
+/* 305 */
+/***/ function(module, exports) {
+
+	module.exports = "SELECT CDB_JenksBins(array_agg(${columnName}::numeric), 7) AS buckets,\n  max(${columnName}::numeric),\n  min(${columnName}::numeric)\nFROM ${tableName}\nWHERE year = ${year} and ${columnName}::numeric is not null\n"
+
+/***/ },
+/* 306 */
+/***/ function(module, exports) {
+
+	module.exports = "SELECT MIN(year), MAX(year) FROM table_3fiscal_primera_serie\n"
+
+/***/ },
+/* 307 */
+/***/ function(module, exports) {
+
+	module.exports = "SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}\n"
+
+/***/ },
+/* 308 */
+/***/ function(module, exports) {
+
+	module.exports = "SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 \n"
+
+/***/ },
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "c8d01c65b951fcdf9d4958258b6af8b9.png";
 
 /***/ },
-/* 301 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "login.html";
