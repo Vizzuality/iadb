@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5a9c7438ed17b927c25a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5edd1b1f7314a41a42b5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -551,7 +551,7 @@
 	__webpack_require__(1);
 	__webpack_require__(3);
 	__webpack_require__(4);
-	module.exports = __webpack_require__(321);
+	module.exports = __webpack_require__(322);
 
 
 /***/ },
@@ -789,13 +789,14 @@
 	    key: 'onMapChange',
 	    value: function onMapChange(mapData) {
 	      var layerData = this.refs.layers.state.layer;
+	      var currentChart = _lodash2.default.find(_config2.default.charts, { columnName: layerData.columnName });
 	      if (mapData.codgov) {
 	        this.refs.dashboard.className = 'dashboard';
 	        _reactDom2.default.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
 	      }
 	      this.refs.average.setState({ codgov: mapData.codgov, layerData: layerData });
 	      this.refs.map.updateTopLayer(layerData);
-	      this.refs.chart.setState({ codgov: mapData.codgov });
+	      this.refs.chart.setState({ chartData: currentChart, codgov: mapData.codgov });
 	    }
 	  }, {
 	    key: 'onChangeTimeline',
@@ -808,13 +809,14 @@
 	  }, {
 	    key: 'onChangeLayers',
 	    value: function onChangeLayers(layerData) {
+	      var currentChart = _lodash2.default.find(_config2.default.charts, { columnName: layerData.columnName });
 	      this.refs.map.setState({ date: this.refs.timeline.getCurrentDate() });
 	      this.refs.map.addLayer(layerData);
 	      this.refs.average.setState({
 	        layerName: layerData.columnName,
 	        layerData: layerData
 	      });
-	      this.refs.chart.setState({ layerName: layerData.columnName });
+	      this.refs.chart.setState({ chartData: currentChart, layerName: layerData.columnName });
 	    }
 	  }, {
 	    key: 'onLayerChange',
@@ -835,7 +837,7 @@
 	    value: function render() {
 	      var currentChart = _lodash2.default.find(_config2.default.charts, { columnName: _config2.default.app.layerName });
 
-	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(320), width: '192', height: '31' })), _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'title' }, _react2.default.createElement('h1', null, 'Datos financieros municipales')), _react2.default.createElement(_Layers2.default, { ref: 'layers',
+	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(321), width: '192', height: '31' })), _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'title' }, _react2.default.createElement('h1', null, 'Datos financieros municipales')), _react2.default.createElement(_Layers2.default, { ref: 'layers',
 	        layerName: _config2.default.app.layerName,
 	        layers: _config2.default.layers,
 	        onChange: this.onChangeLayers.bind(this)
@@ -849,6 +851,7 @@
 	        queryPerc: _config2.default.average.query_perc
 	      }), _react2.default.createElement(_Chart2.default, { ref: 'chart',
 	        cartodbUser: _config2.default.app.cartodbUser,
+	        chartData: currentChart,
 	        layerName: _config2.default.app.layerName,
 	        date: _config2.default.app.date,
 	        unit: currentChart.unit,
@@ -35862,7 +35865,7 @@
 	      if (this.state.codgov) {
 	        (function () {
 	          var el = _reactDom2.default.findDOMNode(_this3);
-	          var cartocss = '#bra_poladm2 [codgov=' + _this3.state.codgov + '] {\n        polygon-fill: transparent;\n        polygon-opacity: 0;\n        line-color: #F11810;\n        line-width: 3;\n        line-opacity: 1;\n      }';
+	          var cartocss = '#bra_poladm2 [codgov=' + _this3.state.codgov + '] {\n        polygon-fill: transparent;\n        polygon-opacity: 0;\n        line-color: #F11810;\n        line-width: 5;\n        line-opacity: 1;\n      }';
 
 	          el.classList.add('_loading');
 
@@ -69023,6 +69026,7 @@
 
 	    _this.data = [];
 	    _this.state = {
+	      chartData: props.chartData,
 	      layerName: props.layerName,
 	      codgov: props.codgov,
 	      date: props.date
@@ -69036,12 +69040,12 @@
 	      var _this2 = this;
 
 	      var username = this.props.cartodbUser;
-	      var sql = this.props.query.replace(/\$\{columnName\}/g, this.state.layerName).replace(/\$\{codgov\}/g, this.state.codgov);
+	      var sql = this.state.chartData.query.replace(/\$\{columnName\}/g, this.state.layerName).replace(/\$\{codgov\}/g, this.state.codgov);
 	      var url = 'https://' + username + '.cartodb.com/api/v2/sql?q=' + sql;
 	      _jquery2.default.getJSON(url, function (d) {
 	        _this2.data = d.rows;
 	        _this2.clearView();
-	        _this2.renderSparkLine();
+	        _this2.renderSparkLine(d.rows);
 	      }).fail(function (err) {
 	        throw err.responseText;
 	      });
@@ -69069,9 +69073,7 @@
 	    }
 	  }, {
 	    key: 'renderSparkLine',
-	    value: function renderSparkLine() {
-	      var data = this.data;
-
+	    value: function renderSparkLine(data) {
 	      var oEl = _reactDom2.default.findDOMNode(this);
 
 	      if (!oEl) {
@@ -69311,7 +69313,7 @@
 	        return null;
 	      }
 
-	      return _react2.default.createElement('div', { className: 'legend' }, _react2.default.createElement('div', { className: 'legend-value' }, this.state.min.toFixed(2)), _react2.default.createElement('div', { className: 'buckets' }, buckets), _react2.default.createElement('div', { className: 'legend-value' }, this.state.max.toFixed(2)));
+	      return _react2.default.createElement('div', { className: 'legend' }, _react2.default.createElement('div', { className: 'legend-value' }, this.state.min.toFixed(0)), _react2.default.createElement('div', { className: 'buckets' }, buckets), _react2.default.createElement('div', { className: 'legend-value' }, this.state.max.toFixed(0)));
 	    }
 	  }]);
 
@@ -69358,7 +69360,7 @@
 
 
 	// module
-	exports.push([module.id, ".legend {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin: 10px 0;\n}\n.legend .buckets {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.legend .bucket {\n  width: 30px;\n  height: 10px;\n  margin: 0 1px;\n  background-color: #ddd;\n}\n", ""]);
+	exports.push([module.id, ".legend {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px;\n\n  background: white;\n}\n.legend .buckets {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.legend .bucket {\n  width: 30px;\n  height: 10px;\n  margin: 0 1px;\n  background-color: #ddd;\n}\n", ""]);
 
 	// exports
 
@@ -69567,6 +69569,12 @@
 	    columnName: 'taxinc_rate',
 	    unit: 'R$',
 	    total: false
+	  }, {
+	    title: 'Total',
+	    query: __webpack_require__(320).replace(/\n/g, ' '),
+	    columnName: 'indicator',
+	    unit: null,
+	    total: true
 	  }]
 
 	};
@@ -69578,19 +69586,19 @@
 /* 303 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.name AS name,\n  b.${columnName} as average_value,\n  (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM ${tableName} WHERE year=b.year GROUP BY year)\nFROM bra_poladm2 a JOIN ${tableName} b\n  ON a.codgov=b.codgov\nWHERE a.codgov=${codgov} AND year=${year}\n"
+	module.exports = "SELECT a.name AS name,\n  round(b.${columnName}::numeric,3) as average_value,\n  (SELECT round(AVG(${columnName})::numeric,3) as nat_average_value FROM ${tableName} WHERE year=b.year GROUP BY year)\nFROM bra_poladm2 a JOIN ${tableName} b\n  ON a.codgov=b.codgov\nWHERE a.codgov=${codgov} AND year=${year}\n"
 
 /***/ },
 /* 304 */
 /***/ function(module, exports) {
 
-	module.exports = "with r as (\n  SELECT\n    sum(p2000) p2000,\n    sum(p2001) p2001,\n    sum(p2002) p2002,\n    sum(p2003) p2003,\n    sum(p2004) p2004,\n    sum(p2005) p2005,\n    sum(p2006) p2006,\n    sum(p2007) p2007,\n    sum(p2008) p2008,\n    sum(p2009) p2009,\n    sum(p2010) p2010,\n    sum(p2011) p2011,\n    sum(p2012) p2012\n  FROM table_2bra_seriepob\n),\ns as (\n  select 2000 as year, p2000 as value from r\n  union select 2001 as year, p2001 as value from r\n  union select 2002 as year, p2002 as value from r\n  union select 2003 as year, p2003 as value from r\n  union select 2004 as year, p2004 as value from r\n  union select 2005 as year, p2005 as value from r\n  union select 2006 as year, p2006 as value from r\n  union select 2007 as year, p2007 as value from r\n  union select 2008 as year, p2008 as value from r\n  union select 2009 as year, p2009 as value from r\n  union select 2010 as year, p2010 as value from r\n  union select 2011 as year, p2011 as value from r\n  union select 2012 as year, p2012 as value from r\n  order by year asc\n),\nt as (\n  select sum(${relatedColumn}::numeric)*1000000 as column_total, year\n  from table_3fiscal_primera_serie group by year\n)\n\nSELECT a.name AS name,\n  round(b.${columnName}::numeric,2) as average_value,\n  round((t.column_total/s.value)::numeric,2) as nat_average_value,\n  b.year\nFROM bra_poladm2 a\n  JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov\n  join s on b.year=s.year\n  join t on b.year=t.year\nWHERE a.codgov=${codgov} and b.year=${year}\n"
+	module.exports = "with r as (\n  SELECT\n    sum(p2000) p2000,\n    sum(p2001) p2001,\n    sum(p2002) p2002,\n    sum(p2003) p2003,\n    sum(p2004) p2004,\n    sum(p2005) p2005,\n    sum(p2006) p2006,\n    sum(p2007) p2007,\n    sum(p2008) p2008,\n    sum(p2009) p2009,\n    sum(p2010) p2010,\n    sum(p2011) p2011,\n    sum(p2012) p2012\n  FROM table_2bra_seriepob\n),\ns as (\n  select 2000 as year, p2000 as value from r\n  union select 2001 as year, p2001 as value from r\n  union select 2002 as year, p2002 as value from r\n  union select 2003 as year, p2003 as value from r\n  union select 2004 as year, p2004 as value from r\n  union select 2005 as year, p2005 as value from r\n  union select 2006 as year, p2006 as value from r\n  union select 2007 as year, p2007 as value from r\n  union select 2008 as year, p2008 as value from r\n  union select 2009 as year, p2009 as value from r\n  union select 2010 as year, p2010 as value from r\n  union select 2011 as year, p2011 as value from r\n  union select 2012 as year, p2012 as value from r\n  order by year asc\n),\nt as (\n  select sum(${relatedColumn}::numeric)*1000000 as column_total, year\n  from table_3fiscal_primera_serie group by year\n)\n\nSELECT a.name AS name,\n  round(b.${columnName}::numeric,3) as average_value,\n  round((t.column_total/s.value)::numeric,3) as nat_average_value,\n  b.year\nFROM bra_poladm2 a\n  JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov\n  join s on b.year=s.year\n  join t on b.year=t.year\nWHERE a.codgov=${codgov} and b.year=${year}\n"
 
 /***/ },
 /* 305 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT CDB_JenksBins(array_agg(${columnName}::numeric), 7) AS buckets,\n  max(${columnName}::numeric),\n  min(${columnName}::numeric)\nFROM ${tableName}\nWHERE year = ${year} and ${columnName}::numeric is not null\n"
+	module.exports = "SELECT CDB_QuantileBins(array_agg(${columnName}::numeric), 7) AS buckets,\n  max(${columnName}::numeric),\n  min(${columnName}::numeric)\nFROM ${tableName}\nWHERE year = ${year} and ${columnName}::numeric is not null\n"
 
 /***/ },
 /* 306 */
@@ -69678,12 +69686,18 @@
 
 /***/ },
 /* 320 */
+/***/ function(module, exports) {
+
+	module.exports = "SELECT a.name, b.indicator as average_value, (\n\tSELECT AVG(indicator) as nat_average_value \n\tFROM table_3fiscal_segunda_serie\n\tWHERE year=b.year \n\tGROUP BY year), b.year \nFROM bra_poladm2 a \nJOIN table_3fiscal_segunda_serie b \nON a.codgov=b.codgov \nWHERE a.codgov=${codgov} ORDER BY b.year"
+
+/***/ },
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "c8d01c65b951fcdf9d4958258b6af8b9.png";
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "login.html";
