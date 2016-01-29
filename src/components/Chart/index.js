@@ -26,6 +26,7 @@ class Chart extends React.Component {
     const url = `https:\/\/${username}.cartodb.com/api/v2/sql?q=${sql}`;
     $.getJSON(url, (d) => {
       this.data = d.rows;
+      this.clearView();
       this.renderSparkLine();
     }).fail((err) => {
       throw err.responseText;
