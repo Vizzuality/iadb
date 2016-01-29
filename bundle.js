@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5edd1b1f7314a41a42b5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "287f9d1429d450d2cd2d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -55960,7 +55960,7 @@
 
 
 	// module
-	exports.push([module.id, ".timeline {\n  position: absolute;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 5px 10px;\n  bottom: 3rem;\n  left: 2rem;\n  right: 2rem;\n\n  background: white;\n\n  z-index: 2;\n}\n.timeline ul {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.timeline li {\n  position: relative;\n  padding: 5px 10px;\n  font-size: 10px;\n  font-weight: bold;\n  cursor: pointer;\n}\n.timeline li._active, .timeline li:hover {\n  color: white;\n  background-color: #004b74;\n}\n.timeline .control {\n  position: relative;\n  width: 26px;\n  height: 26px;\n}\n.timeline .control + ul {\n  margin-left: 20px;\n}\n.timeline .control::after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 50%;\n  left: 50%;\n  border-top: 8px solid transparent;\n  border-left: 12px solid #333;\n  border-bottom: 8px solid transparent;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n}\n.timeline .control._playing::after {\n  width: 4px;\n  height: 16px;\n  border-top: 0;\n  border-bottom: 0;\n  border-right: 4px solid #333;\n  border-left: 4px solid #333;\n}\n", ""]);
+	exports.push([module.id, ".timeline {\n  position: absolute;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 5px 10px;\n  bottom: 3rem;\n  left: 2rem;\n  right: 2rem;\n\n  background: white;\n\n  z-index: 2;\n}\n.timeline ul {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.timeline li {\n  position: relative;\n  padding: 5px 10px;\n  font-size: 10px;\n  font-weight: bold;\n  cursor: pointer;\n}\n.timeline li._active {\n  color: white;\n  background-color: #004b74;\n}\n.timeline li:hover {\n  background-color: #e5edf1;\n}\n.timeline .control {\n  position: relative;\n  width: 26px;\n  height: 26px;\n}\n.timeline .control + ul {\n  margin-left: 20px;\n}\n.timeline .control::after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 50%;\n  left: 50%;\n  border-top: 8px solid transparent;\n  border-left: 12px solid #333;\n  border-bottom: 8px solid transparent;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n}\n.timeline .control._playing::after {\n  width: 4px;\n  height: 16px;\n  border-top: 0;\n  border-bottom: 0;\n  border-right: 4px solid #333;\n  border-left: 4px solid #333;\n}\n", ""]);
 
 	// exports
 
@@ -69101,7 +69101,10 @@
 	        return d.date;
 	      }));
 	      y.domain([0, _d2.default.max(data, function (d) {
-	        return d.average_value > d.nat_average_value ? d.average_value : d.nat_average_value;
+	        var nValue = d.nat_average_value || 0;
+	        var value = d.average_value || 0;
+	        var max = value > nValue ? value : nValue;
+	        return max;
 	      })]);
 
 	      // X Axis
@@ -69143,17 +69146,17 @@
 	      svg.selectAll('dot').data(data).enter().append('circle').attr('class', 'focus').attr('cx', function (d) {
 	        return x(d.date);
 	      }).attr('cy', function (d) {
-	        return y(d.average_value);
+	        return y(d.average_value || 0);
 	      }).attr('r', 2).on('mouseover', function (d) {
 	        showTooltip(d, false);
 	      }).on('mouseout', hideTooltip);
 
 	      // Draw average line
-	      if (data[0].average_value) {
+	      if (data[0].nat_average_value) {
 	        var avgLine = _d2.default.svg.line().interpolate('linear').x(function (d) {
 	          return x(d.date);
 	        }).y(function (d) {
-	          return y(d.nat_average_value);
+	          return y(d.nat_average_value || 0);
 	        });
 
 	        svg.append('path').datum(data).attr('class', 'avg-sparkline').attr('d', avgLine);
@@ -69538,7 +69541,6 @@
 	    columnName: 'reven',
 	    unit: 'M R$',
 	    total: true
-
 	  }, {
 	    title: 'Per capita',
 	    query: __webpack_require__(315).replace(/\n/g, ' '),
@@ -69688,7 +69690,7 @@
 /* 320 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.name, b.indicator as average_value, (\n\tSELECT AVG(indicator) as nat_average_value \n\tFROM table_3fiscal_segunda_serie\n\tWHERE year=b.year \n\tGROUP BY year), b.year \nFROM bra_poladm2 a \nJOIN table_3fiscal_segunda_serie b \nON a.codgov=b.codgov \nWHERE a.codgov=${codgov} ORDER BY b.year"
+	module.exports = "SELECT a.name, b.indicator as average_value, b.year\nFROM bra_poladm2 a\nJOIN table_3fiscal_segunda_serie b\nON a.codgov=b.codgov\nWHERE a.codgov=${codgov} ORDER BY b.year\n"
 
 /***/ },
 /* 321 */
