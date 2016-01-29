@@ -140,6 +140,18 @@ export default {
     categoryName: 'Tax. Inc.',
     total: false,
     relatedColumn:'taxinc'
+  },
+  {
+    name: 'Total',
+    tableName: 'table_3fiscal_segunda_serie',
+    columnName: 'indicator',
+    buckets: 7,
+    query: require('raw!./queries/layer-id.psql').replace(/\n/g, ' '),
+    interactivity: 'codgov,indicator,name',
+    unit: null,
+    categoryName: 'I. D.',
+    total: true,
+    relatedColumn:null
   },],
 
   /**
@@ -154,7 +166,6 @@ export default {
     columnName:'reven',
     unit: 'M R$',
     total: true
-
   },{
     title: 'Per capita',
     query: require('raw!./queries/chart-reven-rate.psql').replace(/\n/g, ' '),
@@ -185,6 +196,12 @@ export default {
     columnName:'taxinc_rate',
     unit: 'R$',
     total: false
+  },{
+    title: 'Total',
+    query: require('raw!./queries/chart-id.psql').replace(/\n/g, ' '),
+    columnName:'indicator',
+    unit: null,
+    total: true
   }]
 
 };

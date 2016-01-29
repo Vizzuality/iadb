@@ -15,7 +15,10 @@ class Average extends React.Component {
       codgov: props.codgov,
       layerName: props.layerName,
       layerData: props.layerData,
-      date: props.date
+      date: props.date,
+      rank: null,
+      maxRank: null,
+      population: null
     };
   }
 
@@ -24,6 +27,7 @@ class Average extends React.Component {
     const username = this.props.cartodbUser;
     const sql = query
       .replace(/\$\{relatedColumn\}/g, this.state.layerData.relatedColumn || '')
+      .replace(/\$\{tableName\}/g, this.state.layerData.tableName || '')
       .replace(/\$\{columnName\}/g, this.state.layerName)
       .replace(/\$\{year\}/g, this.state.date.getFullYear())
       .replace(/\$\{codgov\}/g, this.state.codgov);
@@ -34,7 +38,10 @@ class Average extends React.Component {
       this.setState({
         name: d.name,
         value: d.average_value,
-        natValue: d.nat_average_value
+        natValue: d.nat_average_value,
+        rank: d.rank,
+        maxRank: d.maxrank,
+        population: d.population
       });
     }).fail((err) => {
       throw err.responseText;
@@ -62,6 +69,7 @@ class Average extends React.Component {
   }
 
   render() {
+    let rank = null;
     if (!this.state.name) {
       return (
         <div className="average">
@@ -69,11 +77,24 @@ class Average extends React.Component {
         </div>
       );
     }
+    if (this.state.rank) {
+      rank = <div className="panels">
+        <div className="panel">
+          <h3>Ranking</h3>
+          <div className="nat-value">{`${this.state.rank} / ${this.state.maxRank}`}</div>
+        </div>
+        <div className="panel">
+          <h3>Population</h3>
+          <div className="nat-value">{this.state.population}</div>
+        </div>
+      </div>;
+    }
     const avgNat = (this.state.natValue || this.state.natValue === 0) ? this.state.natValue : '-';
     const avgMun = (this.state.value || this.state.value === 0) ? this.state.value : '-';
     return (
       <div className="average">
         <h2>{this.state.name}</h2>
+        {rank}
         <div className="panels">
           <div className="panel">
             <div className="nat-value">{avgNat} <span className="unit">{this.state.layerData.unit}</span></div>

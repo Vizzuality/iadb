@@ -1,0 +1,5 @@
+SELECT a.name, b.indicator as average_value, b.year
+FROM bra_poladm2 a
+JOIN table_3fiscal_segunda_serie b
+ON a.codgov=b.codgov
+WHERE a.codgov=${codgov} ORDER BY b.year

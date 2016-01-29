@@ -150,11 +150,11 @@ class Map extends React.Component {
   updateTopLayer(layerData) {
     if (this.state.codgov) {
       const el = ReactDOM.findDOMNode(this);
-      const cartocss = `#${layerData.tableName} [codgov = '${this.state.codgov}'] {
+      const cartocss = `#bra_poladm2 [codgov=${this.state.codgov}] {
         polygon-fill: transparent;
         polygon-opacity: 0;
         line-color: #F11810;
-        line-width: 3;
+        line-width: 5;
         line-opacity: 1;
       }`;
 
@@ -163,14 +163,15 @@ class Map extends React.Component {
       if (this.topLayer) {
         this.topLayer.setCartoCSS(cartocss);
       } else {
-        cartodb.createLayer(this.map, {
+        const cartodbConfig = {
           'user_name': this.props.cartodbUser,
           type: 'cartodb',
           sublayers: [{
             sql: 'SELECT the_geom_webmercator, codgov FROM bra_poladm2',
             cartocss: cartocss
           }]
-        })
+        };
+        cartodb.createLayer(this.map, cartodbConfig)
           .addTo(this.map, 1)
           .done((topLayer) => {
             this.topLayer = topLayer;
