@@ -39,7 +39,9 @@ class Average extends React.Component {
         name: d.name,
         value: d.average_value,
         natValue: d.nat_average_value,
-        rank: d.rank
+        rank: d.rank,
+        maxRank: d.maxrank,
+        population: d.population
       });
     }).fail((err) => {
       throw err.responseText;
@@ -79,7 +81,11 @@ class Average extends React.Component {
       rank = <div className="panels">
         <div className="panel">
           <h3>Ranking</h3>
-          <div className="nat-value">{this.state.rank}</div>
+          <div className="nat-value">{`${this.state.rank} / ${this.state.maxRank}`}</div>
+        </div>
+        <div className="panel">
+          <h3>Population</h3>
+          <div className="nat-value">{this.state.population}</div>
         </div>
       </div>;
     }

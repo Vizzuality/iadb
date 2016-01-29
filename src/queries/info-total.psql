@@ -1,14 +1,15 @@
 with u as (
-	SELECT round((AVG(${columnName}) over( partition by year))::numeric,3) as nat_average_value,  
-	codgov, 
-	rank() over( partition by year order by ${columnName} desc), 
+	SELECT round((AVG(${columnName}) over( partition by year))::numeric,3) as nat_average_value,
+	codgov,
+	rank() over( partition by year order by ${columnName} desc),
 	year,
-	count(${columnName}) over(partition by year) as maxRank
+	count(${columnName}) over(partition by year) as maxrank
 	FROM ${tableName})
 
 SELECT a.name AS name,
   round(b.${columnName}::numeric, 3) as average_value,
   u.rank,
+  u.maxrank,
   u.nat_average_value,
   b.year,
   v.p${year} as population
