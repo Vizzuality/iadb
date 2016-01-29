@@ -29,9 +29,13 @@
     font-weight: bold;
     cursor: pointer;
 
-    &._active, &:hover {
+    &._active {
       color: white;
       background-color: #004b74;
+    }
+
+    &:hover {
+      background-color: #e5edf1;
     }
   }
 
