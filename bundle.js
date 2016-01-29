@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "287f9d1429d450d2cd2d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "91837ff311d5d74c7d20"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -805,6 +805,7 @@
 	      this.refs.map.setState({ date: this.refs.timeline.getCurrentDate() });
 	      this.refs.map.addLayer(layerData);
 	      this.refs.average.setState({ date: timelineData.date });
+	      this.refs.chart.setState({ date: timelineData.date });
 	    }
 	  }, {
 	    key: 'onChangeLayers',
@@ -69074,6 +69075,8 @@
 	  }, {
 	    key: 'renderSparkLine',
 	    value: function renderSparkLine(data) {
+	      var _this3 = this;
+
 	      var oEl = _reactDom2.default.findDOMNode(this);
 
 	      if (!oEl) {
@@ -69169,6 +69172,15 @@
 	          showTooltip(d, true);
 	        }).on('mouseout', hideTooltip);
 	      }
+
+	      // Vertical line
+	      svg.selectAll('avg-line').data(data).enter().append('line').attr('class', 'year-line').attr('x1', function (d) {
+	        return x(d.date);
+	      }).attr('x2', function (d) {
+	        return x(d.date);
+	      }).attr('y1', 0).attr('y2', function (d) {
+	        return d.year === _this3.state.date.getFullYear() ? height - margin.bottom - margin.top : 0;
+	      });
 	    }
 	  }, {
 	    key: 'clearView',
@@ -69231,7 +69243,7 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #00a3db;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: white;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -100%);\n\n          transform: translate(-50%, -100%);\n  pointer-events: none;\n  z-index: 3;\n}\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 20px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #00a3db;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: white;\n}\n\n.chart .year-line {\n  stroke: white;\n  stroke-width: 1px;\n  shape-rendering: crispEdges;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -100%);\n\n          transform: translate(-50%, -100%);\n  pointer-events: none;\n  z-index: 3;\n}\n", ""]);
 
 	// exports
 
@@ -69588,7 +69600,7 @@
 /* 303 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT a.name AS name,\n  round(b.${columnName}::numeric,3) as average_value,\n  (SELECT round(AVG(${columnName})::numeric,3) as nat_average_value FROM ${tableName} WHERE year=b.year GROUP BY year)\nFROM bra_poladm2 a JOIN ${tableName} b\n  ON a.codgov=b.codgov\nWHERE a.codgov=${codgov} AND year=${year}\n"
+	module.exports = "with u as (\n\tSELECT round((AVG(${columnName}) over( partition by year))::numeric,3) as nat_average_value,  codgov, rank() over( partition by year order by ${columnName} desc), year FROM ${tableName})\n\nSELECT a.name AS name,\n  round(b.${columnName}::numeric,3) as average_value,\n  u.rank, u.nat_average_value, b.year, v.p${year}\nFROM bra_poladm2 a \nJOIN ${tableName} b ON a.codgov=b.codgov\nJOIN u ON a.codgov=u.codgov and b.year=u.year\nJOIN table_2bra_seriepob v on a.codgov=v.codgov\nWHERE a.codgov=${codgov} AND b.year=${year}\n"
 
 /***/ },
 /* 304 */
