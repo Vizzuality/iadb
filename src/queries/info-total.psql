@@ -1,6 +1,11 @@
+with u as (
+	SELECT round((AVG(${columnName}) over( partition by year))::numeric,3) as nat_average_value,  codgov, rank() over( partition by year order by ${columnName} desc), year FROM ${tableName})
+
 SELECT a.name AS name,
   round(b.${columnName}::numeric,3) as average_value,
-  (SELECT round(AVG(${columnName})::numeric,3) as nat_average_value FROM ${tableName} WHERE year=b.year GROUP BY year)
-FROM bra_poladm2 a JOIN ${tableName} b
-  ON a.codgov=b.codgov
-WHERE a.codgov=${codgov} AND year=${year}
+  u.rank, u.nat_average_value, b.year, v.p${year}
+FROM bra_poladm2 a 
+JOIN ${tableName} b ON a.codgov=b.codgov
+JOIN u ON a.codgov=u.codgov and b.year=u.year
+JOIN table_2bra_seriepob v on a.codgov=v.codgov
+WHERE a.codgov=${codgov} AND b.year=${year}
