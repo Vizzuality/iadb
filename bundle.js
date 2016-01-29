@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "416906c244db78083362"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0a6bdcded9a88f5145ed"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -760,6 +760,12 @@
 
 	var layerData = null;
 
+	function getCookie(name) {
+	  var regexp = new RegExp('(?:^' + name + '|;s*' + name + ')=(.*?)(?:;|$)', 'g');
+	  var result = regexp.exec(document.cookie);
+	  return result === null ? null : result[1];
+	}
+
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 
@@ -877,7 +883,7 @@
 	  return App;
 	}(_react2.default.Component);
 
-	if (document.cookie !== 'iadb_demo_access=true') {
+	if (getCookie('iadb_demo_access') === true) {
 	  window.location.href = 'login.html';
 	} else {
 	  _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
