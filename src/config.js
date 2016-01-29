@@ -19,8 +19,8 @@ export default {
    * Required: name, average_value
    */
   average: {
-    query_total: 'SELECT a.name AS name, b.${columnName} as average_value, (SELECT round(AVG(${columnName})::numeric,2) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year) FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE a.codgov=\'${codgov}\' AND year=${year}',
-    query_perc:'with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(${relatedColumn}::numeric)*1000000 as column_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.${columnName}::numeric,2) as average_value, round((t.column_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=\'${codgov}\' and b.year=${year}'
+    query_total: require('raw!./queries/info-total.psql').replace(/\n/g, ' '),
+    query_perc: require('raw!./queries/info-perc.psql').replace(/\n/g, ' ')
   },
 
   /**
@@ -39,9 +39,11 @@ export default {
       position: 'topright'
     },
     // Basemap url
-    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
+    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?' +
+      'access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
     // Legend colors
-    colors: ['#F8D368','#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F']
+    colors: ['#F8D368','#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F'],
+    cartocssQuery: require('raw!./queries/cartocss.psql').replace(/\n/g, ' ')
   },
 
   /**
@@ -51,7 +53,7 @@ export default {
    */
   timeline: {
     // You should specify query or startDate and endDate
-    query: 'SELECT MIN(year), MAX(year) FROM table_3fiscal_primera_serie',
+    query: require('raw!./queries/timeline.psql').replace(/\n/g, ' '),
     // You should specify query or startDate and endDate
     startDate: null,
     // You should specify query or startDate and endDate
@@ -75,22 +77,22 @@ export default {
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'reven',
     buckets: 7,
-    query: 'SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-    interactivity: 'codgov,reven, name',
+    query: require('raw!./queries/layer-reven.psql').replace(/\n/g, ' '),
+    interactivity: 'codgov,reven,name',
     unit: 'M R$',
     categoryName:'Revenue',
+    relatedColumn: null,
     total: true
   }, {
     name: 'Per capita',
     tableName: 'table_3fiscal_primera_serie',
     columnName: 'reven_rate',
     buckets: 7,
-    query: 'SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
-    interactivity: 'codgov, reven_rate, name',
+    query: require('raw!./queries/layer-reven-rate.psql').replace(/\n/g, ' '),
+    interactivity: 'codgov, reven_rate,name',
     unit: 'R$',
     categoryName:'Revenue',
-    relatedColumn:'reven'
-    ,
+    relatedColumn:'reven',
     total: false
   }, {
     name: 'Total',
@@ -98,10 +100,11 @@ export default {
     columnName: 'taxes',
     buckets: 7,
     query: 'SELECT a.*, b.taxes FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-    interactivity: 'codgov,taxes, name',
+    interactivity: 'codgov,taxes,name',
     unit: 'M R$',
     categoryName: 'Taxes',
-    total: true
+    total: true,
+    relatedColumn: null
   },
   {
     name: 'Per capita',
@@ -109,7 +112,7 @@ export default {
     columnName: 'tax_rate',
     buckets: 7,
     query: 'SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 ',
-    interactivity: 'codgov,tax_rate, name',
+    interactivity: 'codgov,tax_rate,name',
     unit: 'R$',
     categoryName:'Taxes',
     total: false,
@@ -120,10 +123,11 @@ export default {
     columnName: 'taxinc',
     buckets: 7,
     query: 'SELECT a.*, b.taxinc FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov WHERE year=${year}',
-    interactivity: 'codgov,taxinc, name',
+    interactivity: 'codgov,taxinc,name',
     unit: 'M R$',
     categoryName: 'Tax. Inc.',
-    total: true
+    total: true,
+    relatedColumn: null
   },
   {
     name: 'Per capita',
@@ -131,7 +135,7 @@ export default {
     columnName: 'taxinc_rate',
     buckets: 7,
     query: 'SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0',
-    interactivity: 'codgov,taxinc_rate, name',
+    interactivity: 'codgov,taxinc_rate,name',
     unit: 'R$',
     categoryName: 'Tax. Inc.',
     total: false,

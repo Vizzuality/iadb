@@ -25,8 +25,7 @@ class Average extends React.Component {
     const sql = query
       .replace(/\$\{columnName\}/g, this.state.layerName)
       .replace(/\$\{year\}/g, this.state.date.getFullYear())
-      .replace(/\$\{codgov\}/g, this.state.codgov)
-      .replace(/\n/g, ' ');
+      .replace(/\$\{codgov\}/g, this.state.codgov);
     const url = `https:\/\/${username}.cartodb.com/api/v2/sql?q=${sql}`;
     $.getJSON(url, data => {
       const d = data.rows[0];

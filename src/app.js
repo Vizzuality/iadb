@@ -9,6 +9,7 @@ import Layers from './components/Layers';
 import Timeline from './components/Timeline';
 import Average from './components/Average';
 import Chart from './components/Chart';
+import Legend from './components/Legend';
 import config from './config';
 
 let layerData = null;
@@ -93,6 +94,7 @@ class App extends React.Component {
             title={currentChart.title}
             query={currentChart.query}
           />
+          <Legend />
         </div>
         <Map ref="map"
           cartodbUser={config.app.cartodbUser}
@@ -102,6 +104,7 @@ class App extends React.Component {
           colors={config.map.colors}
           date={config.app.date}
           codgov={config.app.codgov}
+          cartocssQuery={config.map.cartocssQuery}
           onChange={this.onMapChange.bind(this)}
         />
         <Timeline ref="timeline"

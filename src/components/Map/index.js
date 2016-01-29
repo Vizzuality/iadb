@@ -114,8 +114,10 @@ class Map extends React.Component {
 
   getCartoCSS(layerData, cb) {
     const colors = this.props.colors;
-    const query = `SELECT CDB_JenksBins(array_agg(${layerData.columnName}::numeric), 7)
-      FROM ${layerData.tableName} where year = ${this.state.date.getFullYear()} and ${layerData.columnName}::numeric is not null`;
+    const query = this.props.cartocssQuery
+      .replace(/\$\{columnName\}/g, layerData.columnName)
+      .replace(/\$\{tableName\}/g, layerData.tableName)
+      .replace(/\$\{year\}/g, this.state.date.getFullYear());
     const url = `https:\/\/${this.props.cartodbUser}.cartodb.com/api/v2/sql?q=${query}`;
     $.getJSON(url, (d) => {
       const data = d.rows[0].cdb_jenksbins;
