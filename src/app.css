@@ -87,36 +87,12 @@ h2 {
   }
 }
 
-/* Chart */
-/*.chart-legend {
-  padding: 20px 0;
-  border-top: 1px solid #ccc;
-
-  font-size: 11px;
-
-  .legend-average::before,
-  .legend-value::before {
-    position: absolute;
-    display: block;
-    left: 0;
-    top: 50%;
-    content: "";
-    height: 2px;
-    width: 20px;
-    background: red;
-  }
-
-  .legend-value::before {
-    background-color: black;
-  }
-
-  .legend-average,
-  .legend-value {
-    position: relative;
-    padding-left: 25px;
-  }
-}*/
-
 ._hidden {
   display: none;
+}
+
+@media screen and (max-height: 800px) {
+  .dashboard .title h1 {
+    font-size: 13px;
+  }
 }
