@@ -12,6 +12,7 @@ class Chart extends React.Component {
     super(props);
     this.data = [];
     this.state = {
+      chartData: props.chartData,
       layerName: props.layerName,
       codgov: props.codgov,
       date: props.date
@@ -20,14 +21,14 @@ class Chart extends React.Component {
 
   fetchData() {
     const username = this.props.cartodbUser;
-    const sql = this.props.query
+    const sql = this.state.chartData.query
       .replace(/\$\{columnName\}/g, this.state.layerName)
       .replace(/\$\{codgov\}/g, this.state.codgov);
     const url = `https:\/\/${username}.cartodb.com/api/v2/sql?q=${sql}`;
     $.getJSON(url, (d) => {
       this.data = d.rows;
       this.clearView();
-      this.renderSparkLine();
+      this.renderSparkLine(d.rows);
     }).fail((err) => {
       throw err.responseText;
     });
@@ -56,9 +57,7 @@ class Chart extends React.Component {
     );
   }
 
-  renderSparkLine() {
-    let data = this.data;
-
+  renderSparkLine(data) {
     const oEl = ReactDOM.findDOMNode(this);
 
     if (!oEl) {

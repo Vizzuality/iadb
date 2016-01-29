@@ -35,13 +35,14 @@ class App extends React.Component {
 
   onMapChange(mapData) {
     const layerData = this.refs.layers.state.layer;
+    const currentChart = _.find(config.charts, {columnName: layerData.columnName});
     if (mapData.codgov) {
       this.refs.dashboard.className = 'dashboard';
       ReactDOM.findDOMNode(this.refs.timeline).className = 'timeline _collapsed';
     }
     this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
     this.refs.map.updateTopLayer(layerData);
-    this.refs.chart.setState({codgov: mapData.codgov});
+    this.refs.chart.setState({chartData: currentChart, codgov: mapData.codgov});
   }
 
   onChangeTimeline(timelineData) {
@@ -52,13 +53,14 @@ class App extends React.Component {
   }
 
   onChangeLayers(layerData) {
+    const currentChart = _.find(config.charts, {columnName: layerData.columnName});
     this.refs.map.setState({date: this.refs.timeline.getCurrentDate()});
     this.refs.map.addLayer(layerData);
     this.refs.average.setState({
       layerName: layerData.columnName,
       layerData: layerData
     });
-    this.refs.chart.setState({layerName: layerData.columnName});
+    this.refs.chart.setState({chartData: currentChart, layerName: layerData.columnName});
   }
 
   onLayerChange(layerData) {
@@ -101,6 +103,7 @@ class App extends React.Component {
           />
           <Chart ref='chart'
             cartodbUser={config.app.cartodbUser}
+            chartData={currentChart}
             layerName={config.app.layerName}
             date={config.app.date}
             unit={currentChart.unit}
