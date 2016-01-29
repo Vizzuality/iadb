@@ -1,4 +1,4 @@
-SELECT CDB_JenksBins(array_agg(${columnName}::numeric), 7) AS buckets,
+SELECT CDB_QuantileBins(array_agg(${columnName}::numeric), 7) AS buckets,
   max(${columnName}::numeric),
   min(${columnName}::numeric)
 FROM ${tableName}
