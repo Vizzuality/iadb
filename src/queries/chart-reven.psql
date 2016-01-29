@@ -5,5 +5,5 @@ SELECT a.name AS name, b.reven as average_value, (
 	GROUP BY year), b.year 
 FROM bra_poladm2 a 
 JOIN table_3fiscal_primera_serie b 
-ON a.codgov::integer=b.codgov 
-WHERE a.codgov='${codgov}' ORDER BY b.year
+ON a.codgov=b.codgov 
+WHERE a.codgov=${codgov} ORDER BY b.year

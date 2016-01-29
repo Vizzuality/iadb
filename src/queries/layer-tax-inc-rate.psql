@@ -1,5 +1,5 @@
 SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate 
 FROM bra_poladm2 a 
-JOIN table_3fiscal_primera_serie b ON a.codgov::integer=b.codgov 
+JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov 
 join table_2bra_seriepob c on a.codgov=c.codgov 
 WHERE year=${year} and c.p${year} !=0
