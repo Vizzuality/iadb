@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0029931a0b4fca2f4c81"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "669916e83a0168d57652"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -69039,6 +69039,7 @@
 	      var url = 'https://' + username + '.cartodb.com/api/v2/sql?q=' + sql;
 	      _jquery2.default.getJSON(url, function (d) {
 	        _this2.data = d.rows;
+	        _this2.clearView();
 	        _this2.renderSparkLine();
 	      }).fail(function (err) {
 	        throw err.responseText;
