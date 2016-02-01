@@ -74,7 +74,7 @@ class Chart extends React.Component {
     const height = el.clientHeight;
     const x = d3.time.scale().range([0, width - margin.left - margin.right]).nice();
     const y = d3.scale.linear().range([height - margin.bottom - margin.top, 0]);
-    const unit = this.state.unit;
+    const unit = this.state.unit || '';
 
     // Creating SVG
     const svg = d3.select(el)
