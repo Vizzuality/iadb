@@ -5,6 +5,7 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
+import helpers from '../../helpers';
 
 class Chart extends React.Component {
 
@@ -137,10 +138,10 @@ class Chart extends React.Component {
     const tooltip = d3.select('body').append('div')
       .attr('class', 'tooltip')
       .style('opacity', 0);
-
     function showTooltip (d, nat) {
+      const tooltipHtml = `${nat ? helpers.formatNumber(d.nat_average_value, 3) : helpers.formatNumber(d.average_value, 3)}`;
       tooltip
-        .html(`${nat ? d.nat_average_value.toFixed(3) : d.average_value.toFixed(3)}`)
+        .html(tooltipHtml)
         .transition().duration(200)
         .style('opacity', 1)
         .style('top', `${d3.event.pageY}px`)

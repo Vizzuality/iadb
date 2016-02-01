@@ -3,6 +3,7 @@
 import './style.css';
 import $ from 'jquery';
 import React from 'react';
+import helpers from '../../helpers';
 
 class Average extends React.Component {
 
@@ -81,11 +82,11 @@ class Average extends React.Component {
       rank = <div className="panels">
         <div className="panel">
           <h3>Ranking</h3>
-          <div className="nat-value">{`${this.state.rank} / ${this.state.maxRank}`}</div>
+          <div className="nat-value">{`${helpers.formatNumber(this.state.rank, 0)} / ${helpers.formatNumber(this.state.maxRank, 0)}`}</div>
         </div>
         <div className="panel">
           <h3>Population</h3>
-          <div className="nat-value">{this.state.population}</div>
+          <div className="nat-value">{helpers.formatNumber(this.state.population, 0)}</div>
         </div>
       </div>;
     }
@@ -98,11 +99,11 @@ class Average extends React.Component {
         <div className="panels">
           <div className="panel">
             <h3>Media nacional</h3>
-            <div className="nat-value">{avgNat} <span className="unit">{this.state.layerData.unit}</span></div>
+            <div className="nat-value">{helpers.formatNumber(avgNat, 2)} <span className="unit">{this.state.layerData.unit}</span></div>
           </div>
           <div className="panel">
             <h3>Media municipal</h3>
-            <div className="value">{avgMun} <span className="unit">{this.state.layerData.unit}</span></div>
+            <div className="value">{helpers.formatNumber(avgMun, 2)} <span className="unit">{this.state.layerData.unit}</span></div>
           </div>
         </div>
       </div>
