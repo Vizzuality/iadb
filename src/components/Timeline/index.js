@@ -19,14 +19,14 @@ class Timeline extends React.Component {
   }
 
   getSteps(state) {
-    const startDate = moment.utc(state.startDate);
-    const endDate = moment.utc(state.endDate);
+    const startDate = moment(state.startDate);
+    const endDate = moment(state.endDate);
     const diff = endDate.diff(startDate, this.props.step[1]);
     if (diff < 0) {
       return [];
     }
     return [...Array(diff + 1)].map((d, i) => {
-      return moment.utc(startDate).add(i * this.props.step[0], this.props.step[1]);
+      return moment(startDate).add(i * this.props.step[0], this.props.step[1]);
     });
   }
 
@@ -55,8 +55,8 @@ class Timeline extends React.Component {
   }
 
   getCurrentDate() {
-    const currentDate = moment.utc(this.state.startDate)
-        .add(this.state.current * this.props.step[0], this.props.step[1]);
+    const currentDate = moment(this.state.startDate)
+      .add(this.state.current * this.props.step[0], this.props.step[1]);
     return currentDate._d;
   }
 
@@ -104,8 +104,8 @@ class Timeline extends React.Component {
     $.getJSON(url, data => {
       const row = data.rows[0];
       const state = {
-        startDate: new Date(row.min.toString()),
-        endDate: new Date(row.max.toString())
+        startDate: new Date(row.min, 0, 1),
+        endDate: new Date(row.max, 0, 1)
       };
       state.steps = this.getSteps(state);
       this.setState(state);
@@ -134,7 +134,7 @@ class Timeline extends React.Component {
 
     // Making steps list
     const stepsList = steps.map((step, index) => {
-      const stepDate = moment.utc(step);
+      const stepDate = moment(step);
       return (
         <li key={index}
           className={index === this.state.current ? '_active' : ''}
