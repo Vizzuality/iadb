@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "00277c5c6bbcd477598f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5d8cce5e9947ac9fba04"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -35883,7 +35883,7 @@
 	      var url = 'https://' + this.props.cartodbUser + '.cartodb.com/api/v2/sql?q=' + query;
 	      _jquery2.default.getJSON(url, function (d) {
 	        var data = d.rows[0].buckets;
-	        var cartocss = '#' + layerData.tableName + '{\n        polygon-fill: ' + colors[0] + ';\n        polygon-opacity: 1;\n        line-color: #FFF;\n        line-width: 0.3;\n        line-opacity: 0.7;\n      }\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[6] + '] {polygon-fill: ' + colors[6] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[5] + '] {polygon-fill: ' + colors[5] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[4] + '] {polygon-fill: ' + colors[4] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[3] + '] {polygon-fill: ' + colors[3] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[2] + '] {polygon-fill: ' + colors[2] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[1] + '] {polygon-fill: ' + colors[1] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[0] + '] {polygon-fill: ' + colors[0] + ';}\n      ';
+	        var cartocss = '#' + layerData.tableName + '{\n        polygon-fill: transparent;\n        polygon-opacity: 1;\n        line-color: #FFF;\n        line-width: 0.3;\n        line-opacity: 0.7;\n      }\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[4] + '] {polygon-fill: ' + colors[4] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[3] + '] {polygon-fill: ' + colors[3] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[2] + '] {polygon-fill: ' + colors[2] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[1] + '] {polygon-fill: ' + colors[1] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' <= ' + data[0] + '] {polygon-fill: ' + colors[0] + ';}\n      #' + layerData.tableName + ' [' + layerData.columnName + ' < ' + d.rows[0].min + '] {polygon-fill: transparent;}\n      ';
 	        layerData.min = d.rows[0].min;
 	        layerData.max = d.rows[0].max;
 	        cb(cartocss);
@@ -69707,7 +69707,7 @@
 	    // Basemap url
 	    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?' + 'access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
 	    // Legend colors
-	    colors: ['#F8D368', '#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F'],
+	    colors: ['#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F'],
 	    cartocssQuery: __webpack_require__(309).replace(/\n/g, ' ')
 	  },
 
@@ -69887,7 +69887,7 @@
 /* 309 */
 /***/ function(module, exports) {
 
-	module.exports = "SELECT CDB_QuantileBins(array_agg(${columnName}::numeric), 7) AS buckets,\n  max(${columnName}::numeric),\n  min(${columnName}::numeric)\nFROM ${tableName}\nWHERE year = ${year} and ${columnName}::numeric is not null and ${columnName}<>0\n"
+	module.exports = "SELECT CDB_QuantileBins(array_agg(${columnName}::numeric), 5) AS buckets,\n  max(${columnName}::numeric),\n  min(${columnName}::numeric)\nFROM ${tableName}\nWHERE year = ${year} and ${columnName}::numeric is not null and ${columnName}<>0\n"
 
 /***/ },
 /* 310 */
