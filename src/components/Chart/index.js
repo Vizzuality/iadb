@@ -222,7 +222,7 @@ class Chart extends React.Component {
     const el = ReactDOM.findDOMNode(this);
     if (el) {
       const chartsElement = el.getElementsByClassName('canvas')[0];
-      chartsElement.innerHTML = null;
+      chartsElement.innerHTML = '';
     }
     if (this.tooltip) {
       this.tooltip.style('opacity', 0);
