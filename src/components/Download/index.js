@@ -51,7 +51,7 @@ class Download extends React.Component {
   }
 
   render() {
-    if (!this.state.query) {
+    if (!this.state.query || !this.state.codgov) {
       return null;
     }
     return (
