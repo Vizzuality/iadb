@@ -37,7 +37,7 @@
         var pI = document.getElementById('passwordInput');
         pI.addEventListener('input', function() {
           if (btoa(pI.value) === 'MTIzNA==') {
-            createCookie('iadb_demo_access', true);
+            createCookie('iadb_demo_access', 'goin');
             window.location.href = 'index.html';
           } else {
             deleteCookie('iadb_demo_access');
