@@ -73,6 +73,7 @@ class Chart extends React.Component {
     const height = el.clientHeight;
     const x = d3.time.scale().range([0, width - margin.left - margin.right]).nice();
     const y = d3.scale.linear().range([height - margin.bottom - margin.top, 0]);
+    const unit = this.state.unit;
 
     // Creating SVG
     const svg = d3.select(el)
@@ -118,7 +119,7 @@ class Chart extends React.Component {
     const yAxis = d3.svg.axis()
       .scale(y)
       .orient('left')
-      .outerTickSize(1)
+      .outerTickSize(0)
       .innerTickSize(0)
       .ticks(5);
 
@@ -135,11 +136,13 @@ class Chart extends React.Component {
     }
 
     // Tooltip
-    const tooltip = d3.select('body').append('div')
+    const tooltip = this.tooltip = d3.select('body').append('div')
       .attr('class', 'tooltip')
       .style('opacity', 0);
+
     function showTooltip (d, nat) {
-      const tooltipHtml = `${nat ? helpers.formatNumber(d.nat_average_value, 3) : helpers.formatNumber(d.average_value, 3)}`;
+      const value = (nat) ? d.nat_average_value : d.average_value;
+      const tooltipHtml = `${helpers.formatNumber(value, 3)} ${unit}`;
       tooltip
         .html(tooltipHtml)
         .transition().duration(200)
@@ -219,6 +222,9 @@ class Chart extends React.Component {
     if (el) {
       const chartsElement = el.getElementsByClassName('canvas')[0];
       chartsElement.innerHTML = null;
+    }
+    if (this.tooltip) {
+      this.tooltip.style('opacity', 0);
     }
   }
 
