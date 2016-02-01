@@ -42,7 +42,7 @@ export default {
     basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?' +
       'access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
     // Legend colors
-    colors: ['#F8D368','#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F'],
+    colors: ['#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F'],
     cartocssQuery: require('raw!./queries/cartocss.psql').replace(/\n/g, ' ')
   },
 
