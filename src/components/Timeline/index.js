@@ -19,14 +19,14 @@ class Timeline extends React.Component {
   }
 
   getSteps(state) {
-    const startDate = moment(state.startDate);
-    const endDate = moment(state.endDate);
+    const startDate = moment.utc(state.startDate);
+    const endDate = moment.utc(state.endDate);
     const diff = endDate.diff(startDate, this.props.step[1]);
     if (diff < 0) {
       return [];
     }
     return [...Array(diff + 1)].map((d, i) => {
-      return moment(startDate).add(i * this.props.step[0], this.props.step[1]);
+      return moment.utc(startDate).add(i * this.props.step[0], this.props.step[1]);
     });
   }
 
@@ -55,7 +55,7 @@ class Timeline extends React.Component {
   }
 
   getCurrentDate() {
-    const currentDate = moment(this.state.startDate)
+    const currentDate = moment.utc(this.state.startDate)
         .add(this.state.current * this.props.step[0], this.props.step[1]);
     return currentDate._d;
   }
@@ -134,7 +134,7 @@ class Timeline extends React.Component {
 
     // Making steps list
     const stepsList = steps.map((step, index) => {
-      const stepDate = moment(step);
+      const stepDate = moment.utc(step);
       return (
         <li key={index}
           className={index === this.state.current ? '_active' : ''}
