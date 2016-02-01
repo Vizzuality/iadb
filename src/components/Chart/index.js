@@ -67,7 +67,7 @@ class Chart extends React.Component {
 
     const el = oEl.getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
-    const margin = {top: 15, left: 40, right: 20, bottom: 35};
+    const margin = {top: 15, left: 35, right: 20, bottom: 20};
     const width = el.clientWidth;
     const height = el.clientHeight;
     const x = d3.time.scale().range([0, width - margin.left - margin.right]).nice();
@@ -98,7 +98,7 @@ class Chart extends React.Component {
       .scale(x)
       .orient('bottom')
       .ticks(d3.time.years, 2)
-      .outerTickSize(1)
+      .outerTickSize(0)
       .innerTickSize(0)
       .tickFormat(d3.time.format(dateFormat));
 
@@ -107,11 +107,11 @@ class Chart extends React.Component {
       .attr('transform', `translate(0, ${height - margin.bottom - margin.top})`)
       .call(xAxis);
 
-    svg.append('text')
-      .attr('class', 'x label')
-      .attr('x', width / 2)
-      .attr('y', height - 17)
-      .text('years');
+    // svg.append('text')
+    //   .attr('class', 'x label')
+    //   .attr('x', width / 2)
+    //   .attr('y', height - 17)
+    //   .text('years');
 
     // Y Axis
     const yAxis = d3.svg.axis()

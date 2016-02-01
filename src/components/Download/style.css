@@ -1,0 +1,18 @@
+.download {
+  padding: 5px 10px 10px 10px;
+  background-color: #333;
+}
+
+.download-btn {
+  display: block;
+  width: 100%;
+  color: white;
+  font-size: 10px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+
+  &:focus {
+    outline: 0;
+  }
+}

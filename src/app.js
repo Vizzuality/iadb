@@ -10,6 +10,7 @@ import Timeline from './components/Timeline';
 import Average from './components/Average';
 import Chart from './components/Chart';
 import Legend from './components/Legend';
+import Download from './components/Download';
 import config from './config';
 
 let layerData = null;
@@ -47,6 +48,11 @@ class App extends React.Component {
       codgov: mapData.codgov,
       unit: currentChart.unit
     });
+    this.refs.download.setState({
+      query: currentChart.query,
+      codgov: mapData.codgov,
+      layerName: layerData.columnName
+    });
   }
 
   onChangeTimeline(timelineData) {
@@ -69,6 +75,10 @@ class App extends React.Component {
       chartData: currentChart,
       layerName: layerData.columnName,
       unit: currentChart.unit
+    });
+    this.refs.download.setState({
+      query: currentChart.query,
+      layerName: layerData.columnName
     });
   }
 
@@ -120,6 +130,10 @@ class App extends React.Component {
             title={currentChart.title}
             query={currentChart.query}
           />
+          <Download ref='download'
+            cartodbUser={config.app.cartodbUser}
+            layerName={config.app.layerName}
+            codgov={config.app.codgov} />
           <Legend ref='legend'
             colors={config.map.colors}
           />
