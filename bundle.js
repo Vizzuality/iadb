@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "45e9d24623c0978ec728"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2f3dcb152a2cebafb4c3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -552,7 +552,7 @@
 	__webpack_require__(3);
 	__webpack_require__(4);
 	__webpack_require__(5);
-	module.exports = __webpack_require__(326);
+	module.exports = __webpack_require__(327);
 
 
 /***/ },
@@ -731,19 +731,19 @@
 
 	var _Average2 = _interopRequireDefault(_Average);
 
-	var _Chart = __webpack_require__(297);
+	var _Chart = __webpack_require__(298);
 
 	var _Chart2 = _interopRequireDefault(_Chart);
 
-	var _Legend = __webpack_require__(300);
+	var _Legend = __webpack_require__(301);
 
 	var _Legend2 = _interopRequireDefault(_Legend);
 
-	var _Download = __webpack_require__(303);
+	var _Download = __webpack_require__(304);
 
 	var _Download2 = _interopRequireDefault(_Download);
 
-	var _config = __webpack_require__(306);
+	var _config = __webpack_require__(307);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -866,7 +866,7 @@
 	    value: function render() {
 	      var currentChart = _lodash2.default.find(_config2.default.charts, { columnName: _config2.default.app.layerName });
 
-	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(325), width: '192', height: '31' })), _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'title' }, _react2.default.createElement('h1', null, 'Datos financieros municipales')), _react2.default.createElement(_Layers2.default, { ref: 'layers',
+	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'brand' }, _react2.default.createElement('img', { className: 'logo', src: __webpack_require__(326), width: '192', height: '31' })), _react2.default.createElement('div', { ref: 'dashboard', className: 'dashboard' }, _react2.default.createElement('div', { className: 'title' }, _react2.default.createElement('h1', null, 'Datos financieros municipales')), _react2.default.createElement(_Layers2.default, { ref: 'layers',
 	        layerName: _config2.default.app.layerName,
 	        layers: _config2.default.layers,
 	        onChange: this.onChangeLayers.bind(this)
@@ -20978,7 +20978,7 @@
 
 
 	// module
-	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/* Base styles */\nbody {\n  min-width: 1000px;\n  min-height: 680px;\n  width: 100%;\n  height: 100%;\n\n  font-family: \"Montserrat\", Arial, sans-serif;\n  font-size: 13px;\n  line-height: 1.4;\n  color: #333;\n\n  background: white;\n\n  overflow: hidden;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\nh1, h2 {\n  margin-top: 0;\n  margin-bottom: .3rem;\n}\n\nh1 {\n  font-size: 1.8rem;\n}\n\nh2 {\n  font-size: 1.2rem;\n}\n\n#app {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n/* Dashboard module */\n.dashboard {\n  position: absolute;\n  top: 30px;\n  left: 30px;\n  right: auto;\n  bottom: auto;\n  width: 300px;\n\n  z-index: 2;\n}\n.dashboard .title {\n  padding: 20px;\n  color: white;\n  text-transform: uppercase;\n  background-color: #004b74;\n}\n.dashboard .title h1 {\n  margin: 0;\n  font-size: 32px;\n  letter-spacing: 0.5px;\n  line-height: 1;\n}\n\n.brand {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: absolute;\n  top: 20px;\n  right: 47px;\n  padding: 0 20px;\n  height: 53px;\n  box-sizing: content-box;\n\n  background-color: white;\n\n  z-index: 2;\n}\n\n.brand .logo {\n  display: block;\n}\n\n._hidden {\n  display: none;\n}\n\n@media screen and (max-height: 800px) {\n  .dashboard .title h1 {\n    font-size: 13px;\n  }\n}\n", ""]);
+	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/* Base styles */\nbody {\n  font-family: \"Montserrat\", Arial, sans-serif;\n  font-size: 13px;\n  line-height: 1.4;\n  color: #333;\n\n  background: white;\n\n  overflow: hidden;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\nh1, h2 {\n  margin-top: 0;\n  margin-bottom: .3rem;\n}\n\nh1 {\n  font-size: 1.8rem;\n}\n\nh2 {\n  font-size: 1.2rem;\n}\n\n#app {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n/* Dashboard module */\n.dashboard {\n  position: absolute;\n  top: 30px;\n  left: 30px;\n  right: auto;\n  bottom: auto;\n  width: 300px;\n\n  z-index: 2;\n}\n.dashboard .title {\n  padding: 20px;\n  color: white;\n  text-transform: uppercase;\n  background-color: #004b74;\n}\n.dashboard .title h1 {\n  margin: 0;\n  font-size: 32px;\n  letter-spacing: 0.5px;\n  line-height: 1;\n}\n\n.brand {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: absolute;\n  top: 20px;\n  right: 47px;\n  padding: 0 20px;\n  height: 53px;\n  box-sizing: content-box;\n\n  background-color: white;\n\n  z-index: 2;\n}\n\n.brand .logo {\n  display: block;\n}\n\n._hidden {\n  display: none;\n}\n\n@media screen and (max-height: 800px) {\n  .dashboard .title h1 {\n    font-size: 13px;\n  }\n}\n", ""]);
 
 	// exports
 
@@ -55879,8 +55879,8 @@
 	      _jquery2.default.getJSON(url, function (data) {
 	        var row = data.rows[0];
 	        var state = {
-	          startDate: new Date(row.min.toString()),
-	          endDate: new Date(row.max.toString())
+	          startDate: new Date(row.min, 0, 1),
+	          endDate: new Date(row.max, 0, 1)
 	        };
 	        state.steps = _this4.getSteps(state);
 	        _this4.setState(state);
@@ -68833,6 +68833,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _helpers = __webpack_require__(297);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
 	}
@@ -68930,11 +68934,11 @@
 	        return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, 'Seleccione un municipio en el mapa'));
 	      }
 	      if (this.state.rank) {
-	        rank = _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Ranking'), _react2.default.createElement('div', { className: 'nat-value' }, this.state.rank + ' / ' + this.state.maxRank)), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Population'), _react2.default.createElement('div', { className: 'nat-value' }, this.state.population)));
+	        rank = _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Ranking'), _react2.default.createElement('div', { className: 'nat-value' }, _helpers2.default.formatNumber(this.state.rank, 0) + ' / ' + _helpers2.default.formatNumber(this.state.maxRank, 0))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Population'), _react2.default.createElement('div', { className: 'nat-value' }, _helpers2.default.formatNumber(this.state.population, 0))));
 	      }
 	      var avgNat = this.state.natValue || this.state.natValue === 0 ? this.state.natValue : '-';
 	      var avgMun = this.state.value || this.state.value === 0 ? this.state.value : '-';
-	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), rank, _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media nacional'), _react2.default.createElement('div', { className: 'nat-value' }, avgNat, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media municipal'), _react2.default.createElement('div', { className: 'value' }, avgMun, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)))));
+	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), rank, _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media nacional'), _react2.default.createElement('div', { className: 'nat-value' }, _helpers2.default.formatNumber(avgNat, 2), ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media municipal'), _react2.default.createElement('div', { className: 'value' }, _helpers2.default.formatNumber(avgMun, 2), ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)))));
 	    }
 	  }]);
 
@@ -69002,6 +69006,48 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function formatNumber(num, dec) {
+	  dec = dec || dec === 0 ? dec : 1;
+
+	  var value = Number(num);
+
+	  if (isNaN(value) || value === null) {
+	    return num;
+	  }
+
+	  value = value.toFixed(~ ~dec);
+
+	  var factor = Math.pow(10, dec);
+	  var esp = /es/i.test(navigator.language);
+	  var regex = /(\d)(?=(?:\d{3})+$)/g;
+	  var tsep = esp ? '.' : ',';
+	  var dsep = esp ? ',' : '.';
+
+	  var parts = value.split('.');
+	  var fnums = parts[0];
+	  var decimals = parts[1] ? dsep + parts[1] : '';
+
+	  return fnums.replace(regex, '$1' + tsep) + decimals;
+	}
+
+	exports.default = {
+	  formatNumber: formatNumber
+	};
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(187); if (makeExportsHot(module, __webpack_require__(70))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "helpers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(7), RootInstanceProvider = __webpack_require__(15), ReactMount = __webpack_require__(17), React = __webpack_require__(70); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 	var _createClass = function () {
@@ -69018,7 +69064,11 @@
 	  value: true
 	});
 
-	__webpack_require__(298);
+	__webpack_require__(299);
+
+	var _lodash = __webpack_require__(178);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
 
 	var _jquery = __webpack_require__(185);
 
@@ -69035,6 +69085,10 @@
 	var _d = __webpack_require__(184);
 
 	var _d2 = _interopRequireDefault(_d);
+
+	var _helpers = __webpack_require__(297);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
@@ -69132,6 +69186,7 @@
 	      var height = el.clientHeight;
 	      var x = _d2.default.time.scale().range([0, width - margin.left - margin.right]).nice();
 	      var y = _d2.default.scale.linear().range([height - margin.bottom - margin.top, 0]);
+	      var unit = this.state.unit;
 
 	      // Creating SVG
 	      var svg = _d2.default.select(el).append('svg').attr('width', width).attr('height', height).append('g').attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
@@ -69164,7 +69219,7 @@
 	      //   .text('years');
 
 	      // Y Axis
-	      var yAxis = _d2.default.svg.axis().scale(y).orient('left').outerTickSize(1).innerTickSize(0).ticks(5);
+	      var yAxis = _d2.default.svg.axis().scale(y).orient('left').outerTickSize(0).innerTickSize(0).ticks(5);
 
 	      svg.append('g').attr('class', 'y axis').call(yAxis);
 
@@ -69173,10 +69228,12 @@
 	      }
 
 	      // Tooltip
-	      var tooltip = _d2.default.select('body').append('div').attr('class', 'tooltip').style('opacity', 0);
+	      var tooltip = this.tooltip = _d2.default.select('body').append('div').attr('class', 'tooltip').style('opacity', 0);
 
 	      function showTooltip(d, nat) {
-	        tooltip.html('' + (nat ? d.nat_average_value.toFixed(3) : d.average_value.toFixed(3))).transition().duration(200).style('opacity', 1).style('top', _d2.default.event.pageY + 'px').style('left', _d2.default.event.pageX + 'px');
+	        var value = nat ? d.nat_average_value : d.average_value;
+	        var tooltipHtml = _helpers2.default.formatNumber(value, 3) + ' ' + unit;
+	        tooltip.html(tooltipHtml).transition().duration(200).style('opacity', 1).style('top', _d2.default.event.pageY + 'px').style('left', _d2.default.event.pageX + 'px');
 	      }
 
 	      function hideTooltip() {
@@ -69236,6 +69293,9 @@
 	        var chartsElement = el.getElementsByClassName('canvas')[0];
 	        chartsElement.innerHTML = null;
 	      }
+	      if (this.tooltip) {
+	        this.tooltip.style('opacity', 0);
+	      }
 	    }
 	  }]);
 
@@ -69255,13 +69315,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(299);
+	var content = __webpack_require__(300);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(177)(content, {});
@@ -69270,8 +69330,8 @@
 	if(true) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept(299, function() {
-				var newContent = __webpack_require__(299);
+			module.hot.accept(300, function() {
+				var newContent = __webpack_require__(300);
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -69281,7 +69341,7 @@
 	}
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(176)();
@@ -69289,13 +69349,13 @@
 
 
 	// module
-	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 10px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #00a3db;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: white;\n}\n\n.chart .year-line {\n  stroke: white;\n  stroke-width: 1px;\n  shape-rendering: crispEdges;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -120%);\n\n          transform: translate(-50%, -120%);\n  pointer-events: none;\n  z-index: 3;\n}\n", ""]);
+	exports.push([module.id, ".chart {\n  position: relative;\n  padding: 10px;\n\n  color: white;\n  background: #333;\n}\n\n.chart .canvas {\n  height: 200px;\n  width: 100%;\n}\n\n.chart .axis {\n  font-size: 10px;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .y.axis .domain {\n  stroke: transparent;\n}\n\n.chart .axis .tick line {\n  fill: none;\n  stroke-width: 1;\n  stroke: white;\n  shape-rendering: crispEdges;\n}\n\n.chart .axis .tick text {\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .sparkline,\n  .chart .avg-sparkline {\n  fill: none;\n  stroke: #00a3db;\n  stroke-width: 1;\n}\n\n.chart .avg-sparkline {\n  stroke: white;\n}\n\n.chart .domain-line {\n  fill: none;\n  stroke: white;\n  stroke-width: 1;\n  shape-rendering: crispEdges;\n}\n\n.chart .label {\n  font-size: 10px;\n  color: white;\n  text-anchor: end;\n  stroke-width: 0;\n  fill: white;\n}\n\n.chart .focus,\n  .chart .avg-focus {\n  fill: #00a3db;\n  stroke-width: 0;\n  shape-rendering: optimizeSpeed;\n  cursor: pointer;\n}\n\n.chart .avg-focus {\n  fill: white;\n}\n\n.chart .year-line {\n  stroke: white;\n  stroke-width: 1px;\n  shape-rendering: crispEdges;\n}\n\n.tooltip {\n  position: absolute;\n  padding: 2px 4px;\n\n  font-size: 10px;\n  font-weight: bold;\n\n  background: white;\n\n  -webkit-transform: translate(-50%, -120%);\n\n          transform: translate(-50%, -120%);\n  pointer-events: none;\n  z-index: 3;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(7), RootInstanceProvider = __webpack_require__(15), ReactMount = __webpack_require__(17), React = __webpack_require__(70); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -69318,7 +69378,7 @@
 	  value: true
 	});
 
-	__webpack_require__(301);
+	__webpack_require__(302);
 
 	var _react = __webpack_require__(70);
 
@@ -69387,13 +69447,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(302);
+	var content = __webpack_require__(303);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(177)(content, {});
@@ -69402,8 +69462,8 @@
 	if(true) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept(302, function() {
-				var newContent = __webpack_require__(302);
+			module.hot.accept(303, function() {
+				var newContent = __webpack_require__(303);
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -69413,7 +69473,7 @@
 	}
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(176)();
@@ -69427,7 +69487,7 @@
 
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(7), RootInstanceProvider = __webpack_require__(15), ReactMount = __webpack_require__(17), React = __webpack_require__(70); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -69450,7 +69510,7 @@
 	  value: true
 	});
 
-	__webpack_require__(304);
+	__webpack_require__(305);
 
 	var _react = __webpack_require__(70);
 
@@ -69554,13 +69614,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(305);
+	var content = __webpack_require__(306);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(177)(content, {});
@@ -69569,8 +69629,8 @@
 	if(true) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept(305, function() {
-				var newContent = __webpack_require__(305);
+			module.hot.accept(306, function() {
+				var newContent = __webpack_require__(306);
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -69580,7 +69640,7 @@
 	}
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(176)();
@@ -69594,7 +69654,7 @@
 
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(7), RootInstanceProvider = __webpack_require__(15), ReactMount = __webpack_require__(17), React = __webpack_require__(70); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -69623,8 +69683,8 @@
 	   * Required: name, average_value
 	   */
 	  average: {
-	    query_total: __webpack_require__(307).replace(/\n/g, ' '),
-	    query_perc: __webpack_require__(308).replace(/\n/g, ' ')
+	    query_total: __webpack_require__(308).replace(/\n/g, ' '),
+	    query_perc: __webpack_require__(309).replace(/\n/g, ' ')
 	  },
 
 	  /**
@@ -69646,7 +69706,7 @@
 	    basemap: 'https://a.tiles.mapbox.com/v4/aliciarenzana.2bebf2c6/{z}/{x}/{y}@2x.png?' + 'access_token=pk.eyJ1IjoiYWxpY2lhcmVuemFuYSIsImEiOiJjOTQ2OThkM2VkY2I5MjYwNTUyNmIyMmEyZWFmOGZjMyJ9.sa4f1HalXYr3GYTRAsdnzA',
 	    // Legend colors
 	    colors: ['#F8D368', '#F5E8B7', '#D3E0E5', '#AEC7D5', '#5285A1', '#084769', '#062B3F'],
-	    cartocssQuery: __webpack_require__(309).replace(/\n/g, ' ')
+	    cartocssQuery: __webpack_require__(310).replace(/\n/g, ' ')
 	  },
 
 	  /**
@@ -69656,7 +69716,7 @@
 	   */
 	  timeline: {
 	    // You should specify query or startDate and endDate
-	    query: __webpack_require__(310).replace(/\n/g, ' '),
+	    query: __webpack_require__(311).replace(/\n/g, ' '),
 	    // You should specify query or startDate and endDate
 	    startDate: null,
 	    // You should specify query or startDate and endDate
@@ -69680,7 +69740,7 @@
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'reven',
 	    buckets: 7,
-	    query: __webpack_require__(311).replace(/\n/g, ' '),
+	    query: __webpack_require__(312).replace(/\n/g, ' '),
 	    interactivity: 'codgov,reven,name',
 	    unit: 'M R$',
 	    categoryName: 'Revenue',
@@ -69691,7 +69751,7 @@
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'reven_rate',
 	    buckets: 7,
-	    query: __webpack_require__(312).replace(/\n/g, ' '),
+	    query: __webpack_require__(313).replace(/\n/g, ' '),
 	    interactivity: 'codgov, reven_rate,name',
 	    unit: 'R$',
 	    categoryName: 'Revenue',
@@ -69702,7 +69762,7 @@
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'taxes',
 	    buckets: 7,
-	    query: __webpack_require__(313).replace(/\n/g, ' '),
+	    query: __webpack_require__(314).replace(/\n/g, ' '),
 	    interactivity: 'codgov,taxes,name',
 	    unit: 'M R$',
 	    categoryName: 'Taxes',
@@ -69713,7 +69773,7 @@
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'tax_rate',
 	    buckets: 7,
-	    query: __webpack_require__(314).replace(/\n/g, ' '),
+	    query: __webpack_require__(315).replace(/\n/g, ' '),
 	    interactivity: 'codgov,tax_rate,name',
 	    unit: 'R$',
 	    categoryName: 'Taxes',
@@ -69724,7 +69784,7 @@
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'taxinc',
 	    buckets: 7,
-	    query: __webpack_require__(315).replace(/\n/g, ' '),
+	    query: __webpack_require__(316).replace(/\n/g, ' '),
 	    interactivity: 'codgov,taxinc,name',
 	    unit: 'M R$',
 	    categoryName: 'Tax. Inc.',
@@ -69735,7 +69795,7 @@
 	    tableName: 'table_3fiscal_primera_serie',
 	    columnName: 'taxinc_rate',
 	    buckets: 7,
-	    query: __webpack_require__(316).replace(/\n/g, ' '),
+	    query: __webpack_require__(317).replace(/\n/g, ' '),
 	    interactivity: 'codgov,taxinc_rate,name',
 	    unit: 'R$',
 	    categoryName: 'Tax. Inc.',
@@ -69746,7 +69806,7 @@
 	    tableName: 'table_3fiscal_segunda_serie',
 	    columnName: 'indicator',
 	    buckets: 7,
-	    query: __webpack_require__(317).replace(/\n/g, ' '),
+	    query: __webpack_require__(318).replace(/\n/g, ' '),
 	    interactivity: 'codgov,indicator,name',
 	    unit: null,
 	    categoryName: 'I. D.',
@@ -69762,43 +69822,43 @@
 	   */
 	  charts: [{
 	    title: 'Total',
-	    query: __webpack_require__(318).replace(/\n/g, ' '),
+	    query: __webpack_require__(319).replace(/\n/g, ' '),
 	    columnName: 'reven',
 	    unit: 'M R$',
 	    total: true
 	  }, {
 	    title: 'Per capita',
-	    query: __webpack_require__(319).replace(/\n/g, ' '),
+	    query: __webpack_require__(320).replace(/\n/g, ' '),
 	    columnName: 'reven_rate',
 	    unit: 'R$',
 	    total: false
 	  }, {
 	    title: 'Total',
-	    query: __webpack_require__(320).replace(/\n/g, ' '),
+	    query: __webpack_require__(321).replace(/\n/g, ' '),
 	    columnName: 'taxes',
 	    unit: 'M R$',
 	    total: true
 	  }, {
 	    title: 'Per capita',
-	    query: __webpack_require__(321).replace(/\n/g, ' '),
+	    query: __webpack_require__(322).replace(/\n/g, ' '),
 	    columnName: 'tax_rate',
 	    unit: 'R$',
 	    total: false
 	  }, {
 	    title: 'Total',
-	    query: __webpack_require__(322).replace(/\n/g, ' '),
+	    query: __webpack_require__(323).replace(/\n/g, ' '),
 	    columnName: 'taxinc',
 	    unit: 'M R$',
 	    total: true
 	  }, {
 	    title: 'Per capita',
-	    query: __webpack_require__(323).replace(/\n/g, ' '),
+	    query: __webpack_require__(324).replace(/\n/g, ' '),
 	    columnName: 'taxinc_rate',
 	    unit: 'R$',
 	    total: false
 	  }, {
 	    title: 'Total',
-	    query: __webpack_require__(324).replace(/\n/g, ' '),
+	    query: __webpack_require__(325).replace(/\n/g, ' '),
 	    columnName: 'indicator',
 	    unit: null,
 	    total: true
@@ -69810,121 +69870,121 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports) {
 
 	module.exports = "with u as (\n\tSELECT round((AVG(${columnName}) over( partition by year))::numeric,3) as nat_average_value,\n\tcodgov,\n\trank() over( partition by year order by ${columnName} desc),\n\tyear,\n\tcount(${columnName}) over(partition by year) as maxrank\n\tFROM ${tableName})\n\nSELECT a.name AS name,\n  round(b.${columnName}::numeric, 3) as average_value,\n  u.rank,\n  u.maxrank,\n  u.nat_average_value,\n  b.year,\n  v.p${year} as population\nFROM bra_poladm2 a\n  JOIN ${tableName} b ON a.codgov=b.codgov\n  JOIN u ON a.codgov=u.codgov and b.year=u.year\n  JOIN table_2bra_seriepob v on a.codgov=v.codgov\nWHERE a.codgov=${codgov} AND b.year=${year}\n"
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports) {
 
 	module.exports = "with r as (\n  SELECT\n    sum(p2000) p2000,\n    sum(p2001) p2001,\n    sum(p2002) p2002,\n    sum(p2003) p2003,\n    sum(p2004) p2004,\n    sum(p2005) p2005,\n    sum(p2006) p2006,\n    sum(p2007) p2007,\n    sum(p2008) p2008,\n    sum(p2009) p2009,\n    sum(p2010) p2010,\n    sum(p2011) p2011,\n    sum(p2012) p2012\n  FROM table_2bra_seriepob\n),\ns as (\n  select 2000 as year, p2000 as value from r\n  union select 2001 as year, p2001 as value from r\n  union select 2002 as year, p2002 as value from r\n  union select 2003 as year, p2003 as value from r\n  union select 2004 as year, p2004 as value from r\n  union select 2005 as year, p2005 as value from r\n  union select 2006 as year, p2006 as value from r\n  union select 2007 as year, p2007 as value from r\n  union select 2008 as year, p2008 as value from r\n  union select 2009 as year, p2009 as value from r\n  union select 2010 as year, p2010 as value from r\n  union select 2011 as year, p2011 as value from r\n  union select 2012 as year, p2012 as value from r\n  order by year asc\n),\nt as (\n  select sum(${relatedColumn}::numeric)*1000000 as column_total, year\n  from ${tableName} group by year\n),\nf as (\n  select rank() over(partition by year order by ${columnName} desc), codgov, year, count(${columnName}) over(partition by year) as maxrank\n  from ${tableName})\n\nselect round(d.${columnName}::numeric,3) as average_value,\nround((t.column_total/s.value)::numeric,3) as nat_average_value, t.year, d.codgov, p${year} as population, a.name, f.rank, f.maxrank\nfrom t\njoin s on t.year=s.year\njoin ${tableName} d on t.year=d.year\njoin table_2bra_seriepob v on d.codgov=v.codgov\njoin bra_poladm2 a on d.codgov=a.codgov\njoin f on d.codgov=f.codgov and s.year=f.year\nwhere d.codgov= ${codgov} and t.year=${year}\n"
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT CDB_QuantileBins(array_agg(${columnName}::numeric), 7) AS buckets,\n  max(${columnName}::numeric),\n  min(${columnName}::numeric)\nFROM ${tableName}\nWHERE year = ${year} and ${columnName}::numeric is not null and ${columnName}<>0\n"
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT MIN(year), MAX(year) FROM table_3fiscal_primera_serie\n"
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE year=${year}\n"
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.*, (b.reven*1000000/c.p${year}) as reven_rate FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join table_2bra_seriepob c on a.codgov=c.codgov WHERE year=${year} and c.p${year} !=0 \n"
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.*, b.taxes \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov=b.codgov \nWHERE year=${year}"
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.*, ( b.taxes*1000000/c.p${year} ) as tax_rate \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov \nJOIN table_2bra_seriepob c  ON a.codgov=c.codgov \nWHERE year=${year} and c.p${year} !=0 "
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.*, b.taxinc \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov=b.codgov \nWHERE year=${year}"
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov \njoin table_2bra_seriepob c on a.codgov=c.codgov \nWHERE year=${year} and c.p${year} !=0"
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.*, b.indicator FROM bra_poladm2 a JOIN table_3fiscal_segunda_serie b ON a.codgov=b.codgov WHERE year=${year}"
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.name AS name, b.reven as average_value, (\n\tSELECT AVG(reven) as nat_average_value \n\tFROM table_3fiscal_primera_serie \n\tWHERE year=b.year \n\tGROUP BY year), b.year \nFROM bra_poladm2 a \nJOIN table_3fiscal_primera_serie b \nON a.codgov=b.codgov \nWHERE a.codgov=${codgov} ORDER BY b.year"
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports) {
 
 	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(reven)*1000000 as reven_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.reven_rate::numeric,2) as average_value, round((t.reven_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=${codgov}  ORDER BY b.year"
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.name AS name, b.taxes AS average_value, (SELECT AVG(taxes) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE a.codgov=${codgov} ORDER BY b.year"
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports) {
 
 	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxes)*1000000 as tax_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.tax_rate::numeric,2) as average_value, round((t.tax_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=${codgov}  ORDER BY b.year"
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.name AS name, b.taxinc AS average_value, (SELECT AVG(taxinc) as nat_average_value FROM table_3fiscal_primera_serie WHERE year=b.year GROUP BY year), b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE a.codgov=${codgov} ORDER BY b.year"
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports) {
 
 	module.exports = "with r as (SELECT sum(p2000) p2000, sum(p2001) p2001,sum(p2002) p2002, sum(p2003) p2003, sum(p2004) p2004, sum(p2005) p2005, sum(p2006) p2006, sum(p2007) p2007, sum(p2008) p2008, sum(p2009) p2009, sum(p2010) p2010, sum(p2011) p2011, sum(p2012) p2012 FROM table_2bra_seriepob),  s as (select 2000 as year, p2000 as value from r union select 2001 as year, p2001 as value from r union select 2002 as year, p2002 as value from r union select 2003 as year, p2003 as value from r union select 2004 as year, p2004 as value from r union select 2005 as year, p2005 as value from r union select 2006 as year, p2006 as value from r union select 2007 as year, p2007 as value from r union select 2008 as year, p2008 as value from r union select 2009 as year, p2009 as value from r union select 2010 as year, p2010 as value from r union select 2011 as year, p2011 as value from r union select 2012 as year, p2012 as value from r order by year asc), t as (select sum(taxinc)*1000000 as taxinc_total, year  from table_3fiscal_primera_serie group by year)   SELECT a.name AS name, round(b.taxinc_rate::numeric,2) as average_value, round((t.taxinc_total/s.value)::numeric,2) as nat_average_value, b.year FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov join s on b.year=s.year join t on b.year=t.year WHERE a.codgov=${codgov}  ORDER BY b.year"
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports) {
 
 	module.exports = "SELECT a.name, b.indicator as average_value, b.year\nFROM bra_poladm2 a\nJOIN table_3fiscal_segunda_serie b\nON a.codgov=b.codgov\nWHERE a.codgov=${codgov} ORDER BY b.year\n"
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "c8d01c65b951fcdf9d4958258b6af8b9.png";
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "login.html";
