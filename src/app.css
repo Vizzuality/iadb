@@ -96,7 +96,7 @@ h2 {
 
   background-color: rgba(255,255,255,.8);
 
-  z-index: 100;
+  z-index: 10000;
 
   .title-container{
     display: inline-block;
