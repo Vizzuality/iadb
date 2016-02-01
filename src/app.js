@@ -94,15 +94,34 @@ class App extends React.Component {
     return false;
   }
 
+  closeLanding(e) {
+    e.preventDefault();
+    this.refs.landing.classList.add('_hidden');
+    this.refs.dashboard.classList.remove('_hidden');
+  }
+
   render() {
     const currentChart = _.find(config.charts, {columnName: config.app.layerName});
 
     return (
       <div>
+        <div ref='landing' className="landing">
+          <div className="title-container">
+            <h1>
+              <span className="title">Datos</span>
+              <span className="title">Financieros</span>
+              <span className="title">Municipales</span>
+            </h1>
+            <p className="subtitle"></p>
+            <a href="#"
+              onClick={this.closeLanding.bind(this)}
+              className="landing-button">Continuar</a>
+          </div>
+        </div>
         <div className="brand">
           <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
         </div>
-        <div ref="dashboard" className="dashboard">
+        <div ref="dashboard" className="dashboard _hidden">
           <div className="title">
             <h1>Datos financieros municipales</h1>
           </div>
