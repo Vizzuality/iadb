@@ -42,7 +42,11 @@ class App extends React.Component {
     }
     this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
     this.refs.map.updateTopLayer(layerData);
-    this.refs.chart.setState({chartData: currentChart, codgov: mapData.codgov});
+    this.refs.chart.setState({
+      chartData: currentChart,
+      codgov: mapData.codgov,
+      unit: currentChart.unit
+    });
   }
 
   onChangeTimeline(timelineData) {
@@ -61,7 +65,11 @@ class App extends React.Component {
       layerName: layerData.columnName,
       layerData: layerData
     });
-    this.refs.chart.setState({chartData: currentChart, layerName: layerData.columnName});
+    this.refs.chart.setState({
+      chartData: currentChart,
+      layerName: layerData.columnName,
+      unit: currentChart.unit
+    });
   }
 
   onLayerChange(layerData) {

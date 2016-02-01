@@ -15,7 +15,8 @@ class Chart extends React.Component {
       chartData: props.chartData,
       layerName: props.layerName,
       codgov: props.codgov,
-      date: props.date
+      date: props.date,
+      unit: props.unit
     };
   }
 
@@ -124,12 +125,12 @@ class Chart extends React.Component {
       .attr('class', 'y axis')
       .call(yAxis);
 
-    if (this.props.unit) {
+    if (this.state.unit) {
       svg.append('text')
       .attr('class', 'y label')
       .attr('x', -4)
       .attr('y', 0)
-      .text(this.props.unit);
+      .text(this.state.unit);
     }
 
     // Tooltip
