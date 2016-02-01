@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cad971e87e1eec62de43"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1c51697b8b128049dc3c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -69188,7 +69188,7 @@
 	      var height = el.clientHeight;
 	      var x = _d2.default.time.scale().range([0, width - margin.left - margin.right]).nice();
 	      var y = _d2.default.scale.linear().range([height - margin.bottom - margin.top, 0]);
-	      var unit = this.state.unit;
+	      var unit = this.state.unit || '';
 
 	      // Creating SVG
 	      var svg = _d2.default.select(el).append('svg').attr('width', width).attr('height', height).append('g').attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
@@ -69598,7 +69598,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (!this.state.query) {
+	      if (!this.state.query || !this.state.codgov) {
 	        return null;
 	      }
 	      return _react2.default.createElement('div', { className: 'download' }, _react2.default.createElement('button', {
