@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "165aeda7ef13cce8283c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f3aa568b8c7af7d00093"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -69293,7 +69293,7 @@
 	      var el = _reactDom2.default.findDOMNode(this);
 	      if (el) {
 	        var chartsElement = el.getElementsByClassName('canvas')[0];
-	        chartsElement.innerHTML = null;
+	        chartsElement.innerHTML = '';
 	      }
 	      if (this.tooltip) {
 	        this.tooltip.style('opacity', 0);
