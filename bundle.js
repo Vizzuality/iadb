@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5d8cce5e9947ac9fba04"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ed84fd3b96b11e4f5282"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -68899,7 +68899,7 @@
 	        _this2.setState({
 	          name: d.name,
 	          value: d.average_value,
-	          natValue: d.nat_average_value,
+	          natValue: _this2.state.layerData.columnName === 'indicator' ? null : d.nat_average_value,
 	          rank: d.rank,
 	          maxRank: d.maxrank,
 	          population: d.population
@@ -68938,9 +68938,9 @@
 	      if (this.state.rank) {
 	        rank = _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Ranking'), _react2.default.createElement('div', { className: 'nat-value' }, _helpers2.default.formatNumber(this.state.rank, 0) + ' / ' + _helpers2.default.formatNumber(this.state.maxRank, 0))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Population'), _react2.default.createElement('div', { className: 'nat-value' }, _helpers2.default.formatNumber(this.state.population, 0))));
 	      }
-	      var avgNat = this.state.natValue || this.state.natValue === 0 ? this.state.natValue : '-';
+	      var avgNat = this.state.natValue || this.state.value === 0 ? _helpers2.default.formatNumber(this.state.natValue, 2) : '-';
 	      var avgMun = this.state.value || this.state.value === 0 ? this.state.value : '-';
-	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), rank, _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media nacional'), _react2.default.createElement('div', { className: 'nat-value' }, _helpers2.default.formatNumber(avgNat, 2), ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media municipal'), _react2.default.createElement('div', { className: 'value' }, _helpers2.default.formatNumber(avgMun, 2), ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)))));
+	      return _react2.default.createElement('div', { className: 'average' }, _react2.default.createElement('h2', null, this.state.name), rank, _react2.default.createElement('div', { className: 'panels' }, _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media nacional'), _react2.default.createElement('div', { className: 'nat-value' }, avgNat, ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit))), _react2.default.createElement('div', { className: 'panel' }, _react2.default.createElement('h3', null, 'Media municipal'), _react2.default.createElement('div', { className: 'value' }, _helpers2.default.formatNumber(avgMun, 2), ' ', _react2.default.createElement('span', { className: 'unit' }, this.state.layerData.unit)))));
 	    }
 	  }]);
 
@@ -69483,7 +69483,7 @@
 
 
 	// module
-	exports.push([module.id, ".legend {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px;\n\n  background: white;\n}\n.legend .buckets {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.legend .bucket {\n  width: 30px;\n  height: 10px;\n  margin: 0 1px;\n  background-color: #ddd;\n}\n", ""]);
+	exports.push([module.id, ".legend {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px;\n\n  background: white;\n}\n.legend .buckets {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.legend .bucket {\n  width: 40px;\n  height: 10px;\n  margin: 0 1px;\n  background-color: #ddd;\n}\n", ""]);
 
 	// exports
 

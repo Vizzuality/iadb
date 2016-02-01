@@ -1,0 +1,147 @@
+@import "normalize.css/normalize.css";
+
+/* Base styles */
+body {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+
+  background: white;
+
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2 {
+  margin-top: 0;
+  margin-bottom: .3rem;
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+#app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Dashboard module */
+.dashboard {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  right: auto;
+  bottom: auto;
+  width: 300px;
+
+  z-index: 2;
+
+  .title {
+    padding: 20px;
+    color: white;
+    text-transform: uppercase;
+
+    background-color: #004b74;
+
+    h1 {
+      margin: 0;
+
+      font-size: 32px;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 47px;
+  padding: 0 20px;
+  height: 53px;
+  box-sizing: content-box;
+
+  background-color: white;
+
+  z-index: 2;
+
+  .logo {
+    display: block;
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+._hidden {
+  display: none;
+}
+
+
+.landing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vw;
+  width: 100%;
+
+  background-color: rgba(255,255,255,.8);
+
+  z-index: 10000;
+
+  .title-container{
+    display: inline-block;
+    position: absolute;
+    top: 17vh;
+    left: 8vw;
+  }
+
+  .title-container .title {
+    text-transform: uppercase;
+    font-size: 77px;
+    line-height: 94px;
+    letter-spacing: 1.1px;
+    background-color: #004b74;
+    color: #FFF;
+    display: table;
+    padding: 0px 15px;
+    margin: 12px 0px;
+  }
+
+  .subtitle {
+    width: 485px;
+    font-size: 24px;
+  }
+
+  .landing-button,
+  .landing-button:active,
+  .landing-button:visited {
+    color: #FFF;
+    background-color: #333;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 24px;
+    padding: 5px 12px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .dashboard .title h1 {
+    font-size: 13px;
+  }
+}
