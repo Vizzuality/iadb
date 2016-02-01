@@ -39,7 +39,7 @@ class Average extends React.Component {
       this.setState({
         name: d.name,
         value: d.average_value,
-        natValue: d.nat_average_value,
+        natValue: this.state.layerData.columnName === 'indicator' ? null : d.nat_average_value,
         rank: d.rank,
         maxRank: d.maxrank,
         population: d.population
@@ -90,7 +90,7 @@ class Average extends React.Component {
         </div>
       </div>;
     }
-    const avgNat = (this.state.natValue || this.state.natValue === 0) ? this.state.natValue : '-';
+    const avgNat = (this.state.natValue || this.state.value === 0) ? helpers.formatNumber(this.state.natValue, 2) : '-';
     const avgMun = (this.state.value || this.state.value === 0) ? this.state.value : '-';
     return (
       <div className="average">
@@ -99,7 +99,7 @@ class Average extends React.Component {
         <div className="panels">
           <div className="panel">
             <h3>Media nacional</h3>
-            <div className="nat-value">{helpers.formatNumber(avgNat, 2)} <span className="unit">{this.state.layerData.unit}</span></div>
+            <div className="nat-value">{avgNat} <span className="unit">{this.state.layerData.unit}</span></div>
           </div>
           <div className="panel">
             <h3>Media municipal</h3>

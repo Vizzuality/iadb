@@ -125,19 +125,18 @@ class Map extends React.Component {
     $.getJSON(url, (d) => {
       const data = d.rows[0].buckets;
       const cartocss = `#${layerData.tableName}{
-        polygon-fill: ${colors[0]};
+        polygon-fill: transparent;
         polygon-opacity: 1;
         line-color: #FFF;
         line-width: 0.3;
         line-opacity: 0.7;
       }
-      #${layerData.tableName} [${layerData.columnName} <= ${data[6]}] {polygon-fill: ${colors[6]};}
-      #${layerData.tableName} [${layerData.columnName} <= ${data[5]}] {polygon-fill: ${colors[5]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[4]}] {polygon-fill: ${colors[4]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[3]}] {polygon-fill: ${colors[3]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[2]}] {polygon-fill: ${colors[2]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[1]}] {polygon-fill: ${colors[1]};}
       #${layerData.tableName} [${layerData.columnName} <= ${data[0]}] {polygon-fill: ${colors[0]};}
+      #${layerData.tableName} [${layerData.columnName} < ${d.rows[0].min}] {polygon-fill: transparent;}
       `;
       layerData.min = d.rows[0].min;
       layerData.max = d.rows[0].max;

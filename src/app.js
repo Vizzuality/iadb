@@ -119,6 +119,7 @@ class App extends React.Component {
           </div>
         </div>
         <div className="brand">
+          <img className="logo" src={require('./images/smartmap.png')} width="136" height="33" />
           <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
         </div>
         <div ref="dashboard" className="dashboard _hidden">
