@@ -3,6 +3,7 @@
 import './style.css';
 import $ from 'jquery';
 import React from 'react';
+import helpers from '../../helpers';
 
 class Average extends React.Component {
 
@@ -16,7 +17,9 @@ class Average extends React.Component {
       layerName: props.layerName,
       layerData: props.layerData,
       date: props.date,
-      rank: null
+      rank: null,
+      maxRank: null,
+      population: null
     };
   }
 
@@ -37,7 +40,9 @@ class Average extends React.Component {
         name: d.name,
         value: d.average_value,
         natValue: d.nat_average_value,
-        rank: d.rank
+        rank: d.rank,
+        maxRank: d.maxrank,
+        population: d.population
       });
     }).fail((err) => {
       throw err.responseText;
@@ -77,7 +82,11 @@ class Average extends React.Component {
       rank = <div className="panels">
         <div className="panel">
           <h3>Ranking</h3>
-          <div className="nat-value">{this.state.rank}</div>
+          <div className="nat-value">{`${helpers.formatNumber(this.state.rank, 0)} / ${helpers.formatNumber(this.state.maxRank, 0)}`}</div>
+        </div>
+        <div className="panel">
+          <h3>Population</h3>
+          <div className="nat-value">{helpers.formatNumber(this.state.population, 0)}</div>
         </div>
       </div>;
     }
@@ -89,12 +98,12 @@ class Average extends React.Component {
         {rank}
         <div className="panels">
           <div className="panel">
-            <div className="nat-value">{avgNat} <span className="unit">{this.state.layerData.unit}</span></div>
             <h3>Media nacional</h3>
+            <div className="nat-value">{helpers.formatNumber(avgNat, 2)} <span className="unit">{this.state.layerData.unit}</span></div>
           </div>
           <div className="panel">
-            <div className="value">{avgMun} <span className="unit">{this.state.layerData.unit}</span></div>
             <h3>Media municipal</h3>
+            <div className="value">{helpers.formatNumber(avgMun, 2)} <span className="unit">{this.state.layerData.unit}</span></div>
           </div>
         </div>
       </div>

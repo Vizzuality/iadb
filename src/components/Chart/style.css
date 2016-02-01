@@ -1,6 +1,6 @@
 .chart {
   position: relative;
-  padding: 20px;
+  padding: 10px;
 
   color: white;
   background: #333;
@@ -13,6 +13,11 @@
   .axis {
     font-size: 10px;
     stroke: white;
+    shape-rendering: crispEdges;
+  }
+
+  .y.axis .domain {
+    stroke: transparent;
   }
 
   .axis .tick line {
@@ -81,7 +86,7 @@
 
   background: white;
 
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -120%);
   pointer-events: none;
   z-index: 3;
 }

@@ -1,10 +1,12 @@
 'use strict';
 
 import './style.css';
+import _ from 'lodash';
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
+import helpers from '../../helpers';
 
 class Chart extends React.Component {
 
@@ -15,7 +17,8 @@ class Chart extends React.Component {
       chartData: props.chartData,
       layerName: props.layerName,
       codgov: props.codgov,
-      date: props.date
+      date: props.date,
+      unit: props.unit
     };
   }
 
@@ -66,11 +69,12 @@ class Chart extends React.Component {
 
     const el = oEl.getElementsByClassName('canvas')[0];
     const dateFormat = '%Y';
-    const margin = {top: 15, left: 40, right: 20, bottom: 35};
+    const margin = {top: 15, left: 35, right: 20, bottom: 20};
     const width = el.clientWidth;
     const height = el.clientHeight;
     const x = d3.time.scale().range([0, width - margin.left - margin.right]).nice();
     const y = d3.scale.linear().range([height - margin.bottom - margin.top, 0]);
+    const unit = this.state.unit;
 
     // Creating SVG
     const svg = d3.select(el)
@@ -97,7 +101,7 @@ class Chart extends React.Component {
       .scale(x)
       .orient('bottom')
       .ticks(d3.time.years, 2)
-      .outerTickSize(1)
+      .outerTickSize(0)
       .innerTickSize(0)
       .tickFormat(d3.time.format(dateFormat));
 
@@ -106,17 +110,17 @@ class Chart extends React.Component {
       .attr('transform', `translate(0, ${height - margin.bottom - margin.top})`)
       .call(xAxis);
 
-    svg.append('text')
-      .attr('class', 'x label')
-      .attr('x', width / 2)
-      .attr('y', height - 17)
-      .text('years');
+    // svg.append('text')
+    //   .attr('class', 'x label')
+    //   .attr('x', width / 2)
+    //   .attr('y', height - 17)
+    //   .text('years');
 
     // Y Axis
     const yAxis = d3.svg.axis()
       .scale(y)
       .orient('left')
-      .outerTickSize(1)
+      .outerTickSize(0)
       .innerTickSize(0)
       .ticks(5);
 
@@ -124,22 +128,24 @@ class Chart extends React.Component {
       .attr('class', 'y axis')
       .call(yAxis);
 
-    if (this.props.unit) {
+    if (this.state.unit) {
       svg.append('text')
       .attr('class', 'y label')
       .attr('x', -4)
       .attr('y', 0)
-      .text(this.props.unit);
+      .text(this.state.unit);
     }
 
     // Tooltip
-    const tooltip = d3.select('body').append('div')
+    const tooltip = this.tooltip = d3.select('body').append('div')
       .attr('class', 'tooltip')
       .style('opacity', 0);
 
     function showTooltip (d, nat) {
+      const value = (nat) ? d.nat_average_value : d.average_value;
+      const tooltipHtml = `${helpers.formatNumber(value, 3)} ${unit}`;
       tooltip
-        .html(`${nat ? d.nat_average_value.toFixed(2) : d.average_value.toFixed(2)}`)
+        .html(tooltipHtml)
         .transition().duration(200)
         .style('opacity', 1)
         .style('top', `${d3.event.pageY}px`)
@@ -217,6 +223,9 @@ class Chart extends React.Component {
     if (el) {
       const chartsElement = el.getElementsByClassName('canvas')[0];
       chartsElement.innerHTML = null;
+    }
+    if (this.tooltip) {
+      this.tooltip.style('opacity', 0);
     }
   }
 

@@ -10,6 +10,7 @@ import Timeline from './components/Timeline';
 import Average from './components/Average';
 import Chart from './components/Chart';
 import Legend from './components/Legend';
+import Download from './components/Download';
 import config from './config';
 
 let layerData = null;
@@ -42,7 +43,16 @@ class App extends React.Component {
     }
     this.refs.average.setState({codgov: mapData.codgov, layerData: layerData});
     this.refs.map.updateTopLayer(layerData);
-    this.refs.chart.setState({chartData: currentChart, codgov: mapData.codgov});
+    this.refs.chart.setState({
+      chartData: currentChart,
+      codgov: mapData.codgov,
+      unit: currentChart.unit
+    });
+    this.refs.download.setState({
+      query: currentChart.query,
+      codgov: mapData.codgov,
+      layerName: layerData.columnName
+    });
   }
 
   onChangeTimeline(timelineData) {
@@ -61,7 +71,15 @@ class App extends React.Component {
       layerName: layerData.columnName,
       layerData: layerData
     });
-    this.refs.chart.setState({chartData: currentChart, layerName: layerData.columnName});
+    this.refs.chart.setState({
+      chartData: currentChart,
+      layerName: layerData.columnName,
+      unit: currentChart.unit
+    });
+    this.refs.download.setState({
+      query: currentChart.query,
+      layerName: layerData.columnName
+    });
   }
 
   onLayerChange(layerData) {
@@ -76,15 +94,34 @@ class App extends React.Component {
     return false;
   }
 
+  closeLanding(e) {
+    e.preventDefault();
+    this.refs.landing.classList.add('_hidden');
+    this.refs.dashboard.classList.remove('_hidden');
+  }
+
   render() {
     const currentChart = _.find(config.charts, {columnName: config.app.layerName});
 
     return (
       <div>
+        <div ref='landing' className="landing">
+          <div className="title-container">
+            <h1>
+              <span className="title">Datos</span>
+              <span className="title">Financieros</span>
+              <span className="title">Municipales</span>
+            </h1>
+            <p className="subtitle"></p>
+            <a href="#"
+              onClick={this.closeLanding.bind(this)}
+              className="landing-button">Continuar</a>
+          </div>
+        </div>
         <div className="brand">
           <img className="logo" src={require('./images/logo.png')} width="192" height="31" />
         </div>
-        <div ref="dashboard" className="dashboard">
+        <div ref="dashboard" className="dashboard _hidden">
           <div className="title">
             <h1>Datos financieros municipales</h1>
           </div>
@@ -112,6 +149,10 @@ class App extends React.Component {
             title={currentChart.title}
             query={currentChart.query}
           />
+          <Download ref='download'
+            cartodbUser={config.app.cartodbUser}
+            layerName={config.app.layerName}
+            codgov={config.app.codgov} />
           <Legend ref='legend'
             colors={config.map.colors}
           />
