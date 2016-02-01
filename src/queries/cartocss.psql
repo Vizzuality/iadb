@@ -2,4 +2,4 @@ SELECT CDB_QuantileBins(array_agg(${columnName}::numeric), 7) AS buckets,
   max(${columnName}::numeric),
   min(${columnName}::numeric)
 FROM ${tableName}
-WHERE year = ${year} and ${columnName}::numeric is not null
+WHERE year = ${year} and ${columnName}::numeric is not null and ${columnName}<>0

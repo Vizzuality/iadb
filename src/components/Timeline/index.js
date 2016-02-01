@@ -56,7 +56,7 @@ class Timeline extends React.Component {
 
   getCurrentDate() {
     const currentDate = moment(this.state.startDate)
-        .add(this.state.current * this.props.step[0], this.props.step[1]);
+      .add(this.state.current * this.props.step[0], this.props.step[1]);
     return currentDate._d;
   }
 
@@ -104,8 +104,8 @@ class Timeline extends React.Component {
     $.getJSON(url, data => {
       const row = data.rows[0];
       const state = {
-        startDate: new Date(row.min.toString()),
-        endDate: new Date(row.max.toString())
+        startDate: new Date(row.min, 0, 1),
+        endDate: new Date(row.max, 0, 1)
       };
       state.steps = this.getSteps(state);
       this.setState(state);
