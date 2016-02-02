@@ -1,1 +1,1 @@
-SELECT a.*, b.reven FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE year=${year}
+SELECT a.*, b.reven, 'M R$' as unit FROM bra_poladm2 a JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov WHERE year=${year}
