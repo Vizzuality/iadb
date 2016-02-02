@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2b8d55712203b393e275"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "14a1d76d3e02dd5b87f8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -762,12 +762,11 @@
 	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
+	var allowAccess = false;
 	var layerData = null;
 
-	function getCookie(name) {
-	  var regexp = new RegExp('(?:^' + name + '|;s*' + name + ')=(.*?)(?:;|$)', 'g');
-	  var result = regexp.exec(document.cookie);
-	  return result === null ? null : result[1];
+	if (sessionStorage) {
+	  allowAccess = !!sessionStorage.getItem('iadb_demo_access');
 	}
 
 	var App = function (_React$Component) {
@@ -920,7 +919,7 @@
 	  return App;
 	}(_react2.default.Component);
 
-	if (getCookie('iadb_demo_access') !== 'goin') {
+	if (!allowAccess) {
 	  window.location.href = 'login.html';
 	} else {
 	  _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
