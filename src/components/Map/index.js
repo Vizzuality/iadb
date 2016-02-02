@@ -5,6 +5,7 @@ import d3 from 'd3';
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import helpers from '../../helpers';
 
 class Map extends React.Component {
 
@@ -80,12 +81,12 @@ class Map extends React.Component {
           this.layer
             .on('featureOver', _.debounce((e, latlng, point, d) => {
               this.tooltip
-                .html(`${d.name}`)
+                .html(`<strong>${d.name}</strong> <br> ${helpers.formatNumber(d[layerData.columnName], 3)} ${layerData.unit || ''}`)
                 .transition().duration(50)
                 .style('opacity', 1)
                 .style('top', `${point.y}px`)
                 .style('left', `${point.x}px`);
-            }, 5))
+            }, 10))
             .on('featureOver', _.debounce(() => {
               this.tooltip.style('opacity', 0);
             }, 1000))

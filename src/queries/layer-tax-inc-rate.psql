@@ -1,4 +1,4 @@
-SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate 
+SELECT a.*, ( b.taxinc*1000000/c.p${year} ) as taxinc_rate,'R$' as unit
 FROM bra_poladm2 a 
 JOIN table_3fiscal_primera_serie b ON a.codgov=b.codgov 
 join table_2bra_seriepob c on a.codgov=c.codgov 
