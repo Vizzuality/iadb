@@ -81,7 +81,7 @@ class Map extends React.Component {
           this.layer
             .on('featureOver', _.debounce((e, latlng, point, d) => {
               this.tooltip
-                .html(`${d.name} <br> ${helpers.formatNumber(d[layerData.columnName], 3)} ${unit}`)
+                .html(`<strong>${d.name}</strong> <br> ${helpers.formatNumber(d[layerData.columnName], 3)} ${layerData.unit || ''}`)
                 .transition().duration(50)
                 .style('opacity', 1)
                 .style('top', `${point.y}px`)
