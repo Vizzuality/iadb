@@ -13,12 +13,11 @@ import Legend from './components/Legend';
 import Download from './components/Download';
 import config from './config';
 
+let allowAccess = false;
 let layerData = null;
 
-function getCookie(name) {
-  var regexp = new RegExp(`(?:^${name}|;\s*${name})=(.*?)(?:;|$)`, 'g');
-  var result = regexp.exec(document.cookie);
-  return (result === null) ? null : result[1];
+if (sessionStorage) {
+  allowAccess = !!sessionStorage.getItem('iadb_demo_access');
 }
 
 class App extends React.Component {
@@ -185,7 +184,7 @@ class App extends React.Component {
 
 }
 
-if (getCookie('iadb_demo_access') !== 'goin') {
+if (!allowAccess) {
   window.location.href = 'login.html'
 } else {
   ReactDOM.render(<App />, document.getElementById('app'));

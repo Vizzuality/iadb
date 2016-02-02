@@ -11,39 +11,22 @@
   <body>
     <input id="passwordInput" type="password" placeholder="Password">
     <script>
-      function getCookie(name) {
-        var regexp = new RegExp('(?:^' + name + '|;\s*' + name + ')=(.*?)(?:;|$)', 'g');
-        var result = regexp.exec(document.cookie);
-        return (result === null) ? null : result[1];
-      }
+      var allowAccess = false;
 
-      function deleteCookie(name, path, domain) {
-        // If the cookie exists
-        if (getCookie(name)) {
-          createCookie(name, "", -1, path, domain);
-        }
-      }
-
-      function createCookie(name, value, days) {
-        if (days) {
-          var date = new Date();
-          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-          var expires = '; expires=' + date.toGMTString();
-        } else var expires = '';
-        document.cookie = name + '=' + value + expires + '; path=/';
+      if (sessionStorage) {
+        allowAccess = !!sessionStorage.getItem('iadb_demo_access');
       }
 
       document.addEventListener('DOMContentLoaded', function() {
         var pI = document.getElementById('passwordInput');
         pI.addEventListener('input', function() {
           if (btoa(pI.value) === 'MTIzNA==') {
-            createCookie('iadb_demo_access', 'goin');
+            sessionStorage.setItem('iadb_demo_access', 'goin');
             window.location.href = 'index.html';
           } else {
-            deleteCookie('iadb_demo_access');
+            sessionStorage.removeItem('iadb_demo_access');
           }
         });
-        deleteCookie('iadb_demo_access');
       });
     </script>
   </body>
